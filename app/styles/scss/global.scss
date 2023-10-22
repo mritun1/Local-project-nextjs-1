@@ -1,0 +1,1846 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
+
+
+//---------------------------------------------
+// MIXIN - @START
+//---------------------------------------------
+@mixin w_h($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin pad_mar($padding, $margin) {
+    padding: $padding;
+    margin: $margin;
+}
+
+@mixin flex($align-item, $justify-content) {
+    display: flex;
+    align-items: $align-item;
+    justify-content: $justify-content;
+}
+
+@mixin position($position, $top, $left) {
+    position: $position;
+    top: $top;
+    left: $left;
+}
+
+@mixin position_full($mx-position, $mx-top, $mx-right, $mx-bottom, $mx-left) {
+    position: $mx-position;
+    top: $mx-top;
+    right: $mx-right;
+    bottom: $mx-bottom;
+    left: $mx-left;
+}
+
+@mixin bg() {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+@mixin bg_hov() {
+    &:hover {
+        box-shadow: 0px 0px 8px $text-color2;
+    }
+}
+
+@mixin two_col_div($bg, $bo) {
+    display: flex;
+    margin: 6px;
+    background-color: $bg;
+    border-radius: 6px;
+
+    &>div {
+        flex: 5;
+    }
+
+    &>div:nth-child(2) {
+        border-left: 1px solid $bo;
+    }
+}
+
+@mixin btn($background-color, $background-color-hov, $color, $font-size, $pad, $mar) {
+    background-color: $background-color;
+
+    &:hover {
+        background-color: $background-color-hov;
+    }
+
+    color: $color;
+    font-size: $font-size;
+    padding: $pad;
+    margin: $mar;
+    border-radius: 6px;
+}
+
+@mixin table($color, $border-color, $head-bg) {
+    border: 1px solid $border-color;
+    @include w_h(100%, auto);
+    border-collapse: collapse;
+
+    &>thead>tr>th,
+    &>tbody>tr>td {
+        border: 1px solid $border-color;
+        @include pad_mar(6px, 0px);
+        color: $color;
+    }
+
+    &>thead>tr {
+        background-color: $head-bg;
+    }
+}
+
+//---------------------------------------------
+// MIXIN - @END
+//---------------------------------------------
+//---------------------------------------------
+// TAG CLASSES - @START
+//---------------------------------------------
+body {
+    @include pad_mar(0px, 0px);
+    font-family: open sans, sans-serif;
+    ;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+input {
+    padding: 6px;
+    outline: none;
+    border: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    padding: 6px;
+    margin: 0px;
+}
+
+//---------------------------------------------
+// TAG CLASSES - @END
+//---------------------------------------------
+//---------------------------------------------
+// CLASSES - @START
+//---------------------------------------------
+.container_full {
+    @include w_h(100%, auto);
+}
+
+.container {
+    @include w_h(1230px, auto);
+    @include pad_mar(auto, 0px auto);
+
+    @media screen and (max-width:1230px) {
+        width: 100%;
+    }
+}
+
+.vertical_list {
+    list-style-type: none;
+    padding-left: 0px;
+
+    &>a {
+        &>li {
+            padding: 9px;
+            padding-left: 45px;
+            font-size: 15px;
+            position: relative;
+
+            &>.icon-list {
+                font-size: 19px;
+                margin-right: 6px;
+                margin-left: 6px;
+                position: absolute;
+                top: 10px;
+                left: 6px;
+            }
+
+            &>.level {
+                float: right;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+//---------------------------------------------
+// CLASSES - @END
+//---------------------------------------------
+
+// ****************************************************************************
+$bg-color: #002F0A;
+$bg-box: #1A421E;
+$text-color: #c3c9c4;
+$text-color2: #9ea79f;
+$btn-color: #127528;
+$btn-hov-color: #088824;
+$gold: rgb(173, 116, 10);
+$gold-hov: rgb(216, 153, 36);
+$btn-red: rgb(65, 1, 1);
+$btn-red-hov: rgb(107, 1, 1);
+$btn-orange: rgb(99, 65, 2);
+$btn-orange-hov: rgb(126, 82, 2);
+
+@mixin green_btn() {
+    background-color: $btn-color;
+
+    &:hover {
+        background-color: $btn-hov-color;
+    }
+}
+
+@mixin category_box() {
+    background-color: $bg-box;
+    border: 1px solid $bg-box;
+
+    &:hover {
+        background-color: $bg-color;
+    }
+}
+
+@mixin div_bg {
+    background-color: $bg-box;
+    border-radius: 6px;
+}
+
+.text-color {
+    color: $text-color;
+}
+
+.text-color2 {
+    color: $text-color2;
+}
+
+@mixin input_class($mx-bo, $mx-border-radius, $mx-height) {
+    border: $mx-bo;
+    border-radius: $mx-border-radius;
+    position: relative;
+    height: $mx-height;
+
+    &>input {
+        border-radius: $mx-border-radius;
+        @include position(absolute, 0px, 0px);
+        right: 0px;
+        bottom: 0px;
+    }
+}
+
+.circle_btn {
+    @include green_btn();
+    @include w_h(30px, 30px);
+    border-radius: 50%;
+    color: $text-color2;
+}
+
+@mixin radio_btn($mx-border, $mx-bg-color, $mx-radius) {
+    border: $mx-border;
+    background-color: $mx-bg-color;
+    border-radius: $mx-radius;
+    display: flex;
+
+    &>div {
+        @include pad_mar(6px, 0px);
+    }
+
+    &>div:nth-child(1) {
+        flex: 8;
+        @include flex(center, left);
+    }
+
+    &>div:nth-child(2) {
+        width: 20px;
+        @include flex(center, right);
+    }
+}
+
+// ****************************************************************************
+body {
+    background-color: $bg-color;
+}
+
+.head {
+    background-color: $bg-box;
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    box-shadow: 0px 0px 5px $text-color2;
+}
+
+.head_col {
+    display: flex;
+
+    &>div {
+        @include w_h(auto, 58px);
+    }
+
+    &>div:nth-child(1) {
+        width: 150px;
+
+        @media screen and (max-width:375px) {
+            width: 50px;
+        }
+
+        @include flex(center, center);
+        color: $text-color;
+
+        &>div:nth-child(1)>img {
+            @include w_h(auto, 45px);
+        }
+
+        &>div:nth-child(2)>h2 {
+            @media screen and (max-width:375px) {
+                display: none;
+            }
+        }
+    }
+
+    &>div:nth-child(2) {
+        flex: 8;
+        @include flex(center, right);
+
+        &>.menu {
+            @include flex(center, center);
+
+            &>div {
+                position: relative;
+                @include w_h(35px, 35px);
+                margin-left: 10px;
+
+                &>button:nth-child(1) {
+                    @include position(absolute, 0px, 0px);
+                    color: $text-color;
+
+                    &:hover {
+                        color: $btn-color;
+                    }
+
+                    background: none;
+                    font-size: 20px;
+                }
+
+                &>button:nth-child(2) {
+                    @include position(absolute, 20px, 10px);
+                    color: $text-color;
+                    background-color: $btn-color;
+                    border-radius: 50%;
+                    @include w_h(20px, 20px);
+                    font-weight: bold;
+                }
+            }
+
+            &>.profile_img {
+                @include flex(center, center);
+                width: 56px;
+
+                &>div:nth-child(1) {
+                    flex: 8;
+
+                    &>div {
+                        @include w_h(40px, 40px);
+                        @include bg();
+                        border: 1px solid $text-color2;
+                        border-radius: 50%;
+                        cursor: pointer;
+
+                        &:hover {
+                            border-color: $text-color;
+                        }
+                    }
+                }
+
+                &>div:nth-child(2) {
+                    color: $text-color2;
+                    width: 10px;
+                }
+            }
+        }
+    }
+}
+
+.col_left>div,
+.col_right>div {
+    position: sticky;
+    top: 60px;
+}
+
+.content_col {
+    display: flex;
+
+    &>.col_left,
+    &>.col_right {
+        @include w_h(30%, auto);
+
+        @media screen and (max-width:768px) {
+            display: none;
+        }
+    }
+
+    &>.col_center {
+        @include w_h(60%, auto);
+
+        @media screen and (max-width:768px) {
+            width: 100%;
+        }
+    }
+}
+
+.link_color {
+    color: $text-color;
+}
+
+.link_color2 {
+    color: $text-color2;
+}
+
+.left_menu {
+    border-top: 1px solid $bg-box;
+    border-bottom: 1px solid $bg-box;
+
+    &>ul>a>li:hover {
+        background-color: $bg-box;
+    }
+
+    &>ul>a>li {
+        border-radius: 6px;
+    }
+
+    &>ul>a>.active {
+        background-color: $bg-box;
+    }
+}
+
+.left_pin {
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+    &>button {
+        @include pad_mar(8px, 6px);
+        border-radius: 6px;
+        @include w_h(96%, auto);
+        font-size: 15px;
+        font-weight: bold;
+        color: $text-color;
+        @include green_btn();
+    }
+}
+
+.search_box {
+    display: flex;
+    width: 93%;
+    @include div_bg();
+    @include pad_mar(2px, 6px);
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    &>div:nth-child(1) {
+        width: 30px;
+        @include flex(center, center);
+        border-right: 2px solid $bg-color;
+        cursor: pointer;
+        color: $text-color2;
+    }
+
+    &>div:nth-child(2) {
+        flex: 8;
+
+        &>input {
+            width: 93%;
+            background-color: $bg-box;
+
+            &::placeholder {
+                font-weight: bold;
+                color: $text-color2;
+            }
+
+            caret-color: $text-color2;
+        }
+    }
+}
+
+.main_content {
+    @include pad_mar(auto, 0px 10px);
+}
+
+.title_bar {
+    @include div_bg();
+    display: flex;
+    @include pad_mar(6px, 15px 6px);
+
+    &>div {
+        @include flex(center, center);
+
+        &>div {
+            width: 100%;
+
+            &>h3,
+            &>h4 {
+                @include pad_mar(6px, 0px);
+                color: $text-color2;
+
+                &>button {
+                    border-radius: 6px;
+                    color: $text-color2;
+                    padding: 3px 6px;
+                    @include green_btn();
+                }
+            }
+        }
+    }
+
+    &>div:nth-child(1) {
+        flex: 8;
+    }
+
+    &>div:nth-child(2) {
+        width: 90px;
+
+        &>div {
+            text-align: right;
+        }
+    }
+}
+
+.offer_post {
+    position: relative;
+    margin: 6px;
+    height: 530px;
+
+    &>.store {
+        @include position(absolute, 0px, 0px);
+        width: 100%;
+        @include flex(center, center);
+    }
+
+    &>.product {
+        @include w_h(100%, auto);
+        @include position(absolute, 20px, 0px);
+        background-color: $bg-box;
+        border-radius: 6px;
+    }
+
+    &>.more_btn {
+        position: absolute;
+        bottom: 30px;
+        right: 10px;
+    }
+}
+
+.more_list {
+    position: absolute;
+    top: 21px;
+    right: 0px;
+    background-color: #088824;
+    z-index: 1;
+    width: 100px;
+    padding-left: 4px;
+
+    &>ul {
+        list-style-type: none;
+        @include pad_mar(4px, 0);
+
+        &>li {
+            padding: 4px;
+            padding-left: 20px;
+            font-size: 13px;
+            color: $text-color;
+            font-weight: bold;
+
+            &:hover {
+                background-color: $bg-color;
+                cursor: pointer;
+            }
+
+            position: relative;
+
+            &>i {
+                @include position(absolute, 7px, 0px);
+            }
+        }
+    }
+}
+
+.store_profile {
+    display: flex;
+    padding: 2px 4px;
+    @include green_btn();
+    border-radius: 20px;
+
+    &>div:nth-child(1) {
+        width: 40px;
+        @include flex(center, center);
+
+        &>.img {
+            @include w_h(40px, 40px);
+            background-color: red;
+            border-radius: 50%;
+            @include bg();
+        }
+    }
+
+    &>div:nth-child(2) {
+        flex: 8;
+        @include flex(center, left);
+
+        &>div {
+
+            &>a>h5,
+            &>a>p {
+                @include pad_mar(6px, 6px);
+                color: $text-color;
+            }
+        }
+    }
+}
+
+.product_bo {
+    position: relative;
+    height: 320px;
+    margin: 25px 6px 6px 6px;
+
+    &>.date {
+        @include position(absolute, 0px, 0px);
+        width: 100%;
+        padding-left: 8px;
+
+        &>h5 {
+            @include pad_mar(6px, 0px);
+            color: $text-color2;
+
+            &>.off {
+                color: $gold;
+            }
+        }
+    }
+
+    &>.offer {
+        background-color: orange;
+        @include position(absolute, 0px, 90%);
+        @include w_h(60px, 60px);
+        border-radius: 50%;
+        @include flex(center, center);
+
+        &>div {
+
+            h2,
+            p {
+                @include pad_mar(0px, 0px);
+            }
+        }
+    }
+
+    &>.product_img_bo {
+        @include w_h(100%, 200px);
+        @include position(absolute, 76px, 0px);
+        @include flex(center, center);
+
+        &>.product_img {
+            @include bg();
+            @include w_h(95%, 280px);
+            background-color: brown;
+            position: relative;
+
+            &>div {
+                @include w_h(30px, 30px);
+                @include green_btn();
+                border-radius: 50%;
+                @include flex(center, center);
+                cursor: pointer;
+
+                &>div {
+                    &>i {
+                        font-size: 26px;
+                        color: $text-color2;
+                    }
+                }
+            }
+
+            &>.left_bar {
+                @include position(absolute, 40%, -10px);
+            }
+
+            &>.right_bar {
+                @include position(absolute, 40%, 96%);
+            }
+        }
+    }
+}
+
+.product_title {
+    padding-left: 15px;
+
+    &>h2 {
+        @include pad_mar(3px, 0px);
+        color: $text-color2;
+
+        @media screen and (max-width:425px) {
+            font-size: 18px;
+        }
+    }
+}
+
+.product_btn {
+    display: flex;
+    margin-bottom: 20px;
+
+    &>div {
+        flex: 5;
+        @include flex(center, center);
+
+        &>div {
+            text-align: center;
+
+            &>p {
+                color: $text-color;
+                @include pad_mar(6px, 0px);
+            }
+
+            &>.price {
+                background-color: $bg-color;
+                color: $text-color;
+                border-radius: 20px;
+                @include pad_mar(8px, 0px);
+
+                &>h3 {
+                    @include pad_mar(6px, 0px);
+                }
+            }
+
+            .buy_btn {
+                background-color: $gold;
+                color: $text-color;
+                border-radius: 10px;
+                @include pad_mar(10px, 6px);
+
+                &:hover {
+                    background-color: $gold-hov;
+                }
+            }
+        }
+    }
+}
+
+.product_images {
+    position: relative;
+
+    &>.news_img_sec {
+        @include bg();
+        @include w_h(100%, 300px);
+
+        &>div {
+            @include w_h(26px, 26px);
+
+            &>div {
+                @include w_h(26px, 26px);
+                border-radius: 50%;
+                @include flex(center, center);
+                @include green_btn();
+                cursor: pointer;
+                color: $text-color;
+            }
+        }
+
+        &>.news_img_btn_left {
+            @include position(absolute, 48%, -12px);
+        }
+
+        &>.news_img_btn_right {
+            @include position(absolute, 48%, 98%);
+        }
+    }
+}
+
+.product_news {
+    width: 93%;
+    @include pad_mar(6px, 0px auto);
+    margin-top: 30px;
+
+    &>.news_date {
+        display: flex;
+        position: relative;
+
+        &>div:nth-child(1) {
+            flex: 8;
+        }
+
+        &>div:nth-child(2) {
+            width: 60px;
+        }
+    }
+
+    &>.news_date>div>h3 {
+        @include pad_mar(6px, 0px);
+
+        &>.date {
+            color: $gold;
+        }
+
+        color: $text-color;
+    }
+
+    .news_des {
+        position: relative;
+        height: 120px;
+
+        &>div:nth-child(1) {
+            @include position(absolute, 0px, 0px);
+            @include w_h(100%, 120px);
+
+            &>p {
+                @include pad_mar(6px, 6px);
+
+                @media screen and (max-width:425px) {
+                    font-size: 13px;
+                }
+
+                color: $text-color;
+            }
+        }
+
+        &>div:nth-child(2) {
+            @include position(absolute, 80px, 0px);
+            @include w_h(100%, auto);
+            text-align: center;
+
+            &>button {
+                @include green_btn();
+                color: $text-color;
+                @include pad_mar(6px 10px, 6px);
+                border-radius: 20px;
+                box-shadow: 0px 0px 12px $btn-color;
+            }
+        }
+    }
+}
+
+.event_posts {
+    @include div_bg();
+    margin-bottom: 48px;
+
+    &>.events_cont {
+        @include position(absolute, 0px, 0px);
+        @include w_h(100%, 300px);
+
+        &>div {
+            margin: 6px 18px;
+
+            &>.event_date {
+                &>h3 {
+                    color: $text-color;
+
+                    &>.event_date {
+                        color: $gold;
+                    }
+                }
+            }
+        }
+    }
+
+    &>.profile {
+        @include w_h(180px, 100px);
+        @include position(absolute, 86%, 37%);
+        position: relative;
+
+        &>.profile_img {
+            @include flex(center, center);
+            @include position(absolute, 0px, 35%);
+
+            &>div {
+                @include w_h(60px, 60px);
+                @include bg();
+                border-radius: 50%;
+            }
+        }
+
+        &>.profile_name {
+            background-color: $btn-hov-color;
+            @include position(absolute, 50%, 0px);
+            width: 100%;
+            text-align: center;
+            border-radius: 8px;
+
+            &>a {
+                color: $text-color;
+
+                &>h5 {
+                    @include pad_mar(6px, 9px);
+                }
+            }
+
+        }
+    }
+}
+
+.categories_lists {
+    overflow: auto;
+    margin: 8px;
+
+    &>div {
+        float: left;
+
+        &>a {
+            &>div {
+                text-align: center;
+                @include pad_mar(6px, 6px);
+                border-radius: 40px;
+                cursor: pointer;
+                background-color: $bg-box;
+                @include bg_hov();
+                color: $text-color;
+
+                &>h3 {
+                    @include pad_mar(6px, 6px);
+                }
+
+                &>button {
+                    @include pad_mar(6px, 6px);
+                    border-radius: 50%;
+                    @include green_btn();
+                    font-weight: bold;
+                    color: $text-color;
+                }
+            }
+        }
+    }
+}
+
+.cat_right {
+    margin: 3px 8px 10px 8px;
+
+    &>.cat_title {
+        display: flex;
+        border-top: 1px solid $bg-box;
+        border-bottom: 1px solid $bg-box;
+        padding: 10px 2px;
+
+        &>div:nth-child(1) {
+            width: 40px;
+
+            &>a>div {
+                @include w_h(30px, 30px);
+                @include green_btn();
+                color: $text-color2;
+                border-radius: 50%;
+                @include flex(center, center);
+            }
+        }
+
+        &>div:nth-child(2) {
+            flex: 8;
+
+            &>div {
+                &>h5 {
+                    @include pad_mar(6px, 0px);
+                    color: $text-color2;
+                }
+            }
+        }
+    }
+
+    &>.cat_list {
+        overflow: auto;
+        margin-top: 10px;
+
+        &>.cat {
+            border-radius: 30px;
+            @include pad_mar(2px, 3px);
+            @include category_box();
+            float: left;
+
+            &>a {
+                color: $text-color;
+
+                &>h5>button {
+                    border-radius: 50%;
+                    margin-left: 6px;
+                    @include green_btn();
+                    color: $text-color2;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+.columns_two_product {
+    display: flex;
+    flex-wrap: wrap;
+
+    &>div {
+        width: 49%;
+
+        @media screen and (max-width:425px) {
+            width: 100%;
+        }
+
+        &>div {
+            @include bg_hov();
+            @include div_bg();
+            @include pad_mar(6px 16px, 6px);
+
+            &>.pin_profile {
+                overflow: auto;
+
+                &>div:nth-child(1) {
+                    float: left;
+                }
+
+                &>div:nth-child(2) {
+                    float: right;
+                    color: $text-color;
+                    @include flex(center, center);
+                    height: 40px;
+
+                    &>div>p {
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.secondhand_price {
+    display: flex;
+    color: $text-color2;
+
+    &>div {
+        flex: 5;
+    }
+
+    &>div:nth-child(2) {
+        text-align: right;
+    }
+}
+
+.secondhand_btns {
+    display: flex;
+    margin-top: 10px;
+
+    &>div {
+        flex: 3.3;
+        text-align: center;
+        color: $text-color2;
+
+        &>p {
+            font-size: 13px;
+        }
+
+        &>button {
+            border-radius: 50%;
+            @include w_h(30px, 30px);
+            @include green_btn();
+            color: $text-color;
+        }
+    }
+}
+
+.business {
+    cursor: pointer;
+    @include div_bg();
+    @include pad_mar(0px, 8px);
+    @include bg_hov();
+    display: flex;
+
+    &>div:nth-child(1) {
+        width: 100px;
+        @include pad_mar(6px, 0px);
+
+        &>div {
+            @include w_h(100%, 100%);
+            @include bg();
+            border-radius: 6px;
+        }
+    }
+
+    &>div:nth-child(2) {
+        flex: 8;
+        color: $text-color;
+    }
+}
+
+.cat_text {
+    background-color: rgb(9, 9, 173);
+    color: $text-color;
+    @include pad_mar(4px, 4px);
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.more_btn_cont {
+    border-radius: 6px;
+    @include green_btn();
+    color: $text-color;
+    font-weight: bold;
+}
+
+.post_create_btns {
+    @include two_col_div($bg-box, $bg-color);
+
+    &>div {
+        @include flex(center, center);
+        height: 100px;
+        text-align: center;
+        color: $text-color2;
+
+        &>div>button {
+            @include btn($btn-color, $btn-hov-color, $text-color, 15px, 6px, 6px);
+        }
+    }
+}
+
+.tab_menu {
+    display: flex;
+    @include div_bg();
+    @include pad_mar(6px 6px 0px 6px, 6px);
+
+    &>div {
+        flex: 2px;
+        text-align: center;
+        @include green_btn();
+        border-radius: 6px 6px 0px 0px;
+        margin: 4px 4px 0px 4px;
+        cursor: pointer;
+        color: $text-color2;
+
+        &>h3 {
+            margin: 0px;
+            padding-bottom: 0px;
+        }
+
+        &>p {
+            padding-top: 0px;
+            font-size: 13px;
+        }
+    }
+}
+
+.post_box {
+    @include div_bg();
+    margin: 6px;
+
+    &>div:nth-child(1),
+    &>div:nth-child(3) {
+        display: flex;
+
+        &>div {
+            flex: 5;
+            padding: 6px;
+        }
+
+        &>div:nth-child(1) {
+            &>p {
+                color: $text-color2;
+                font-size: 13px;
+            }
+        }
+
+        &>div:nth-child(2) {
+            text-align: right;
+        }
+    }
+
+    &>div:nth-child(2) {
+        color: $text-color;
+        padding: 6px;
+    }
+
+    &>div:nth-child(3)>div:nth-child(2) {
+        &>.view {
+            @include btn($btn-color, $btn-hov-color, $text-color2, 12px, 6px, 0px);
+        }
+
+        &>.del {
+            @include btn($btn-red, $btn-red-hov, $text-color2, 12px, 6px, 0px);
+        }
+
+        &>.edit {
+            @include btn($btn-orange, $btn-orange-hov, $text-color2, 12px, 6px, 0px);
+        }
+    }
+
+    &>div:nth-child(1)>div:nth-child(2) {
+        &>button {
+            @include btn(transparent, transparent, $btn-hov-color, 15px, 6px, 6px);
+            border: 1px solid $bg-color;
+        }
+    }
+}
+
+.chart {
+    @include pad_mar(6px, 6px);
+    border: 1px solid $bg-box;
+    background-color: $bg-box;
+}
+
+.bank {
+    @include pad_mar(6px, 6px);
+    background-color: $bg-box;
+    border-radius: 6px;
+    overflow: auto;
+}
+
+.transaction>.table {
+    @include table($text-color2, $btn-color, $btn-color);
+
+    &>tbody>tr>td:nth-child(1) {
+        text-align: center;
+    }
+}
+
+.bank_details>.table {
+    @include table($text-color2, $btn-color, $btn-color);
+
+    &>tbody>tr>td:nth-child(1) {
+        text-align: right;
+    }
+}
+
+.table-bar {
+    display: flex;
+
+    &>div {
+        flex: 5;
+    }
+
+    &>div:nth-child(1) {
+        @include flex(center, left);
+
+        &>div>button {
+            @include green_btn();
+            color: $text-color2;
+            @include pad_mar(6px, 6px);
+            border-radius: 6px;
+        }
+    }
+
+    &>div:nth-child(2) {
+        text-align: right;
+        color: $text-color2;
+
+        &>p>button {
+            @include green_btn();
+            color: $text-color2;
+        }
+    }
+}
+
+.bank_details {
+    &>.table-bar>div:nth-child(1) {
+        color: $text-color2;
+    }
+
+    &>.table>tbody>tr>td:nth-child(1) {
+        width: 100px;
+    }
+
+    &>.table>tbody>tr>td:nth-child(2) {
+        &:hover {
+            background-color: $btn-color;
+        }
+    }
+}
+
+.single-div-center {
+    @include flex(center, center);
+    @include w_h(auto, 120px);
+    border-top: 1px solid $text-color2;
+
+    &>div {
+        width: 200px;
+        text-align: center;
+
+        &>div {
+            @include input_class(none, 6px, 30px);
+        }
+
+        &>button {
+            @include green_btn();
+            color: $text-color;
+            @include pad_mar(6px, 6px);
+            border-radius: 6px;
+        }
+    }
+}
+
+.alert {
+    display: flex;
+    @include div_bg();
+    @include pad_mar(6px, 6px);
+
+    &>div:nth-child(1) {
+        flex: 8;
+        color: $text-color2;
+
+        &>h5>button {
+            @include btn($btn-red, $btn-red-hov, $text-color2, 13px, 6px, 0px);
+        }
+    }
+
+    &>div:nth-child(2) {
+        width: 60px;
+        @include flex(center, center);
+
+        &>div>button {
+            @include green_btn();
+            color: $text-color2;
+            border-radius: 50%;
+            @include w_h(30px, 30px);
+        }
+    }
+}
+
+.profile_sec {
+    @include div_bg();
+    @include pad_mar(6px, 6px);
+
+    &>div:nth-child(1) {
+        @include flex(center, center);
+    }
+
+    &>div:nth-child(2) {
+        display: flex;
+
+        &>div {
+            flex: 5;
+        }
+
+        &>div:nth-child(1) {
+            &>button {
+                @include green_btn();
+                color: $text-color;
+                border-radius: 6px;
+            }
+        }
+
+        &>div:nth-child(2) {
+            position: relative;
+            text-align: right;
+            color: $text-color2;
+        }
+    }
+}
+
+.center_profile {
+    display: flex;
+
+    &>div:nth-child(1) {
+        width: 100px;
+        @include flex(center, center);
+
+        &>div {
+            @include w_h(80px, 80px);
+            @include bg();
+            border-radius: 50%;
+        }
+    }
+
+    &>div:nth-child(2) {
+        flex: 8;
+        color: $text-color2;
+    }
+}
+
+.online_offline {
+    position: relative;
+    display: inline-block;
+    @include w_h(60px, 20px);
+
+    &>input {
+        opacity: 0;
+        @include w_h(0px, 0px);
+    }
+
+    &>.slider {
+        @include position(absolute, 0px, 0px);
+        cursor: pointer;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    &>.slider:before {
+        position: absolute;
+        content: "";
+        @include w_h(26px, 20px);
+        left: 4px;
+        bottom: 0px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    &>input:checked+.slider {
+        background-color: $btn-color;
+    }
+
+    &>input:focus+.slider {
+        box-shadow: 0 0 1px $btn-color;
+    }
+
+    &>input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    &>.slider.round {
+        border-radius: 34px;
+    }
+
+    &>.slider.round:before {
+        border-radius: 50%;
+    }
+}
+
+.create_bar {
+    @include div_bg();
+    @include pad_mar(6px, 6px);
+    display: flex;
+    color: $text-color2;
+
+    &>div:nth-child(1) {
+        flex: 8;
+
+        &>div>button {
+            @include green_btn();
+            color: $text-color;
+            padding: 6px;
+            border-radius: 6px;
+        }
+
+        &>div {
+            width: 100px;
+
+            &:hover {
+                font-weight: bold;
+                cursor: pointer;
+            }
+        }
+    }
+
+    &>div:nth-child(2) {
+        width: 60px;
+        @include flex(center, center);
+    }
+}
+
+.my_store_list {
+    @include div_bg();
+    @include pad_mar(6px, 6px);
+
+    &>div:nth-child(2) {
+        text-align: right;
+
+        &>button {
+            @include green_btn();
+            border-radius: 6px;
+            color: $text-color;
+            @include pad_mar(6px, 6px);
+        }
+    }
+}
+
+.referral_box {
+    @include div_bg();
+    @include pad_mar(6px, 6px);
+    color: $text-color2;
+
+    &>div:nth-child(2) {
+        @include input_class(none, 6px, 30px);
+
+        &>input {
+            background-color: $text-color2;
+        }
+    }
+
+    &>div:nth-child(3) {
+        text-align: right;
+
+        &>button {
+            @include green_btn();
+            border-radius: 6px;
+            @include pad_mar(6px, 6px);
+            color: $text-color;
+            font-weight: bold;
+        }
+    }
+}
+
+.details_list {
+    @include div_bg();
+    @include pad_mar(6px, 6px);
+    display: flex;
+    color: $text-color2;
+
+    &>div {
+        flex: 3;
+        text-align: center;
+
+        &>p {
+            font-size: 13px;
+        }
+    }
+}
+
+.service-not-available {
+    @include div_bg();
+    @include pad_mar(6px, 6px);
+    height: 70vh;
+    @include flex(center, center);
+
+    &>div {
+        text-align: center;
+        color: $text-color2;
+    }
+}
+
+.home_page {
+    @include flex(center, center);
+    height: 100vh;
+
+    &>.home_cont {
+        background-color: $bg-box;
+        @include pad_mar(6px, 6px);
+        border-radius: 6px;
+
+        &>div:nth-child(1) {
+            display: flex;
+
+            &>div:nth-child(1) {
+                flex: 8;
+                height: 70vh;
+                @include bg();
+                color: white;
+                @include flex(center, center);
+
+                @media screen and (max-width:650px) {
+                    display: none;
+                }
+
+                &>div {
+                    background-color: green;
+                    opacity: 0.6;
+                    width: 80%;
+                    border-radius: 6px;
+
+                    &>h1 {
+                        font-size: 40px;
+                    }
+                }
+            }
+
+            &>div:nth-child(2) {
+                width: 300px;
+
+                @media screen and (max-width:650px) {
+                    width: 100%;
+                    height: 70vh;
+                }
+
+                border: 1px solid $text-color2;
+                border-radius: 6px;
+            }
+        }
+
+        &>div:nth-child(2) {
+            padding-top: 10px;
+
+            &>p {
+                color: $text-color2;
+                font-size: 13px;
+                padding-bottom: 0px;
+
+                &>a {
+                    color: $text-color2;
+                    padding-right: 10px;
+                }
+            }
+
+            &>p:nth-child(1) {
+                border-bottom: 1px solid rgb(71, 80, 65);
+                padding-bottom: 10px;
+            }
+        }
+    }
+}
+
+.login {
+    @include pad_mar(6px 6px 0px 6px, 6px 6px 0px 6px);
+
+    &>div {
+        margin: 16px 6px;
+    }
+
+    &>.input {
+        @include input_class(none, 6px, 35px);
+
+        &>input {
+            font-size: 18px;
+        }
+    }
+
+    &>.btn {
+        &>button {
+            @include green_btn();
+            color: $text-color;
+            @include pad_mar(6px, 6px);
+            font-size: 18px;
+            width: 97%;
+            border-radius: 6px;
+        }
+    }
+
+    &>.forgot {
+        text-align: right;
+        margin-bottom: 10px;
+
+        &>p>a {
+            color: $text-color;
+        }
+    }
+}
+
+.hr_or {
+    position: relative;
+    height: 20px;
+
+    &>hr {
+        @include w_h(80%, 1px);
+        background-color: $text-color2;
+        border: none;
+        @include position(absolute, 5%, 10%);
+        right: 10%;
+    }
+
+    &>button {
+        @include position(absolute, 0px, 45%);
+        background-color: $bg-box;
+        color: $text-color2;
+    }
+}
+
+.btn-reg {
+    @include pad_mar(6px, 6px);
+    @include flex(center, center);
+
+    &>div {
+        width: 96%;
+    }
+
+    &>div>button {
+        @include green_btn();
+        color: $text-color2;
+        @include pad_mar(8px, 6px);
+        border-radius: 6px;
+        font-size: 15px;
+        width: 96%;
+    }
+}
+
+.apps {
+    @include flex(center, center);
+
+    &>div {
+        flex: 5;
+        @include flex(center, center);
+
+        &>div {
+            @include w_h(90%, 40px);
+            @include bg();
+            @include green_btn();
+            cursor: pointer;
+            border-radius: 6px;
+            display: flex;
+
+            &>div:nth-child(1) {
+                width: 40px;
+                @include bg();
+            }
+
+            &>div:nth-child(2) {
+                flex: 8;
+                color: $text-color2;
+            }
+        }
+    }
+}
+
+.modal {
+    @include position_full(fixed, 0px, 0px, 0px, 0px);
+
+    &>div {
+        @include w_h(100%, 100vh);
+        @include position_full(absolute, 0px, 0px, 0px, 0px);
+    }
+
+    &>.modal_bg {
+        background-color: $bg-color;
+        opacity: 0.5;
+    }
+
+    &>.modal_body {
+        @include flex(center, center);
+
+        &>div {
+            background-color: $bg-color;
+            box-shadow: 0px 0px 5px $text-color2;
+            border-radius: 6px;
+
+            &>.modal_head {
+                border-bottom: 1px solid $text-color2;
+                display: flex;
+
+                &>div:nth-child(1) {
+                    flex: 8;
+                    color: $text-color2;
+                    padding: 6px;
+
+                    &>h2 {
+                        padding-bottom: 0px;
+                    }
+
+                    &>p {
+                        padding-top: 0px;
+                        font-size: 13px;
+                    }
+                }
+
+                &>div:nth-child(2) {
+                    width: 60px;
+                    @include flex(center, center);
+
+                    &>div>button {
+                        @include green_btn();
+                        color: $text-color2;
+                        font-weight: bold;
+                        border-radius: 50%;
+                        font-size: 26px;
+                        padding: 6px 11px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.sign_up {
+    @include w_h(380px, auto);
+
+    @media screen and (max-width:375px) {
+        width: 96%;
+    }
+
+    &>.sign_up_form {
+        &>form {
+            &>div {
+                margin: 6px 0px;
+            }
+
+            &>.sign_up_one_col {
+                padding: 6px;
+
+                &>div {
+                    @include input_class(none, 6px, 30px);
+
+                    &>input {
+                        background-color: $text-color;
+                    }
+                }
+            }
+
+            &>.sign_up_two_col {
+                display: flex;
+
+                &>div {
+                    flex: 5;
+                    padding: 6px;
+
+                    &>div {
+                        @include input_class(none, 6px, 30px);
+
+                        &>input {
+                            background-color: $text-color;
+                        }
+                    }
+                }
+            }
+
+            &>.sign_up_title {
+                color: $text-color2;
+
+                &>p {
+                    padding-bottom: 0px;
+                }
+            }
+
+            &>.sign_up_three_col {
+                display: flex;
+
+                &>div {
+                    flex: 3;
+                    padding: 6px;
+
+                    &>div {
+                        @include radio_btn(none, $text-color, 6px);
+                    }
+                }
+            }
+
+            &>.terms>p {
+                font-size: 13px;
+            }
+
+            &>.submit {
+                text-align: center;
+
+                &>button {
+                    @include green_btn();
+                    width: 90%;
+                    color: $text-color2;
+                    @include pad_mar(8px, 6px);
+                    font-size: 20px;
+                    border-radius: 6px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+.loading{
+    @include position_full(fixed, 0px, 0px, 0px, 0px);
+    &>div{
+        @include position_full(absolute, 0px, 0px, 0px, 0px);
+    }
+    &>.loading_bg{
+        background-color: black;
+        opacity: 0.5;
+    }
+    &>.loading_img{
+        @include flex(center, center);
+        overflow: hidden;
+        &>div{
+            opacity: 0.5;
+            &>img{
+                @include w_h(180px, 180px);
+                border-radius: 50%;
+            }
+        }
+    }
+}

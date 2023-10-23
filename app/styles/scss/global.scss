@@ -1844,3 +1844,44 @@ body {
         }
     }
 }
+.error_status{
+    @include flex(top, left);
+    @include pad_mar(0px, 6px);
+    color: $text-color2;
+    border-radius: 6px;
+    &>div:nth-child(1)>button{
+        border-radius: 50%;
+        font-size: 26px;
+        @include w_h(30px, 30px);
+        margin: 3px;
+        color: $text-color;
+    }
+}
+.error_status.success>div:nth-child(1)>button {
+    @include green_btn();
+}
+.error_status.success {
+    background-color: rgb(37, 75, 37);
+}
+.error_status.danger{
+    background-color: rgb(75, 38, 37);
+}
+.error_status.danger>div:nth-child(1)>button {
+    background-color: $btn-red;
+    &:hover {
+        background-color: $btn-red-hov;
+    }
+}
+
+.btn_loading{
+    text-align: center;
+    color: $text-color;
+    border: 1px solid $text-color;
+    border-radius: 10px;
+    margin: 6px;
+    &>p>img{
+        @include w_h(20px, 20px);
+        vertical-align: -5px;
+        margin-right: 10px;
+    }
+}

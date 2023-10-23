@@ -12,7 +12,7 @@ const page = () => {
                       <div className="title_bar">
                           <div>
                               <div>
-                                  <h3><i className="fa-solid fa-clipboard-list icon-list"></i> Product News (23)</h3>
+                                  <h3><i className="fa-solid fa-clipboard-list icon-list"></i> Local News (23)</h3>
                               </div>
                           </div>
                           <div>

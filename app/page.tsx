@@ -1,7 +1,8 @@
-import Image from 'next/image'
 import SignUpModal from './components/buttons/SignUpModal'
+import Login from './components/form/Login'
 
 export default function Home() {
+  
   return (
     <main>
 
@@ -22,22 +23,7 @@ export default function Home() {
 
               <div>
 
-                <div className="login">
-                  <div className="input">
-                    <input type="text" placeholder="Email" />
-                  </div>
-                  <div className="input">
-                    <input type="password" placeholder="Password" />
-                  </div>
-                  <div className="btn">
-                    <button><i className="fa-solid fa-right-to-bracket"></i> Login</button>
-                  </div>
-                  <div className="forgot">
-                    <p>
-                      <a href="">Forgot Password?</a>
-                    </p>
-                  </div>
-                </div>
+                <Login></Login>
 
                 <div className="hr_or">
                   <hr />

@@ -44,6 +44,9 @@ const AppContent = (props:templateType) => {
                           <a href="/my-saved" className="link_color2">
                               <li><i className="fa-solid fa-floppy-disk icon-list"></i> My Saved <span className="level">0</span></li>
                           </a>
+                          <a href="/my-groups" className="link_color2">
+                              <li><i className="fa-solid fa-users-rectangle icon-list"></i> My Groups <span className="level">0</span></li>
+                          </a>
                           <a href="/my-analytics" className="link_color2">
                               <li><i className="fa-solid fa-chart-simple icon-list"></i> My Analytics</li>
                           </a>

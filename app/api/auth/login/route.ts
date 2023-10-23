@@ -12,16 +12,16 @@ export async function POST(req: Request) {
         const { mobile, password } = body;
         if ( !mobile || !password ) {
             return NextResponse.json(
-                { msg: "Please, don`t leave empty fields." },
-                { status: 400 }
+                { msg: "Please, don`t leave empty fields.", code: 0 }
+                
             )
         }
 
         const isUserPresent = await User.findOne({ mobile });
         if (!isUserPresent) {
             return NextResponse.json(
-                { msg: "User not exists, please register" },
-                { status: 404 }
+                { msg: "User not exists, please register", code: 0 }
+                
             )
         }
         const gotPassword:any = isUserPresent.password
@@ -37,20 +37,20 @@ export async function POST(req: Request) {
                 const secret: any = process.env.SECRECT_KEY
                 const token = jwt.sign({ name, pin_code, mobile }, secret)
                 const response = NextResponse.json(
-                    { msg: "Welcome! to Localnii." },
-                    { status: 200 }
+                    { msg: "Welcome! to Localnii.", code: 1 }
+                    
                 )
                 const logCookie: any = process.env.LOGIN_COOKIE
                 response.cookies.set(logCookie, token)
                 return response
             }else{
-                return NextResponse.json({ msg: "Sorry! Wrong Password" },{status:401})
+                return NextResponse.json({ msg: "Sorry! Wrong Password", code: 0 })
             }
             
         } catch (error) {
-            return NextResponse.json({ msg: error }, { status: 500 })
+            return NextResponse.json({ msg: error,code:0 })
         }
     } catch (error) {
-        return NextResponse.json({ error: "Something went wrong " + error }, { status: 500 })
+        return NextResponse.json({ error: error, code: 0 })
     }
 }

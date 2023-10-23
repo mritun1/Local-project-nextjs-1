@@ -9,7 +9,7 @@ const MoreBtn = (props:any) => {
     return (
         <>
             <button onClick={toggleModal} className="more_btn_cont">more <i className="fa-solid fa-caret-down"></i></button>
-            <div style={{ display: isHidden ? `none` : `block` }} className="more_list">
+            <div id='morebtn' style={{ display: isHidden ? `none` : `block` }} className="more_list">
                 <ul>
                     {props.children}
                 </ul>

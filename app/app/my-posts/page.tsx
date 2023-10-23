@@ -25,7 +25,7 @@ const page = () => {
                         <div className="post_create_btns">
                             <div>
                                 <div>
-                                    <h5>Add Product News</h5>
+                                    <h5>Add Local News</h5>
                                     <button><i className="fa-solid fa-plus"></i> Create Post</button>
                                 </div>
                             </div>

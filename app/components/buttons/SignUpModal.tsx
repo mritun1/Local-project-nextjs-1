@@ -1,16 +1,13 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Alerts from '../temp/Alerts'
+import ActivateForm from '../form/ActivateForm'
 
 const SignUpModal = () => {
 
     const [isHidden, setIsHidden] = useState(true)
-    const [isHiddenActivation, setIsHiddenActivation] = useState(false)
     const displayModal = () => {
         setIsHidden(!isHidden)
-    }
-    const displayModalActivation = () => {
-        setIsHiddenActivation(!isHiddenActivation)
     }
 
     // REGISTER FORM START
@@ -26,6 +23,7 @@ const SignUpModal = () => {
     const [activeStatus, setActiveStatus] = useState(false)
     const [msg, setMsg] = useState('')
     const [submitLoad, setSubmitLoad] = useState(true)
+    const [user_id, setUserId] = useState('')
 
     const signupForm = async (e: any) => {
         e.preventDefault();
@@ -34,6 +32,7 @@ const SignUpModal = () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+
             },
             body: JSON.stringify({
                 firstName,
@@ -54,6 +53,7 @@ const SignUpModal = () => {
             const data = await res.json();
             if (data.code === 1) {
                 setActiveStatus(true)
+                setUserId(data.id)
             } else {
                 setCode(true)
             }
@@ -66,51 +66,16 @@ const SignUpModal = () => {
         <>
             <button onClick={displayModal}><i className="fa-solid fa-id-badge"></i> Register</button>
 
-
+            
             {/* 
                 -------------------------
                  MODAL FOR ACTIVATE ACCOUNT 
                  -------------------------
             */}
             {activeStatus ? (
-                <div id="activate_account" className="modal" style={{ display: isHiddenActivation ? `none` : `block` }}>
-                    <div className="modal_bg"></div>
-                    <div className="modal_body">
-                        <div className="sign_up">
-                            <div className="modal_head">
-                                <div >
-                                    <h2>Activate Account</h2>
-                                    <p>You must activate the account before login.</p>
-                                </div>
-                                <div>
-                                    <div><button onClick={displayModalActivation} ><i className="fa-solid fa-xmark"></i></button></div>
-                                </div>
-                            </div>
-
-                            <div className="sign_up_form">
-                                <form id="sign_up_form" method="POST">
-
-                                    <div className="sign_up_title terms">
-                                        <p>OTP is sent to your mobile number, please find and enter below.</p>
-                                    </div>
-
-                                    <div className="sign_up_one_col">
-                                        <div><input type="number" name="otp" placeholder="OTP" required /></div>
-                                    </div>
-
-                                    <div className="sign_up_title terms">
-                                        <p>After enter the OTP please click here.</p>
-                                    </div>
-                                    <div className="sign_up_title submit">
-                                        <button type="submit">Activate Account</button>
-                                    </div>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div >
-
+                <ActivateForm
+                id={`${user_id}`}
+                />
             ) : (
 
                 <div id="sign_up" className="modal" style={{ display: isHidden ? `none` : `block` }}>

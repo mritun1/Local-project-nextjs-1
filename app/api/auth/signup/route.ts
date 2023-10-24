@@ -28,12 +28,16 @@ export async function POST(req: Request) {
         let newPassword = password.toString();
         const hashPassword = await bcrypt.hash(newPassword, 10)
 
+        let otp:string = "234";
+        const hashOtp = await bcrypt.hash(otp, 10)
+
         try {
-            await User.create({ firstName, lastName, pinCode, gender, profession, mobile, password: hashPassword });
+            const newUser = await User.create({ firstName, lastName, pinCode, gender, profession, mobile, password: hashPassword,otp:hashOtp });
+            const user_id = newUser._id
             const secret: any = process.env.SECRECT_KEY
-            const token = jwt.sign({ firstName, lastName, pinCode, mobile }, secret)
+            const token = jwt.sign({ user_id, firstName, lastName, pinCode, mobile }, secret)
             const response = NextResponse.json(
-                { msg: "Welcome! you are registered success.", code: 1 }
+                { msg: "Welcome! you are registered success.", code: 1, id: user_id }
 
             )
             const logCookie: any = process.env.LOGIN_COOKIE

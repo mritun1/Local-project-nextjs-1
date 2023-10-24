@@ -28,7 +28,17 @@ let userSchema = new mongoose.Schema({
     password:{
         type: String,
         require: true
+    },
+    otp: {
+        type: String
+    },
+    isActive: {
+        type: Number,
+        default: 0,
     }
 })
+
+
+
 let User = mongoose.model("user",userSchema);
 export default User;

@@ -2,7 +2,7 @@
 
 const nextConfig = {
     //RUN BUILD
-    output:'export',
+    //output:'export',
 }
 
 module.exports = nextConfig

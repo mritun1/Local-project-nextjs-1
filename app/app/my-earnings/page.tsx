@@ -1,13 +1,13 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import AppContent from '@/app/components/templates/AppContent'
 import Script from 'next/script'
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const page = () => {
+const Page = () => {
+
     return (
         <>
-            
-
+        
             <AppContent
                 mainContent={
                     <div className="main_content">
@@ -168,18 +168,22 @@ const page = () => {
                 rightBar={``}
             ></AppContent>
 
+            
+            <Script
+                src='js/inline_chart.js'
+                type='text/javascript'
+            ></Script>
             <Script 
                 src='https://cdn.jsdelivr.net/npm/chart.js'
                 type='text/javascript'
             ></Script>
-            <Script
-                src='../../styles/js/inline_chart.js'
-                type='text/javascript'
-            ></Script>
+
             
+
 
         </>
     )
 }
 
-export default page
+export default Page
+

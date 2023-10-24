@@ -47,7 +47,7 @@ const page = () => {
                                         <div>
 
                                             <label className="online_offline">
-                                                <input type="checkbox" checked />
+                                                <input type="checkbox" defaultChecked={true} />
                                                 <span className="slider round"></span>
                                             </label>
 

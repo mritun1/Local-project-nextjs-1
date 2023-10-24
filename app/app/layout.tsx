@@ -18,8 +18,9 @@ export default function RootLayout({
 }) {
     
     return (
-        <html lang="en">
-            <body className={inter.className}>
+        <main>
+            
+            <div className={inter.className}>
 
                 <div className="container_full head">
                     <div className="container head_col">
@@ -84,7 +85,7 @@ export default function RootLayout({
 
                 
                 
-            </body>
-        </html>
+            </div>
+        </main>
     )
 }

@@ -13,6 +13,11 @@ const ActivateForm = (props:propType) => {
         setIsHiddenActivation(!isHiddenActivation)
     }
 
+    const [isHiddenSuccessModal, setIsHiddenSuccessModal] = useState<boolean>(false)
+    const displaySuccessModal = () =>{
+        setIsHiddenSuccessModal(!isHiddenSuccessModal)
+    }
+
     const [otp, setOtp] = useState<string>('')
     const [mobile, setMobile] = useState<number>(0)
     const [status, setStatus] = useState<boolean>(false)
@@ -56,7 +61,7 @@ const ActivateForm = (props:propType) => {
     return (
         <>
             {res?(
-                <div id="activate_success" className="modal"  >
+                <div id="activate_success" className="modal" style={{ display: isHiddenSuccessModal ? `none` : `block` }} >
                     <div className="modal_bg"></div>
                     <div className="modal_body">
                         <div className="sign_up">
@@ -66,7 +71,7 @@ const ActivateForm = (props:propType) => {
                                     <p>Welcome to Localnii.com</p>
                                 </div>
                                 <div>
-                                    <div><button  ><i className="fa-solid fa-xmark"></i></button></div>
+                                    <div><button onClick={displaySuccessModal} ><i className="fa-solid fa-xmark"></i></button></div>
                                 </div>
                             </div>
 
@@ -85,6 +90,7 @@ const ActivateForm = (props:propType) => {
                                                 alt='success image'
                                                 width={100}
                                                 height={100}
+                                                onClick={displaySuccessModal}
                                             />
                                         </center>
                                     </div>

@@ -1,7 +1,5 @@
 import SignUpModal from './components/buttons/SignUpModal'
-import ActivateForm from './components/form/ActivateForm'
 import Login from './components/form/Login'
-import Image from 'next/image'
 
 export default function Home() {
 
@@ -72,19 +70,6 @@ export default function Home() {
 
         </div>
       </div>
-
-
-
-
-
-
-
-      {/* <ActivateForm
-        id="65381f855d50b9aa3ebaed71"
-      /> */}
-
-
-
 
 
 

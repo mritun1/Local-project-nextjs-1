@@ -1845,16 +1845,25 @@ body {
     }
 }
 .error_status{
-    @include flex(top, left);
     @include pad_mar(0px, 6px);
     color: $text-color2;
     border-radius: 6px;
+    overflow: auto;
+    &>div{
+        float:left;
+    }
     &>div:nth-child(1)>button{
         border-radius: 50%;
         font-size: 26px;
         @include w_h(30px, 30px);
         margin: 3px;
         color: $text-color;
+    }
+    &>div:nth-child(1){
+        width: 30px;
+    }
+    &>div:nth-child(2){
+        width: 85%;
     }
 }
 .error_status.success>div:nth-child(1)>button {
@@ -1884,3 +1893,31 @@ body {
         margin-right: 10px;
     }
 }
+///-------------------------------------------------------
+.display-flex{display: flex;}
+
+.circle-gal-btn{
+    color: $text-color;
+    &>.img{
+        @include flex(center, center);
+        padding: 10px 0px;
+        &>div{
+            @include green_btn();
+            cursor: pointer;
+            @include w_h(60px, 60px);
+            border-radius: 50%;
+            @include flex(center, center);
+            &>i{
+                font-size: 30px;
+            }
+        }
+    }
+    &>.btn{
+        text-align: center;
+        &>p{
+            @include pad_mar(0px 0px 10px 0px, 0px);
+            font-size: 10px;
+        }
+    }
+}
+

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '../styles/scss/global.scss'
-import Link from 'next/link'
 import LeftMenu from '../components/templates/LeftMenu'
+import MenuModal from '../components/form/MenuModal'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,46 +22,9 @@ export default function RootLayout({
             
             <div className={inter.className}>
 
-                <div className="container_full head">
-                    <div className="container head_col">
-                        <div >
-                            <div>
-                                <img src="/icons/logo/logo1.png" alt='Logo' />
-                            </div>
-                            <div>
-                                <h2 >OCALNII</h2>
-                            </div>
-                        </div>
-                        <div >
+                
 
-                            <div className="menu">
-                                <div title="Delivery Order">
-                                    <button><i className="fa-solid fa-truck"></i></button>
-                                    <button>2</button>
-                                </div>
-                                <div title="Sell Order">
-                                    <button><i className="fa-solid fa-clipboard-check"></i></button>
-                                    <button>2</button>
-                                </div>
-                                <div title="Messages">
-                                    <button><i className="fa-solid fa-message"></i></button>
-                                    <button>2</button>
-                                </div>
-                                <div title="Notification">
-                                    <button><i className="fa-solid fa-bell"></i></button>
-                                    <button>9+</button>
-                                </div>
-                                <div className="profile_img">
-                                    <div>
-                                        <div style={{ backgroundImage: `url(https://i.kinja-img.com/gawker-media/image/upload/c_fit,f_auto,g_center,q_60,w_645/0ac071df51837e4b91b71842ea368862.jpg)` }} ></div>
-                                    </div>
-                                    <div><i className="fa-solid fa-ellipsis-vertical"></i></div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+                <MenuModal></MenuModal>
 
                 <div className="container_full">
                     <div className="container content_col">
@@ -86,6 +49,7 @@ export default function RootLayout({
                 
                 
             </div>
+            
         </main>
     )
 }

@@ -1,0 +1,14 @@
+$text-color: #c3c9c4;
+
+.menuModal{
+    &>div{
+        border-bottom: 1px solid $text-color;
+        &>div{
+            width: 20%;
+            
+        }
+    }
+    &>div:nth-last-child(1){
+        border: none;
+    }
+}

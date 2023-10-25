@@ -1,8 +1,12 @@
 "use client"
 import React, { useState } from 'react'
 import Alerts from '../temp/Alerts'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
+    const router = useRouter();
+
     const [mobile, setMobile] = useState('')
     const [password, setPassword] = useState('')
     const [logstatus, setLogstatus] = useState(true)
@@ -29,13 +33,21 @@ const Login = () => {
             setMsg(data.msg)
             if (data.code === 0) {
                 setLogstatus(false)
+            } else if (data.code === 1) {
+                setLogstatus(true)
+                router.push("app/local-offers")
             }
             setSubmitLoad(true)
         }
     }
     return (
         <>
-            {logstatus ? ('') : (
+            {logstatus ? (
+                <Alerts
+                    alert='success'
+                    msg={`${msg}`}
+                ></Alerts>
+            ) : (
                 <Alerts
                     alert='danger'
                     msg={`${msg}`}
@@ -69,7 +81,7 @@ const Login = () => {
                         ) : (
                             <div className="btn_loading">
                                 <p>
-                                    <img src="/icons/others/loading.webp" alt="Loading img" />
+                                    <Image src="/icons/others/loading.webp" alt="Loading img" width={20} height={20} />
                                     Loading...
                                 </p>
                             </div>

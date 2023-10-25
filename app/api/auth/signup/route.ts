@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 
 export async function POST(req: Request) {
     try {
-        connectDB();
+        await connectDB();
         const body = await req.json();
 
         const { firstName, lastName, pinCode, mobile, password, profession, gender } = body;
@@ -32,20 +32,26 @@ export async function POST(req: Request) {
         const hashOtp = await bcrypt.hash(otp, 10)
 
         try {
-            const newUser = await User.create({ firstName, lastName, pinCode, gender, profession, mobile, password: hashPassword,otp:hashOtp });
+            // const newUser = await User.create({ firstName, lastName, pinCode, gender, profession, mobile, password: hashPassword, otp: hashOtp });
+            const newUser = new User({ firstName, lastName, pinCode, gender, profession, mobile, password: hashPassword, otp: hashOtp });
+            newUser.save()
+            
             const user_id = newUser._id
             const secret: any = process.env.SECRECT_KEY
             const token = jwt.sign({ user_id, firstName, lastName, pinCode, mobile }, secret)
             const response = NextResponse.json(
-                { msg: "Welcome! you are registered success.", code: 1, id: user_id }
+                { msg: "Welcome! you are registered success.", code: 1, id: user_id, mobile:mobile }
 
             )
             const logCookie: any = process.env.LOGIN_COOKIE
             response.cookies.set(logCookie, token)
             return response
+            
         } catch (error) {
             return NextResponse.json({ msg: error, code: 0 })
         }
+        
+
     } catch (error) {
         return NextResponse.json({ msg: "Something went wrong " + error, code: 0 })
     }

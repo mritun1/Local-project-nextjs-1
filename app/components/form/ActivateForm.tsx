@@ -1,25 +1,28 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Alerts from '../temp/Alerts'
+import Image from 'next/image'
+
 type propType = {
-    id:string
+    mobileNumber:Number
 }
 
 const ActivateForm = (props:propType) => {
-    const [isHiddenActivation, setIsHiddenActivation] = useState(false)
+    const [isHiddenActivation, setIsHiddenActivation] = useState<boolean>(false)
     const displayModalActivation = () => {
         setIsHiddenActivation(!isHiddenActivation)
     }
 
-    const [otp, setOtp] = useState('')
-    const [_id, setId] = useState('')
-    const [status, setStatus] = useState(false)
-    const [msg,setMsg] = useState('')
-    const [submitLoad, setSubmitLoad] = useState(true)
+    const [otp, setOtp] = useState<string>('')
+    const [mobile, setMobile] = useState<number>(0)
+    const [status, setStatus] = useState<boolean>(false)
+    const [msg, setMsg] = useState<string>('')
+    const [submitLoad, setSubmitLoad] = useState<boolean>(true)
+    const [res, setRes] = useState<boolean>(false)
 
     useEffect(()=>{
-        setId(props.id)
-    },[props.id])
+        setMobile(Number(props.mobileNumber))
+    },[props.mobileNumber])
 
     const activateForm = async (e: any) => {
         e.preventDefault();
@@ -27,13 +30,13 @@ const ActivateForm = (props:propType) => {
         const res = await fetch(
             "api/auth/activate-ac",
             {
-                method: "POST",
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    _id, 
-                    otp
+                    mobile: mobile,
+                    otp,
                 })
             },
         )
@@ -43,6 +46,7 @@ const ActivateForm = (props:propType) => {
             const data = await res.json();
             if (data.code === 1) {
                 setStatus(false)
+                setRes(true)
             }
             setMsg(data.msg)
             setSubmitLoad(true)
@@ -51,67 +55,122 @@ const ActivateForm = (props:propType) => {
     }
     return (
         <>
-            <div id="activate_account" className="modal" style={{ display: isHiddenActivation ? `none` : `block` }}>
-                <div className="modal_bg"></div>
-                <div className="modal_body">
-                    <div className="sign_up">
-                        <div className="modal_head">
-                            <div >
-                                <h2>Activate Account</h2>
-                                <p>You must activate the account before login.</p>
+            {res?(
+                <div id="activate_success" className="modal"  >
+                    <div className="modal_bg"></div>
+                    <div className="modal_body">
+                        <div className="sign_up">
+                            <div className="modal_head">
+                                <div >
+                                    <h2>Activate Success</h2>
+                                    <p>Welcome to Localnii.com</p>
+                                </div>
+                                <div>
+                                    <div><button  ><i className="fa-solid fa-xmark"></i></button></div>
+                                </div>
                             </div>
-                            <div>
-                                <div><button onClick={displayModalActivation} ><i className="fa-solid fa-xmark"></i></button></div>
+
+                            <div className="sign_up_form">
+
+                                <form>
+
+                                    <div className="sign_up_title terms" >
+                                        <center><p>Your account is activated success.</p></center>
+                                    </div>
+
+                                    <div className="warn_board">
+                                        <center>
+                                            <Image
+                                                src={`/icons/others/success.png`}
+                                                alt='success image'
+                                                width={100}
+                                                height={100}
+                                            />
+                                        </center>
+                                    </div>
+
+                                    <div className="sign_up_title terms" >
+                                        <center><p>Please Login.</p></center>
+                                    </div>
+
+                                </form>
+
+
                             </div>
+
                         </div>
-
-                        {status ?
-                            (<Alerts
-                                alert='danger'
-                                msg={`${msg}`}
-                            ></Alerts>)
-                            : ('')
-                        }
-
-                        <div className="sign_up_form">
-                            <form id="sign_up_form" onSubmit={activateForm} method="POST">
-
-                                <div className="sign_up_title terms">
-                                    <p>OTP is sent to your mobile number, please find and enter below.</p>
+                    </div>
+                </div >
+            ):(
+                <div id="activate_account" className="modal" style={{ display: isHiddenActivation ? `none` : `block` }}>
+                    <div className="modal_bg"></div>
+                    <div className="modal_body">
+                        <div className="sign_up">
+                            <div className="modal_head">
+                                <div >
+                                    <h2>Activate Account</h2>
+                                    <p>You must activate the account before login.</p>
                                 </div>
-
-                                <div className="sign_up_one_col">
-                                    <div><input type="number" name="otp" placeholder="OTP"
-                                        onChange={(e) => { setOtp(e.target.value) }}
-                                        value={otp}
-                                        required /></div>
+                                <div>
+                                    <div><button onClick={displayModalActivation} ><i className="fa-solid fa-xmark"></i></button></div>
                                 </div>
+                            </div>
 
-                                <div className="sign_up_title terms">
-                                    <p>After enter the OTP please click here.</p>
-                                </div>
+                            {status ?
+                                (<Alerts
+                                    alert='danger'
+                                    msg={`${msg}`}
+                                ></Alerts>)
+                                : ('')
+                            }
 
-                                {submitLoad ?
-                                    (
+                            <div className="sign_up_form">
+                                <form id="sign_up_form" onSubmit={activateForm} method="POST">
+
+                                    <div className="sign_up_title terms">
+                                        <p>OTP is sent to your mobile number, please find and enter below.</p>
+                                    </div>
+
+                                    
+
+                                    <div className="sign_up_one_col">
+                                        <div><input type="text" name="otp" placeholder="OTP"
+                                            onChange={(e) => { setOtp(e.target.value) }}
+                                            value={otp}
+                                            required /></div>
+                                    </div>
+
+                                    <div className="sign_up_title terms">
+                                        <p>After enter the OTP please click here.</p>
+                                    </div>
+
+                                    {/* {submitLoad ?
+                                        (
+                                            <div className="sign_up_title submit">
+                                                <button type="submit">Activate Account</button>
+                                            </div>
+                                        ) : (
+                                            <div className="btn_loading">
+                                                <p>
+                                                    <Image src="/icons/others/loading.webp" alt="Loading img" width={20} height={20} />
+                                                    Loading...
+                                                </p>
+                                            </div>
+                                        )
+                                    } */}
+
                                         <div className="sign_up_title submit">
                                             <button type="submit">Activate Account</button>
                                         </div>
-                                    ) : (
-                                        <div className="btn_loading">
-                                            <p>
-                                                <img src="/icons/others/loading.webp" alt="Loading img" />
-                                                Loading...
-                                            </p>
-                                        </div>
-                                    )
-                                }
 
-                            </form>
+                                </form>
+                            </div>
+
                         </div>
-
                     </div>
-                </div>
-            </div >
+                </div >
+            )}
+            
         </>
     )
 }

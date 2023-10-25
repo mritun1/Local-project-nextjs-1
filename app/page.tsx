@@ -1,9 +1,10 @@
 import SignUpModal from './components/buttons/SignUpModal'
 import ActivateForm from './components/form/ActivateForm'
 import Login from './components/form/Login'
+import Image from 'next/image'
 
 export default function Home() {
-  
+
   return (
     <main>
 
@@ -12,7 +13,7 @@ export default function Home() {
 
           <div>
 
-            <div style={{background:`url(https://wallpaperaccess.com/full/397969.jpg)`}}>
+            <div style={{ background: `url(https://wallpaperaccess.com/full/397969.jpg)` }}>
 
               <div>
                 <h1>Localnii</h1>
@@ -46,7 +47,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div >
-                      <div style={{ backgroundImage:`url(https://static.vecteezy.com/system/resources/previews/020/489/291/original/3d-logo-of-apple-iphone-free-png.png)`}}></div>
+                      <div style={{ backgroundImage: `url(https://static.vecteezy.com/system/resources/previews/020/489/291/original/3d-logo-of-apple-iphone-free-png.png)` }}></div>
                       <div><h3>iPhone</h3></div>
                     </div>
                   </div>
@@ -73,10 +74,20 @@ export default function Home() {
       </div>
 
 
-      <ActivateForm
-        id={`653747579aeb14c4e02d30c9`}
-      />
-      
+
+
+
+
+
+      {/* <ActivateForm
+        id="65381f855d50b9aa3ebaed71"
+      /> */}
+
+
+
+
+
+
     </main>
   )
 }

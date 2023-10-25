@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Alerts from '../temp/Alerts'
 import ActivateForm from '../form/ActivateForm'
+import Image from 'next/image'
 
 const SignUpModal = () => {
 
@@ -11,19 +12,19 @@ const SignUpModal = () => {
     }
 
     // REGISTER FORM START
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [pinCode, setPinCode] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [mobile, setMobile] = useState('')
-    const [gender, setGender] = useState('')
-    const [profession, setProfession] = useState('')
-    const [code, setCode] = useState(false)
-    const [activeStatus, setActiveStatus] = useState(false)
-    const [msg, setMsg] = useState('')
-    const [submitLoad, setSubmitLoad] = useState(true)
-    const [user_id, setUserId] = useState('')
+    const [firstName, setFirstName] = useState<string>('')
+    const [lastName, setLastName] = useState<string>('')
+    const [pinCode, setPinCode] = useState<number>(0)
+    const [password, setPassword] = useState<string>('')
+    const [confirmPassword, setConfirmPassword] = useState<string>('')
+    const [mobile, setMobile] = useState<number>(0)
+    const [gender, setGender] = useState<string>('')
+    const [profession, setProfession] = useState<string>('')
+    const [code, setCode] = useState<boolean>(false)
+    const [activeStatus, setActiveStatus] = useState<boolean>(false)
+    const [msg, setMsg] = useState<string>('')
+    const [submitLoad, setSubmitLoad] = useState<boolean>(true)
+    const [user_id, setUserId] = useState<number>(0)
 
     const signupForm = async (e: any) => {
         e.preventDefault();
@@ -53,7 +54,8 @@ const SignUpModal = () => {
             const data = await res.json();
             if (data.code === 1) {
                 setActiveStatus(true)
-                setUserId(data.id)
+                // setUserId(data.id)
+                setUserId(data.mobile)
             } else {
                 setCode(true)
             }
@@ -66,16 +68,17 @@ const SignUpModal = () => {
         <>
             <button onClick={displayModal}><i className="fa-solid fa-id-badge"></i> Register</button>
 
-            
-            {/* 
+
+            {/*
                 -------------------------
-                 MODAL FOR ACTIVATE ACCOUNT 
+                 MODAL FOR ACTIVATE ACCOUNT
                  -------------------------
             */}
             {activeStatus ? (
                 <ActivateForm
-                id={`${user_id}`}
+                    mobileNumber={user_id}
                 />
+
             ) : (
 
                 <div id="sign_up" className="modal" style={{ display: isHidden ? `none` : `block` }}>
@@ -91,10 +94,10 @@ const SignUpModal = () => {
                                     <div><button onClick={displayModal} ><i className="fa-solid fa-xmark"></i></button></div>
                                 </div>
                             </div>
-                            {/* 
+                            {/*
                             ---------------------------------------
                             ERROR - START
-                            --------------------------------------- 
+                            ---------------------------------------
                         */}
                             {code ?
                                 (<Alerts
@@ -104,10 +107,10 @@ const SignUpModal = () => {
                                 : ('')
                             }
 
-                            {/* 
+                            {/*
                             ---------------------------------------
                             ERROR - END
-                            --------------------------------------- 
+                            ---------------------------------------
                         */}
                             <div className="sign_up_form">
                                 <form onSubmit={signupForm} >
@@ -128,7 +131,7 @@ const SignUpModal = () => {
                                     </div>
                                     <div className="sign_up_one_col">
                                         <div><input type="number" name="mobile" placeholder="Mobile Number"
-                                            onChange={(e) => setMobile(e.target.value)}
+                                                onChange={(e) => setMobile(parseInt(e.target.value))}
                                             value={mobile}
                                             required /></div>
                                     </div>
@@ -180,7 +183,7 @@ const SignUpModal = () => {
                                         <div>
                                             <p className="text-color">PIN Code</p>
                                             <div><input type="number" name="pin" maxLength={6} placeholder="ie.783360"
-                                                onChange={(e) => setPinCode(e.target.value)}
+                                                    onChange={(e) => setPinCode(parseInt(e.target.value))}
                                                 value={pinCode}
                                                 required /></div>
                                         </div>
@@ -204,7 +207,7 @@ const SignUpModal = () => {
                                         ) : (
                                             <div className="btn_loading">
                                                 <p>
-                                                    <img src="/icons/others/loading.webp" alt="Loading img" />
+                                                    <Image src="/icons/others/loading.webp" alt="Loading img" width={20} height={20} />
                                                     Loading...
                                                 </p>
                                             </div>

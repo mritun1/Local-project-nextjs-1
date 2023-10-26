@@ -14,10 +14,10 @@ const SignUpModal = () => {
     // REGISTER FORM START
     const [firstName, setFirstName] = useState<string>('')
     const [lastName, setLastName] = useState<string>('')
-    const [pinCode, setPinCode] = useState<number>(0)
+    const [pinCode, setPinCode] = useState<number>()
     const [password, setPassword] = useState<string>('')
     const [confirmPassword, setConfirmPassword] = useState<string>('')
-    const [mobile, setMobile] = useState<number>(0)
+    const [mobile, setMobile] = useState<number>()
     const [gender, setGender] = useState<string>('')
     const [profession, setProfession] = useState<string>('')
     const [code, setCode] = useState<boolean>(false)
@@ -54,7 +54,6 @@ const SignUpModal = () => {
             const data = await res.json();
             if (data.code === 1) {
                 setActiveStatus(true)
-                // setUserId(data.id)
                 setUserId(data.mobile)
             } else {
                 setCode(true)
@@ -62,6 +61,10 @@ const SignUpModal = () => {
             setMsg(data.msg)
             setSubmitLoad(true)
         }
+    }
+    const [activateModal, setActivateModal] = useState<boolean>(false)
+    const activateModalClick = () => {
+        setActivateModal(!activateModal)
     }
 
     return (
@@ -76,8 +79,10 @@ const SignUpModal = () => {
             */}
             {activeStatus ? (
                 <ActivateForm
+                    isHidden={activateModal}
                     mobileNumber={user_id}
-                />
+                    onClick={activateModalClick}
+                ></ActivateForm>
 
             ) : (
 
@@ -131,7 +136,7 @@ const SignUpModal = () => {
                                     </div>
                                     <div className="sign_up_one_col">
                                         <div><input type="number" name="mobile" placeholder="Mobile Number"
-                                                onChange={(e) => setMobile(parseInt(e.target.value))}
+                                            onChange={(e) => setMobile(parseInt(e.target.value))}
                                             value={mobile}
                                             required /></div>
                                     </div>
@@ -183,7 +188,7 @@ const SignUpModal = () => {
                                         <div>
                                             <p className="text-color">PIN Code</p>
                                             <div><input type="number" name="pin" maxLength={6} placeholder="ie.783360"
-                                                    onChange={(e) => setPinCode(parseInt(e.target.value))}
+                                                onChange={(e) => setPinCode(parseInt(e.target.value))}
                                                 value={pinCode}
                                                 required /></div>
                                         </div>

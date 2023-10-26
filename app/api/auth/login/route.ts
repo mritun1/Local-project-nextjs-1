@@ -16,7 +16,7 @@ export async function POST(req: Request) {
                 
             )
         }
-
+        //CHECK IF THE USER EXISTS
         const isUserPresent = await User.findOne({ mobile });
         if (!isUserPresent) {
             return NextResponse.json(
@@ -24,31 +24,35 @@ export async function POST(req: Request) {
                 
             )
         }
-        const gotPassword:any = isUserPresent.password
-        
-        try {
-            
-            const isMatch = await bcrypt.compare(password.toString(), gotPassword)
-            if (isMatch){
-                const name = isUserPresent.firstName + ' ' + isUserPresent.lastName
-                const pin_code = isUserPresent.pinCode
-                const mobile = isUserPresent.mobile
+        //CHECK IF THE USER IS ACTIVE
+        if(isUserPresent.isActive === 1){
+            const gotPassword:any = isUserPresent.password
+            try {
+                
+                const isMatch = await bcrypt.compare(password.toString(), gotPassword)
+                if (isMatch){
+                    const name = isUserPresent.firstName + ' ' + isUserPresent.lastName
+                    const pin_code = isUserPresent.pinCode
+                    const mobile = isUserPresent.mobile
 
-                const secret: any = process.env.SECRECT_KEY
-                const token = jwt.sign({ name, pin_code, mobile }, secret)
-                const response = NextResponse.json(
-                    { msg: "Welcome! to Localnii.", code: 1 }
-                    
-                )
-                const logCookie: any = process.env.LOGIN_COOKIE
-                response.cookies.set(logCookie, token)
-                return response
-            }else{
-                return NextResponse.json({ msg: "Sorry! Wrong Password", code: 0 })
+                    const secret: any = process.env.SECRECT_KEY
+                    const token = jwt.sign({ name, pin_code, mobile }, secret)
+                    const response = NextResponse.json(
+                        { msg: "Welcome! to Localnii.", code: 1 }
+                        
+                    )
+                    const logCookie: any = process.env.LOGIN_COOKIE
+                    response.cookies.set(logCookie, token)
+                    return response
+                }else{
+                    return NextResponse.json({ msg: "Sorry! Wrong Password", code: 0 })
+                }
+                
+            } catch (error) {
+                return NextResponse.json({ msg: error,code:0 })
             }
-            
-        } catch (error) {
-            return NextResponse.json({ msg: error,code:0 })
+        }else{
+            return NextResponse.json({msg: "Please Activate your Account.",code:2})
         }
     } catch (error) {
         return NextResponse.json({ error: error, code: 0 })

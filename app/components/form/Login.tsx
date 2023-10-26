@@ -4,6 +4,8 @@ import Alerts from '../temp/Alerts'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Alerts2 from '../temp/Alerts2'
+import ActivateForm from './ActivateForm'
+import SuccessModal from '../templates/SuccessModal'
 
 const Login = () => {
     const router = useRouter();
@@ -19,6 +21,7 @@ const Login = () => {
     const [alert, setAlert] = useState<boolean>(false)
     const [msg2,setMsg2] = useState<string>('')
     const [showForgotForm,setShowForgotForm] = useState<boolean>(true)
+    const [activateModal,setActivateModal] = useState<boolean>(true)
 
     const forgotPass = () => {
         setIsHiddenModal(!isHiddenModal)
@@ -32,6 +35,7 @@ const Login = () => {
             headers: {
                 "Content-Type": "application/json"
             },
+            cache:'no-store',
             body: JSON.stringify({
                 mobile,
                 password
@@ -48,7 +52,11 @@ const Login = () => {
             } else if (data.code === 1) {
                 setLogstatus(true)
                 router.push("app/local-offers")
+            }else if (data.code === 2){
+                setActivateModal(false)
+                setLogstatus(false)
             }
+            
         }
         
     }
@@ -80,6 +88,11 @@ const Login = () => {
         }
         
     }
+
+    const activateModalClick = () =>{
+        setActivateModal(!activateModal)
+    }
+
     return (
         <>
             {logstatus ? (
@@ -211,6 +224,19 @@ const Login = () => {
                     </div>
                 </div>
             </div >
+
+            {/* 
+                ---------------------------------------
+                ACTIVATE ACCOUNT - START
+                --------------------------------------- 
+            */}
+            <ActivateForm
+                isHidden={activateModal}
+                mobileNumber={parseInt(mobile)}
+                onClick={activateModalClick}
+            ></ActivateForm>
+
+            
         </>
     )
 }

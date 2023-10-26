@@ -13,8 +13,9 @@ const MenuModal = () => {
         setIsHidden(!isHidden)
     }
 
+    const [isClicked, setIsClicked] = useState<boolean>(true);
     const logout = async () =>{
-        
+        setIsClicked(!isClicked)
         const res = await fetch("/api/auth/logout",{
             method:'POST',
             body:JSON.stringify({
@@ -24,6 +25,7 @@ const MenuModal = () => {
         if(!res.ok){
             console.log("Could not logged out")
         }else{
+            setIsClicked(!isClicked)
             router.push('/');
         }
 
@@ -135,7 +137,19 @@ const MenuModal = () => {
 
                                 <div className='circle-gal-btn'>
                                     <div onClick={logout} className="img" >
-                                        <div style={{ backgroundColor: "red" }}><i className="fa-solid fa-right-from-bracket"></i></div>
+                                        <div style={{ backgroundColor: "red" }}>
+                                            {isClicked?(
+                                                <i className="fa-solid fa-right-from-bracket"></i>
+                                            ):(
+                                                <Image
+                                                    src={"/icons/others/loading.webp"}
+                                                    alt='Loading'
+                                                    width={35}
+                                                    height={35}
+                                                    style={{ borderRadius: `50%` }}
+                                                />
+                                            )}
+                                        </div>
                                     </div>
                                     <div className="btn">
                                         <p>Logout</p>
@@ -186,7 +200,16 @@ const MenuModal = () => {
 
                                 <div className='circle-gal-btn'>
                                     <div className="img" >
-                                        <div style={{ backgroundColor: "red" }}><i className="fa-solid fa-right-from-bracket"></i></div>
+                                        <div style={{ backgroundColor: "red" }}>
+                                            <i className="fa-solid fa-right-from-bracket"></i>
+                                            {/* <Image 
+                                            src={"/icons/others/loading.webp"}
+                                            alt='Loading'
+                                            width={35}
+                                            height={35}
+                                            style={{borderRadius:`50%`}}
+                                            /> */}
+                                        </div>
                                     </div>
                                     <div className="btn">
                                         <p>Logout</p>

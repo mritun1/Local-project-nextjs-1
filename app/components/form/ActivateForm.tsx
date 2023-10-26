@@ -150,7 +150,7 @@ const ActivateForm = (props:propType) => {
                                         <p>After enter the OTP please click here.</p>
                                     </div>
 
-                                    {/* {submitLoad ?
+                                    {submitLoad ?
                                         (
                                             <div className="sign_up_title submit">
                                                 <button type="submit">Activate Account</button>
@@ -163,11 +163,7 @@ const ActivateForm = (props:propType) => {
                                                 </p>
                                             </div>
                                         )
-                                    } */}
-
-                                        <div className="sign_up_title submit">
-                                            <button type="submit">Activate Account</button>
-                                        </div>
+                                    }
 
                                 </form>
                             </div>

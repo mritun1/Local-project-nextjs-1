@@ -1610,8 +1610,12 @@ body {
         text-align: right;
         margin-bottom: 10px;
 
-        &>p>a {
+        &>p>span {
             color: $text-color;
+            cursor: pointer;
+            &:hover{
+                text-decoration: underline;
+            }
         }
     }
 }

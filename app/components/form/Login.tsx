@@ -89,10 +89,6 @@ const Login = () => {
         
     }
 
-    const activateModalClick = () =>{
-        setActivateModal(!activateModal)
-    }
-
     return (
         <>
             {logstatus ? (
@@ -233,7 +229,6 @@ const Login = () => {
             <ActivateForm
                 isHidden={activateModal}
                 mobileNumber={parseInt(mobile)}
-                onClick={activateModalClick}
             ></ActivateForm>
 
             

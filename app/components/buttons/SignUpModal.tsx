@@ -62,10 +62,6 @@ const SignUpModal = () => {
             setSubmitLoad(true)
         }
     }
-    const [activateModal, setActivateModal] = useState<boolean>(false)
-    const activateModalClick = () => {
-        setActivateModal(!activateModal)
-    }
 
     return (
         <>
@@ -79,9 +75,8 @@ const SignUpModal = () => {
             */}
             {activeStatus ? (
                 <ActivateForm
-                    isHidden={activateModal}
+                    isHidden={false}
                     mobileNumber={user_id}
-                    onClick={activateModalClick}
                 ></ActivateForm>
 
             ) : (
@@ -226,6 +221,10 @@ const SignUpModal = () => {
                     </div>
                 </div>
             )}
+
+
+
+            
 
         </>
     )

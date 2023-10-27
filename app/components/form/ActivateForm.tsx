@@ -1,5 +1,5 @@
 "use client"
-import React, { MouseEventHandler, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Alerts from '../temp/Alerts'
 import Image from 'next/image'
 import SuccessModal from '../templates/SuccessModal'
@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation'
 type propType = {
     isHidden: boolean,
     mobileNumber: Number,
-    onClick: MouseEventHandler<HTMLButtonElement>
 }
 
 const ActivateForm = (props: propType) => {
@@ -20,6 +19,7 @@ const ActivateForm = (props: propType) => {
     const [msg, setMsg] = useState<string>('')
     const [submitLoad, setSubmitLoad] = useState<boolean>(true)
     const [activateModal, setActivateModal] = useState<boolean>(true)
+    const [otpFormHidden,setOtoFromHidden] = useState<boolean>(props.isHidden)
 
     useEffect(() => {
         setMobile(Number(props.mobileNumber))
@@ -48,6 +48,7 @@ const ActivateForm = (props: propType) => {
             if (data.code === 1) {
                 setStatus(false)
                 setActivateModal(false)
+                setOtoFromHidden(!otpFormHidden)
                 //REDIRECT AFTER 2 secs
                 router.push("/app/local-offers")
             }
@@ -63,7 +64,7 @@ const ActivateForm = (props: propType) => {
     return (
         <>
 
-            <div id="activate_account" className="modal" style={{ display: props.isHidden ? `none` : `block` }}>
+            <div id="activate_account" className="modal" style={{ display: otpFormHidden ? `none` : `block` }}>
                 <div className="modal_bg"></div>
                 <div className="modal_body">
                     <div className="sign_up">
@@ -73,7 +74,7 @@ const ActivateForm = (props: propType) => {
                                 <p>You must activate the account before login.</p>
                             </div>
                             <div>
-                                <div><button onClick={props.onClick} ><i className="fa-solid fa-xmark"></i></button></div>
+                                <div><button ><i className="fa-solid fa-xmark"></i></button></div>
                             </div>
                         </div>
 

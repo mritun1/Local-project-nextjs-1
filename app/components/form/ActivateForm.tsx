@@ -1,9 +1,9 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import Alerts from '../temp/Alerts'
 import Image from 'next/image'
 import SuccessModal from '../templates/SuccessModal'
 import { useRouter } from 'next/navigation'
+import Alerts3 from '../temp/Alerts3'
 
 type propType = {
     isHidden: boolean,
@@ -57,6 +57,9 @@ const ActivateForm = (props: propType) => {
             setStatus(true)
         }
     }
+    const setStatusCode = () => {
+        setStatus(!status)
+    }
 
     const activateModalClick = () => {
         setActivateModal(!activateModal)
@@ -78,13 +81,12 @@ const ActivateForm = (props: propType) => {
                             </div>
                         </div>
 
-                        {status ?
-                            (<Alerts
-                                alert='danger'
-                                msg={`${msg}`}
-                            ></Alerts>)
-                            : ('')
-                        }
+                        <Alerts3
+                            alert='danger'
+                            msg={`${msg}`}
+                            isHidden={status}
+                            onClick={setStatusCode}
+                        ></Alerts3>
 
                         <div className="sign_up_form">
                             <form id="sign_up_form" onSubmit={activateForm} method="POST">

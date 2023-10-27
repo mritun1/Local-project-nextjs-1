@@ -1,8 +1,8 @@
 "use client"
 import React, { useState } from 'react'
-import Alerts from '../temp/Alerts'
 import ActivateForm from '../form/ActivateForm'
 import Image from 'next/image'
+import Alerts3 from '../temp/Alerts3'
 
 const SignUpModal = () => {
 
@@ -63,6 +63,10 @@ const SignUpModal = () => {
         }
     }
 
+    const setCodeFunc = () =>{
+        setCode(!code)
+    }
+
     return (
         <>
             <button onClick={displayModal}><i className="fa-solid fa-id-badge"></i> Register</button>
@@ -99,13 +103,12 @@ const SignUpModal = () => {
                             ERROR - START
                             ---------------------------------------
                         */}
-                            {code ?
-                                (<Alerts
+                                <Alerts3
                                     alert='danger'
                                     msg={`${msg}`}
-                                ></Alerts>)
-                                : ('')
-                            }
+                                    isHidden={code}
+                                    onClick={setCodeFunc}
+                                ></Alerts3>
 
                             {/*
                             ---------------------------------------
@@ -119,32 +122,32 @@ const SignUpModal = () => {
                                         <div>
                                             <div><input type="text" name="first_name" placeholder="First Name" required
                                                 onChange={(e) => setFirstName(e.target.value)}
-                                                value={firstName}
+                                                value={firstName || ""}
                                             /></div>
                                         </div>
                                         <div>
                                             <div><input type="text" name="last_name" placeholder="Last Name"
                                                 onChange={(e) => setLastName(e.target.value)}
-                                                value={lastName}
+                                                    value={lastName || ""}
                                                 required /></div>
                                         </div>
                                     </div>
                                     <div className="sign_up_one_col">
                                         <div><input type="number" name="mobile" placeholder="Mobile Number"
                                             onChange={(e) => setMobile(parseInt(e.target.value))}
-                                            value={mobile}
+                                                value={mobile || ""}
                                             required /></div>
                                     </div>
                                     <div className="sign_up_one_col">
                                         <div><input type="password" name="password" placeholder="Password"
                                             onChange={(e) => setPassword(e.target.value)}
-                                            value={password}
+                                                value={password || ""}
                                             required /></div>
                                     </div>
                                     <div className="sign_up_one_col">
                                         <div><input type="password" name="password_confirm" placeholder="Confirm Password"
                                             onChange={(e) => setConfirmPassword(e.target.value)}
-                                            value={confirmPassword}
+                                                value={confirmPassword || ""}
                                             required /></div>
                                     </div>
                                     <div className="sign_up_title">
@@ -184,14 +187,14 @@ const SignUpModal = () => {
                                             <p className="text-color">PIN Code</p>
                                             <div><input type="number" name="pin" maxLength={6} placeholder="ie.783360"
                                                 onChange={(e) => setPinCode(parseInt(e.target.value))}
-                                                value={pinCode}
+                                                    value={pinCode || ""}
                                                 required /></div>
                                         </div>
                                         <div>
                                             <p className="text-color">Profession</p>
                                             <div><input type="text" name="profession" placeholder="ie. Student, Engineer"
                                                 onChange={(e) => setProfession(e.target.value)}
-                                                value={profession}
+                                                    value={profession || ""}
                                                 required /></div>
                                         </div>
                                     </div>

@@ -1,11 +1,10 @@
 "use client"
 import React, { useState } from 'react'
-import Alerts from '../temp/Alerts'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Alerts2 from '../temp/Alerts2'
 import ActivateForm from './ActivateForm'
-import SuccessModal from '../templates/SuccessModal'
+import Alerts3 from '../temp/Alerts3'
 
 const Login = () => {
     const router = useRouter();
@@ -13,7 +12,7 @@ const Login = () => {
     const [mobile, setMobile] = useState<string>('')
     const [mobile2, setMobile2] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const [logstatus, setLogstatus] = useState<boolean>(true)
+    const [logstatus, setLogstatus] = useState<boolean>(false)
     const [msg, setMsg] = useState<string>('')
     const [submitLoad, setSubmitLoad] = useState<boolean>(true)
     const [isHiddenModal, setIsHiddenModal] = useState<boolean>(true)
@@ -47,18 +46,22 @@ const Login = () => {
             setSubmitLoad(true)
             const data = await res.json()
             setMsg(data.msg)
-            if (data.code === 0) {
-                setLogstatus(false)
-            } else if (data.code === 1) {
-                setLogstatus(true)
+            if (data.code === 1) {
+                setStatus('success')
                 router.push("app/local-offers")
             }else if (data.code === 2){
                 setActivateModal(false)
-                setLogstatus(false)
+                setStatus('danger')
+            }else{
+                setStatus('danger')
             }
-            
+            setLogstatus(!logstatus)
         }
         
+    }
+
+    const handleLogStatus = () =>{
+        setLogstatus(!logstatus)
     }
 
     const forgotSubmit = async (e: any) => {
@@ -91,17 +94,12 @@ const Login = () => {
 
     return (
         <>
-            {logstatus ? (
-                <Alerts
-                    alert='success'
-                    msg={`${msg}`}
-                ></Alerts>
-            ) : (
-                <Alerts
-                    alert='danger'
-                    msg={`${msg}`}
-                ></Alerts>
-            )}
+            <Alerts3
+                alert={status}
+                msg={`${msg}`}
+                isHidden={logstatus}
+                onClick={handleLogStatus}
+            ></Alerts3>
 
 
             <form id="loginForm" onSubmit={loginForm} method='POST' >

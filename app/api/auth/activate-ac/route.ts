@@ -30,9 +30,12 @@ export async function PATCH(req:Request){
             }
             //SET USER AS ACTIVE
             try{
-                // await User.findOneAndUpdate({ _id: objId }, { isActive: 1 })
                 await User.findOneAndUpdate({ mobile: mobile }, { isActive: 1 })
-                return NextResponse.json({ msg: "Thank you, your account is activated", code: 1 })
+                //REMOVE THE IS_USER_ACTIVE COOKIE
+                const response = NextResponse.json({ msg: "Thank you, your account is activated", code: 1 })
+                const isUserActive: any = process.env.IS_USER_ACTIVE
+                response.cookies.delete(isUserActive)
+                return response
             }catch(err){
                 return NextResponse.json({ msg: err, code: 0 })
             }

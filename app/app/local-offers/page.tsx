@@ -1,5 +1,4 @@
 import More1 from '@/app/components/buttons/More1'
-import MenuModal from '@/app/components/form/MenuModal'
 import AppContent from '@/app/components/templates/AppContent'
 import React from 'react'
 

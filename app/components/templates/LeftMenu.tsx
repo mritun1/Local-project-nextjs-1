@@ -12,27 +12,27 @@ const LeftMenu = () => {
                               <Link href="/app/local-news" className="link_color">
                                     <li
                                           className={pathname === '/app/local-news' ? 'active' : ''}
-                                    ><i className="fa-solid fa-clipboard-list icon-list"></i> Local News</li>
+                                    ><i className="fa-solid fa-clipboard-list icon-list"></i> Local News <span className="level">0</span></li>
                               </Link>
                               <Link href="/app/local-events" className="link_color">
-                                    <li className={pathname === '/app/local-events' ? 'active' : ''}><i className="fa-regular fa-calendar icon-list"></i> Local Events</li>
+                                    <li className={pathname === '/app/local-events' ? 'active' : ''}><i className="fa-regular fa-calendar icon-list"></i> Local Events <span className="level">0</span></li>
                               </Link>
                               <Link href="/app/local-offers" className="link_color">
                                     <li
                                           className={pathname === '/app/local-offers' ? 'active' : ''}
-                                    ><i className="fa-solid fa-bolt icon-list"></i> Local offers</li>
+                                    ><i className="fa-solid fa-bolt icon-list"></i> Local offers <span className="level">0</span></li>
                               </Link>
                               <Link href="/app/local-market" className="link_color">
-                                    <li className={pathname === '/app/local-market' ? 'active' : ''}><i className="fa-solid fa-bag-shopping icon-list"></i> Local Market</li>
+                                    <li className={pathname === '/app/local-market' ? 'active' : ''}><i className="fa-solid fa-bag-shopping icon-list"></i> Local Market <span className="level">0</span></li>
                               </Link>
                               <Link href="/app/local-business" className="link_color">
-                                    <li className={pathname === '/app/local-business' || pathname === '/app/local-business-cat' ? 'active' : ''}><i className="fa-solid fa-briefcase icon-list"></i> Local Business</li>
+                                    <li className={pathname === '/app/local-business' || pathname === '/app/local-business-cat' ? 'active' : ''}><i className="fa-solid fa-briefcase icon-list"></i> Local Business <span className="level">0</span></li>
                               </Link>
                               <Link href="/app/local-groups" className="link_color">
-                                    <li className={pathname === '/app/local-groups' ? 'active' : ''}><i className="fa-solid fa-users-rectangle icon-list"></i> Local Groups</li>
+                                    <li className={pathname === '/app/local-groups' ? 'active' : ''}><i className="fa-solid fa-users-rectangle icon-list"></i> Local Groups <span className="level">0</span></li>
                               </Link>
                               <Link href="/app/local-people" className="link_color">
-                                    <li className={pathname === '/app/local-people' || pathname === '/app/local-people-cat' ? 'active' : ''}><i className="fa-solid fa-users icon-list"></i> Local People</li>
+                                    <li className={pathname === '/app/local-people' || pathname === '/app/local-people-cat' ? 'active' : ''}><i className="fa-solid fa-users icon-list"></i> Local People <span className="level">0</span></li>
                               </Link>
                         </ul>
                   </div>
@@ -64,13 +64,7 @@ const LeftMenu = () => {
                         </ul>
                   </div>
 
-                  <div className="left_menu" style={{ border: `none` }}>
-                        <ul className="vertical_list">
-                              <Link href="/app/settings" className="link_color">
-                                    <li className={pathname === '/app/settings' ? 'active' : ''} ><i className="fa-solid fa-gear icon-list"></i> Settings</li>
-                              </Link>
-                        </ul>
-                  </div>
+
             </>
       )
 }

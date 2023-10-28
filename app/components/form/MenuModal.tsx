@@ -5,9 +5,22 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-
 const MenuModal = () => {
     const router = useRouter();
+
+    const [fullName,setFullName] = useState<string>("")
+
+    const loadMe = async () =>{
+        const res = await fetch("/api/auth/me")
+        if(res.ok){
+            const data = await res.json()
+            setFullName(data.firstName + " " + data.lastName)
+        }
+    }
+
+    useEffect(()=>{
+        loadMe()
+    })
 
     const [isHidden, setIsHidden] = useState<boolean>(false);
     const displayModal = () => {
@@ -29,8 +42,6 @@ const MenuModal = () => {
             setIsClicked(!isClicked)
             router.push('/');
         }
-
-        
     }
 
     return (
@@ -107,7 +118,7 @@ const MenuModal = () => {
                                     <div className="img" style={{ backgroundImage: `url(https://th-i.thgim.com/public/incoming/9uvnty/article67222424.ece/alternates/BASE_SQUARE/2023-08-04T094328Z_1224629970_RC2WG2AC6YU7_RTRMADP_3_WPP-RESULTS-TWITTER.JPG)` }}></div>
                                 </div>
                                 <div>
-                                    <div><Link href=""><h4>Mritunjoy Mushahary</h4></Link></div>
+                                    <div><Link href=""><h4>{fullName}</h4></Link></div>
                                 </div>
                                 <div>
                                     <div>

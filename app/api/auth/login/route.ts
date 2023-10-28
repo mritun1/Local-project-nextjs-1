@@ -31,12 +31,11 @@ export async function POST(req: Request) {
                 
                 const isMatch = await bcrypt.compare(password.toString(), gotPassword)
                 if (isMatch){
-                    const name = isUserPresent.firstName + ' ' + isUserPresent.lastName
                     const pin_code = isUserPresent.pinCode
                     const mobile = isUserPresent.mobile
 
                     const secret: any = process.env.SECRECT_KEY
-                    const token = jwt.sign({ name, pin_code, mobile }, secret)
+                    const token = jwt.sign({ user_id: isUserPresent._id, firstName: isUserPresent.firstName, lastName: isUserPresent.lastName, pinCode: pin_code, mobile }, secret)
                     const response = NextResponse.json(
                         { msg: "Welcome! to Localnii.", code: 1 }
                         

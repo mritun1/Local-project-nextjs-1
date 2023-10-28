@@ -176,14 +176,13 @@ p {
         }
     }
 }
-.light-bottom-border{
-    border-bottom: 1px solid #034223;
-}
 //---------------------------------------------
 // CLASSES - @END
 //---------------------------------------------
 
 // ****************************************************************************
+$color-border: #034223;
+$color-border2: #0c5330;
 $bg-color: #002F0A;
 $bg-box: #1A421E;
 $text-color: #c3c9c4;
@@ -222,6 +221,9 @@ $btn-orange-hov: rgb(126, 82, 2);
 @mixin div_bg {
     background-color: $bg-box;
     border-radius: 6px;
+}
+.light-bottom-border {
+    border-bottom: 1px solid $color-border;
 }
 
 .text-color {
@@ -1972,6 +1974,37 @@ body {
             margin-right: 6px;
             @include green_btn();
             color: $text-color;
+        }
+    }
+}
+.singleData{
+    @include div_bg();
+    margin: 6px;
+    color: $text-color2;
+    &>div:nth-child(1){
+        border-bottom: 1px solid $color-border2;
+        &>p{
+            font-size: 12px;
+        }
+    }
+    &>div:nth-child(2){
+        display: flex;
+        &>div:nth-child(1){
+            flex: 8;
+            @include flex(center, left);
+        }
+        &>div:nth-child(2){
+            width: 80px;
+            @include flex(center, center);
+            &>div>button{
+                background-color: $btn-orange;
+                &:hover{
+                    background-color: $btn-orange-hov;
+                }
+                color: $text-color2;
+                font-weight: bold;
+                padding: 4px 8px;
+            }
         }
     }
 }

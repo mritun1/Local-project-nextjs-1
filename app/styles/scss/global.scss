@@ -176,7 +176,9 @@ p {
         }
     }
 }
-
+.light-bottom-border{
+    border-bottom: 1px solid #034223;
+}
 //---------------------------------------------
 // CLASSES - @END
 //---------------------------------------------
@@ -197,9 +199,14 @@ $btn-orange-hov: rgb(126, 82, 2);
 
 @mixin green_btn() {
     background-color: $btn-color;
-
     &:hover {
         background-color: $btn-hov-color;
+    }
+}
+@mixin red_btn() {
+    background-color: $btn-red;
+    &:hover {
+        background-color: $btn-red-hov;
     }
 }
 
@@ -1726,16 +1733,25 @@ body {
                 }
 
                 &>div:nth-child(2) {
-                    width: 60px;
-                    @include flex(center, center);
-
-                    &>div>button {
-                        @include green_btn();
+                    flex: 2;
+                    @include flex(center, right);
+                    &>div>button,
+                    &>div>a>button {
                         color: $text-color2;
                         font-weight: bold;
                         border-radius: 50%;
-                        font-size: 26px;
-                        padding: 6px 11px;
+                        font-size: 20px;
+                        @include w_h(35px, 35px);
+                        @include pad_mar(6px, 0px 6px 0px 0px);
+                    }
+                    &>.close>button{
+                        @include red_btn();
+                    }
+                    &>.others{
+
+                    }
+                    &>.green_btn>a>button {
+                        @include green_btn();
                     }
                 }
             }
@@ -1925,3 +1941,37 @@ body {
     }
 }
 
+.profile_bar_btn{
+    display: flex;
+    border: 1px solid $text-color2;
+    margin: 6px;
+    border-radius: 8px;
+    &>div:nth-child(1){
+        width: 45px;
+        &>.img{
+            @include w_h(40px, 40px);
+            border-radius: 50%;
+            @include bg();
+        }
+    }
+    &>div:nth-child(2){
+        flex: 6;
+        @include flex(center, left);
+        &>div{
+            &>a{
+                color: $text-color;
+            }
+        }
+    }
+    &>div:nth-child(3){
+        flex: 2;
+        @include flex(center, right);
+        &>div>a>button{
+            @include w_h(28px, 28px);
+            border-radius: 50%;
+            margin-right: 6px;
+            @include green_btn();
+            color: $text-color;
+        }
+    }
+}

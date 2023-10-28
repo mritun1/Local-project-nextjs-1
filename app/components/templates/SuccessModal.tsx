@@ -19,7 +19,7 @@ const SuccessModal = (props: propsType) => {
                                 <p>Welcome to Localnii.com</p>
                             </div>
                             <div>
-                                <div>
+                                <div className='close'>
                                     <button onClick={props.clickFunc} >
                                         <i className="fa-solid fa-xmark"></i>
                                     </button>

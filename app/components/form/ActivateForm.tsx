@@ -77,7 +77,7 @@ const ActivateForm = (props: propType) => {
                                 <p>You must activate the account before login.</p>
                             </div>
                             <div>
-                                <div><button ><i className="fa-solid fa-xmark"></i></button></div>
+                                <div className='close'><button ><i className="fa-solid fa-xmark"></i></button></div>
                             </div>
                         </div>
 

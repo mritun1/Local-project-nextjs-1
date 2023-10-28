@@ -161,7 +161,7 @@ const Login = () => {
                                 <p>Find your forgot password again.</p>
                             </div>
                             <div>
-                                <div><button
+                                <div className='close'><button
                                     onClick={forgotPass}
                                 ><i className="fa-solid fa-xmark"></i></button></div>
                             </div>

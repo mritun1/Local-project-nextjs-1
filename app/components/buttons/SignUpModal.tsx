@@ -95,7 +95,7 @@ const SignUpModal = () => {
                                     <p>It`s fast and easy.</p>
                                 </div>
                                 <div>
-                                    <div><button onClick={displayModal} ><i className="fa-solid fa-xmark"></i></button></div>
+                                    <div className='close'><button onClick={displayModal} ><i className="fa-solid fa-xmark"></i></button></div>
                                 </div>
                             </div>
                             {/*

@@ -1,6 +1,7 @@
 "use client"
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import Modal from '../../temp/Modal'
+import ButtonLoading from '../../temp/ButtonLoading'
 type propsType = {
     id: string,
     children: string,
@@ -14,6 +15,36 @@ type propsType = {
 }
 
 const RadioInput = (props: propsType) => {
+    const options = ['Male','Female','Others']
+    const [val, setVal] = useState<string>(props.children)
+    const [submitLoad, setSubmitLoad] = useState<boolean>(true)
+
+    useEffect(()=>{
+        setVal(props.children)
+    },[props.children])
+
+    const submitHandler = async (e: any) => {
+        e.preventDefault()
+        setSubmitLoad(!submitLoad)
+        const res = await fetch("/api/auth/me/update", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                [props.inputName]: val
+            })
+        })
+        if (res.ok) {
+            setSubmitLoad(true)
+            const data = await res.json()
+            if (data.code === 1) {
+                props.onClick()
+                setVal(data.response[props.inputName])
+            }
+
+        }
+    }
     return (
         <>
             <div className="singleData">
@@ -22,7 +53,7 @@ const RadioInput = (props: propsType) => {
                 </div>
                 <div>
                     <div>
-                        <div><h3>{props.children}</h3></div>
+                        <div><h3>{val}</h3></div>
                     </div>
                     <div>
                         <div><button onClick={props.onClick}><i className="fa-solid fa-pen-to-square"></i> Edit</button></div>
@@ -40,40 +71,33 @@ const RadioInput = (props: propsType) => {
                 closeBtn={props.onClick}
             >
                 <div className="sign_up_form">
-                    <form >
+                    <form onSubmit={submitHandler}>
 
                         <div className="sign_up_three_col">
-                            <div>
-                                <div>
-                                    <div><div><label htmlFor="male">Male</label></div></div>
-                                    <div><div><input type="radio" name="gender" id="male"
-                                       
-                                    /></div></div>
+
+                            {options.map((option,index)=>(
+                                <div key={index}>
+                                    <div>
+                                        <div><div><label htmlFor={option}>{option}</label></div></div>
+                                        <div><div><input type="radio" name="gender" id={option}
+                                        checked={option === val}
+                                        onChange={(e)=>setVal(option)}
+                                        /></div></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <div>
-                                    <div><div><label htmlFor="female">Female</label></div></div>
-                                    <div><div><input type="radio" name="gender"
-                                        
-                                        id="female" /></div></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    <div><div><label htmlFor="others">Others</label></div></div>
-                                    <div><div><input type="radio" name="gender"
-                                        
-                                        id="others" /></div></div>
-                                </div>
-                            </div>
+                            ))}
+
                         </div>
 
-                        <div className="btn-box right">
-                            <div>
-                                <button className='save'><i className="fa-solid fa-floppy-disk"></i> Save</button>
+                        <ButtonLoading 
+                        submitLoad={submitLoad}
+                        >
+                            <div className="btn-box right">
+                                <div>
+                                    <button className='save'><i className="fa-solid fa-floppy-disk"></i> Save</button>
+                                </div>
                             </div>
-                        </div>
+                        </ButtonLoading>
 
                     </form>
                 </div>

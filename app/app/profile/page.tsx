@@ -3,33 +3,65 @@ import DoubleInput from '@/app/components/form/singleData/DoubleInput'
 import RadioInput from '@/app/components/form/singleData/RadioInput'
 import SingleInput from '@/app/components/form/singleData/SingleInput'
 import AppContent from '@/app/components/templates/AppContent'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Page = () => {
-    const [isSingleInputHidden,setIsSingleInputHidden] = useState<boolean>(false)
+    const [isSingleInputHidden, setIsSingleInputHidden] = useState<boolean>(false)
+    const [isPinCodeHidden, setIsPinCodeHidden] = useState<boolean>(false)
+    const [isNameHidden, setIsNameHidden] = useState<boolean>(false)
+    const [isRadioHidden, setRadioHidden] = useState<boolean>(false)
+    const [isProfession, setIsProfession] = useState<boolean>(false)
+
+    const [firstName, setFirstName] = useState<any>("")
+    const [lastName, setLastName] = useState<any>("")
+    const [professionX, setProfession] = useState<string>("")
+    const [gender, setGender] = useState<any | null>(null)
+    const [mobile, setMobile] = useState<number | null>(null)
+    const [pincode, setPincode] = useState<number | null>(null)
+
+    const loadMe = async () => {
+        try {
+            const res = await fetch("/api/auth/me")
+            if (res.ok) {
+                const data = await res.json()
+                setFirstName(data.firstName)
+                setLastName(data.lastName)
+                setProfession(data.profession)
+                setGender(data.gender)
+                setMobile(data.mobile)
+                setPincode(data.pinCode)
+            } else {
+                console.log("something wrong")
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        loadMe()
+    }, [])
+
     const showModal = () =>{
         setIsSingleInputHidden(!isSingleInputHidden)
     }
 
-    const [isPinCodeHidden, setIsPinCodeHidden] = useState<boolean>(false)
     const pinCodeModal = () => {
         setIsPinCodeHidden(!isPinCodeHidden)
     }
 
-    const [isNameHidden, setIsNameHidden] = useState<boolean>(false)
     const nameModal = () => {
         setIsNameHidden(!isNameHidden)
     }
 
-    const [isRadioHidden, setRadioHidden] = useState<boolean>(false)
     const radioBtn = () => {
         setRadioHidden(!isRadioHidden)
     }
 
-    const [isProfession, setIsProfession] = useState<boolean>(false)
     const professionModal = () => {
         setIsProfession(!isProfession)
     }
+
+    
 
     return (
         <>
@@ -41,15 +73,16 @@ const Page = () => {
                         <div className="title_bar">
                             <div>
                                 <div>
-                                    <h3><i className="fa-solid fa-id-badge icon-list"></i> Profile</h3>
+                                    <h3 ><i className="fa-solid fa-id-badge icon-list"></i> Profile</h3>
                                 </div>
                             </div>
                             <div>
                                 <div>
-                                    <h4>78336 <button><i className="fa-solid fa-location-dot"></i></button></h4>
+                                    <h4>78336  <button ><i className="fa-solid fa-location-dot"></i></button></h4>
                                 </div>
                             </div>
                         </div>
+
 
                         <DoubleInput
                             id="fullName"
@@ -60,13 +93,13 @@ const Page = () => {
                             placeHolder2='Last Name'
                             inputType1='text'
                             inputType2='text'
-                            inputVal1={'Mritunjoy'}
-                            inputVal2={'Mushahary'}
+                            inputVal1={firstName}
+                            inputVal2={lastName}
                             isModalHidden={isNameHidden}
                             modalClass=''
                             additionalBtn={''}
                             onClick={nameModal}
-                        >Mritunjoy Mushahary</DoubleInput>
+                        >null</DoubleInput>
 
                         <SingleInput
                             id="profession"
@@ -77,18 +110,19 @@ const Page = () => {
                             modalClass=''
                             additionalBtn={''}
                             onClick={professionModal}
-                        >Software Engineer</SingleInput>
+                        >{professionX}</SingleInput>
 
-                        <RadioInput 
-                            id="radioBtn"
-                            title='Mobile Number'
-                            inputName='mobile'
-                            inputType='number'
+                        
+                        <RadioInput
+                            id="genders"
+                            title='Gender'
+                            inputName='gender'
+                            inputType='text'
                             isModalHidden={isRadioHidden}
                             modalClass=''
                             additionalBtn={''}
-                            onClick={radioBtn} 
-                        >Female</RadioInput>
+                            onClick={radioBtn}
+                        >{gender}</RadioInput>
 
                         <SingleInput
                             id="mobile"
@@ -99,7 +133,7 @@ const Page = () => {
                             modalClass=''
                             additionalBtn={''}
                             onClick={showModal}
-                        >8011501382</SingleInput>
+                        >{mobile}</SingleInput>
 
                         <SingleInput
                             id="pin"
@@ -110,7 +144,7 @@ const Page = () => {
                             modalClass=''
                             additionalBtn={''}
                             onClick={pinCodeModal}
-                        >783360</SingleInput>
+                        >{pincode}</SingleInput>
 
 
 

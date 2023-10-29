@@ -129,7 +129,6 @@ p {
     padding: 6px;
     margin: 0px;
 }
-
 //---------------------------------------------
 // TAG CLASSES - @END
 //---------------------------------------------
@@ -176,6 +175,7 @@ p {
         }
     }
 }
+.p-10px{padding: 10px;}
 //---------------------------------------------
 // CLASSES - @END
 //---------------------------------------------
@@ -208,7 +208,12 @@ $btn-orange-hov: rgb(126, 82, 2);
         background-color: $btn-red-hov;
     }
 }
-
+@mixin orange_btn() {
+    background-color: $btn-orange;
+    &:hover {
+        background-color: $btn-orange-hov;
+    }
+}
 @mixin category_box() {
     background-color: $bg-box;
     border: 1px solid $bg-box;
@@ -1763,18 +1768,33 @@ body {
 
 .sign_up {
     @include w_h(380px, auto);
-
     @media screen and (max-width:375px) {
         width: 96%;
     }
+}
+.sign_up_form {
+    &>form {
+        &>div {
+            margin: 6px 0px;
+        }
 
-    &>.sign_up_form {
-        &>form {
+        &>.sign_up_one_col {
+            padding: 6px;
+
             &>div {
-                margin: 6px 0px;
-            }
+                @include input_class(none, 6px, 30px);
 
-            &>.sign_up_one_col {
+                &>input {
+                    background-color: $text-color;
+                }
+            }
+        }
+
+        &>.sign_up_two_col {
+            display: flex;
+
+            &>div {
+                flex: 5;
                 padding: 6px;
 
                 &>div {
@@ -1785,61 +1805,44 @@ body {
                     }
                 }
             }
+        }
 
-            &>.sign_up_two_col {
-                display: flex;
+        &>.sign_up_title {
+            color: $text-color2;
+
+            &>p {
+                padding-bottom: 0px;
+            }
+        }
+
+        &>.sign_up_three_col {
+            display: flex;
+
+            &>div {
+                flex: 3;
+                padding: 6px;
 
                 &>div {
-                    flex: 5;
-                    padding: 6px;
-
-                    &>div {
-                        @include input_class(none, 6px, 30px);
-
-                        &>input {
-                            background-color: $text-color;
-                        }
-                    }
+                    @include radio_btn(none, $text-color, 6px);
                 }
             }
+        }
 
-            &>.sign_up_title {
+        &>.terms>p {
+            font-size: 13px;
+        }
+
+        &>.submit {
+            text-align: center;
+
+            &>button {
+                @include green_btn();
+                width: 90%;
                 color: $text-color2;
-
-                &>p {
-                    padding-bottom: 0px;
-                }
-            }
-
-            &>.sign_up_three_col {
-                display: flex;
-
-                &>div {
-                    flex: 3;
-                    padding: 6px;
-
-                    &>div {
-                        @include radio_btn(none, $text-color, 6px);
-                    }
-                }
-            }
-
-            &>.terms>p {
-                font-size: 13px;
-            }
-
-            &>.submit {
-                text-align: center;
-
-                &>button {
-                    @include green_btn();
-                    width: 90%;
-                    color: $text-color2;
-                    @include pad_mar(8px, 6px);
-                    font-size: 20px;
-                    border-radius: 6px;
-                    font-weight: bold;
-                }
+                @include pad_mar(8px, 6px);
+                font-size: 20px;
+                border-radius: 6px;
+                font-weight: bold;
             }
         }
     }
@@ -2008,3 +2011,29 @@ body {
         }
     }
 }
+//-----------------------------------------------------
+// TWO COL BUTTONS - START
+//-----------------------------------------------------
+.btn-box{
+    @include pad_mar(6px 0px, 6px 0px);
+    &>div>button{
+        color: $text-color;
+        font-weight: bold;
+        @include pad_mar(6px, 3px);
+    }
+    &>div>.save{
+        @include green_btn();
+    }
+    &>div>.cancel {
+        @include red_btn();
+    }
+}
+.btn-box.right{
+    @include flex(center, right);
+}
+// <div className="btn-box right">
+//     <div>
+//         <button className='cancel'>Cancel</button>
+//         <button className='save'>Save</button>
+//     </div>
+// </div>

@@ -103,8 +103,8 @@ const MenuModal = () => {
                             </div>
                             <div>
                                 <div className='others green_btn'>
-                                    <Link href="">
-                                        <button ><i className="fa-solid fa-gear"></i></button>
+                                    <Link href="/app/settings">
+                                        <button onClick={displayModal} ><i className="fa-solid fa-gear"></i></button>
                                     </Link>
                                 </div>
                                 <div className='close'><button onClick={displayModal} ><i className="fa-solid fa-xmark"></i></button></div>
@@ -122,8 +122,8 @@ const MenuModal = () => {
                                 </div>
                                 <div>
                                     <div>
-                                        <Link href="">
-                                            <button><i className="fa-regular fa-id-badge"></i></button>
+                                        <Link href="/app/profile">
+                                            <button onClick={displayModal}><i className="fa-regular fa-id-badge"></i></button>
                                         </Link>
                                     </div>
                                 </div>

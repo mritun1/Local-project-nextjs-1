@@ -10,7 +10,8 @@ export async function PATCH(req:NextRequest){
 
         const getData = new getTokenData(req)
         const userID = getData.userID()
-        const res = await User.findByIdAndUpdate({ _id: userID }, body, { new: true })
+        const todayDate = Date.now()
+        const res = await User.findByIdAndUpdate({ _id: userID }, { body, updatedDate: todayDate }, { new: true })
         if (!res) {
             return NextResponse.json({
                 msg: "Sorry, Update failed",

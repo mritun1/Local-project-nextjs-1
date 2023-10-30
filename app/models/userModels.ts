@@ -24,7 +24,8 @@ let userSchema = new mongoose.Schema({
     },
     mobile:{
         type: Number,
-        require: true
+        require: true,
+        unique: true
     },
     password:{
         type: String,
@@ -36,7 +37,15 @@ let userSchema = new mongoose.Schema({
     isActive: {
         type: Number,
         default: 0,
-    }
+    },
+    createdDate:{
+        type: Date,
+        default: Date.now()
+    },
+    updatedDate: {
+        type: Date,
+        default: Date.now()
+    },
 })
 
 

@@ -9,7 +9,6 @@ export async function PATCH(req:Request){
         
         const body = await req.json();
         const { mobile, otp } = body;
-        console.log(mobile)
         //CHECK IF THE REQUEST EXISTS
         if (!mobile || !otp){
             return NextResponse.json({msg:"Request no full field.",code:0})
@@ -22,7 +21,6 @@ export async function PATCH(req:Request){
 
         //COMPARE THE OTP
         const hasOtp:any = isIdExist.otp;
-        console.log(hasOtp)
         try{
             const isValidOtp = await bcrypt.compare(otp,hasOtp)
             if(!isValidOtp){
@@ -44,7 +42,6 @@ export async function PATCH(req:Request){
             return NextResponse.json({ msg: error, code: 0 })
         }
     }catch(err){
-        console.log(err)
         return NextResponse.json({msg:err,code:0})
     }
 }

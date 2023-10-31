@@ -1,3 +1,4 @@
+import CreatePost from '@/app/components/pages/posts/CreatePost'
 import AppContent from '@/app/components/templates/AppContent'
 import React from 'react'
 
@@ -22,20 +23,9 @@ const page = () => {
                             </div>
                         </div>
 
-                        <div className="post_create_btns">
-                            <div>
-                                <div>
-                                    <h5>Add Local News</h5>
-                                    <button><i className="fa-solid fa-plus"></i> Create Post</button>
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    <h5>Add Events</h5>
-                                    <button><i className="fa-solid fa-plus"></i> Create Events</button>
-                                </div>
-                            </div>
-                        </div>
+                        
+
+                        <CreatePost></CreatePost>
 
 
                         <div className="tab_menu">

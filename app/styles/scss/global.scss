@@ -113,7 +113,8 @@ button {
     cursor: pointer;
 }
 
-input {
+input,
+textarea {
     padding: 6px;
     outline: none;
     border: none;
@@ -245,7 +246,8 @@ $btn-orange-hov: rgb(126, 82, 2);
     position: relative;
     height: $mx-height;
 
-    &>input {
+    &>input,
+    &>textarea {
         border-radius: $mx-border-radius;
         @include position(absolute, 0px, 0px);
         right: 0px;
@@ -1784,7 +1786,8 @@ body {
             &>div {
                 @include input_class(none, 6px, 30px);
 
-                &>input {
+                &>input,
+                &>textarea {
                     background-color: $text-color;
                 }
             }
@@ -2076,5 +2079,52 @@ body {
         &>div>h3{
             padding-left: 0px;
         }
+    }
+}
+@mixin img_upload_cont(){
+    &>div {
+        @include w_h(100px, 100px);
+        position: relative;
+
+        &>div:nth-child(1) {
+            @include position_full(absolute, 10px, 10px, 10px, 10px);
+            @include green_btn();
+            @include bg();
+        }
+
+        &>div:nth-child(2) {
+            @include position_full(absolute, 10px, 10px, 10px, 10px);
+            @include flex(center, center);
+            cursor: pointer;
+
+            &>div>i {
+                color: $text-color2;
+                font-size: 30px;
+            }
+        }
+
+        &>.btn_plus:hover {
+            background-color: green;
+            opacity: 0.6;
+        }
+
+        &>.btn_minus:hover {
+            background-color: $btn-red;
+            opacity: 0.6;
+        }
+    }
+}
+.img_upload_bar{
+    overflow: auto;
+    &>div{
+        float: left;
+    }
+    &>.btn_upload {
+        &>label {
+            @include img_upload_cont();
+        }
+    }
+    &>.btn_img {
+        @include img_upload_cont();
     }
 }

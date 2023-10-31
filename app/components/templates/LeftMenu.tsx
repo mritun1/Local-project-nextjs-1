@@ -25,6 +25,9 @@ const LeftMenu = () => {
                               <Link href="/app/local-market" className="link_color">
                                     <li className={pathname === '/app/local-market' ? 'active' : ''}><i className="fa-solid fa-bag-shopping icon-list"></i> Local Market <span className="level">0</span></li>
                               </Link>
+                              <Link href="/app/local-secondhand" className="link_color">
+                                    <li className={pathname === '/app/local-secondhand' ? 'active' : ''}><i className="fa-solid fa-bag-shopping icon-list"></i> Local Secondhand <span className="level">0</span></li>
+                              </Link>
                               <Link href="/app/local-business" className="link_color">
                                     <li className={pathname === '/app/local-business' || pathname === '/app/local-business-cat' ? 'active' : ''}><i className="fa-solid fa-briefcase icon-list"></i> Local Business <span className="level">0</span></li>
                               </Link>

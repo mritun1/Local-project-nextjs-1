@@ -23,7 +23,7 @@ const Modal = (props: propsType) => {
                             </div>
                             <div>
                                 {props.additionBtn}
-                                <div className='close'><button onClick={props.closeBtn} ><i className="fa-solid fa-xmark"></i></button></div>
+                                <div className='close'><button type='button' onClick={props.closeBtn} ><i className="fa-solid fa-xmark"></i></button></div>
                             </div>
                         </div>
 

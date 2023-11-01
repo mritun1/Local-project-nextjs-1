@@ -15,7 +15,8 @@ let draftNewsPostSchema = new mongoose.Schema({
     },
     userId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref:'user'
+        ref:'user',
+        unique:true
     },
     images:[],
     createdDate:{

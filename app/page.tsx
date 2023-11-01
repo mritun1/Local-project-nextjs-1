@@ -15,7 +15,7 @@ export default function Home() {
 
               <div>
                 <h1>Localnii</h1>
-                <p>To stay connected locally. Local Social network for business only. Create an account and connect with customers and other business people. Post an offer, product release news, sell second-hand products, post an event, etc. You can search your local people by profession.</p>
+                <p>To stay connected locally. Local Social network for business only. Hyperlocal content sharing platform.</p>
               </div>
 
             </div>

@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 import Modal from '../../temp/Modal'
 import Alerts3 from '../../temp/Alerts3'
 import ButtonLoading from '../../temp/ButtonLoading'
-import ProgressBar from '../../temp/ProgressBar'
-import axios from 'axios'
+import ImageInput from '../../temp/ImageInput'
 
 const CreatePost = () => {
     //CHECK AND CREATE DRAFT POST
@@ -196,37 +195,7 @@ const CreatePost = () => {
         await submitPost("events", "/api/posts/events/create/", eventTitle, eventDes, eventStartDate, eventEndDate)
     }
 
-    //UPLOAD IMAGE - NEWS
-    const [imgUploadState, setImgUploadState] = useState<boolean>(true)
-    const [imgUploadNum,setImgUploadNum] = useState<number>(0)
-    const newsImgUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const fileObj = e.target.files?.[0]
-        if (fileObj) {
-            setImgUploadState(!imgUploadState)
-            const formData = new FormData();
-            formData.set("imgFile", fileObj)
-
-            axios.post("/api/image/upload",formData,{
-                headers:{
-                    "Content-Type":"multipart/form-data"
-                },
-                onUploadProgress:(event)=>{
-                    if (event.total !== undefined) {
-                        const progress = (event.loaded / event.total) * 100;
-                        setImgUploadNum(Math.round(progress));
-                    }
-                }
-            })
-            .then((response) => {
-                console.log('Response data:', response.data);
-                setImgUploadState(true)
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
-        }
-    }
+    
 
     return (
         <>
@@ -285,67 +254,8 @@ const CreatePost = () => {
                         </div>
 
 
-
-                        <ProgressBar
-                            width={imgUploadNum.toString()}
-                            display={imgUploadState}
-                        ></ProgressBar>
-
-                        <input type="file" onChange={(e) => newsImgUpload(e)} name="img_file" id="img_file" style={{ display: `none` }} />
-
-                        <div className="img_upload_bar">
-
-                            <div className='btn_upload' >
-                                <label htmlFor="img_file">
-                                    <div >
-                                        <div></div>
-
-                                        <div className='btn_plus' >
-                                            <div><i className="fa-solid fa-plus"></i></div>
-                                        </div>
-
-                                    </div>
-                                </label>
-                            </div>
-
-                            <div className='btn_img' >
-                                <div >
-                                    <div style={{ backgroundImage: `url(https://deep-image.ai/blog/content/images/2022/09/underwater-magic-world-8tyxt9yz.jpeg)` }}></div>
-                                    <div className='btn_minus'>
-                                        <div><i className="fa-solid fa-minus"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='btn_img' >
-                                <div >
-                                    <div style={{ backgroundImage: `url(https://deep-image.ai/blog/content/images/2022/09/underwater-magic-world-8tyxt9yz.jpeg)` }}></div>
-                                    <div className='btn_minus'>
-                                        <div><i className="fa-solid fa-minus"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='btn_img' >
-                                <div >
-                                    <div style={{ backgroundImage: `url(https://deep-image.ai/blog/content/images/2022/09/underwater-magic-world-8tyxt9yz.jpeg)` }}></div>
-                                    <div className='btn_minus'>
-                                        <div><i className="fa-solid fa-minus"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='btn_img' >
-                                <div >
-                                    <div style={{ backgroundImage: `url(https://deep-image.ai/blog/content/images/2022/09/underwater-magic-world-8tyxt9yz.jpeg)` }}></div>
-                                    <div className='btn_minus'>
-                                        <div><i className="fa-solid fa-minus"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
+                        <ImageInput></ImageInput>
+                        
 
                         <p className='text-color2'>Pin: 783360</p>
 

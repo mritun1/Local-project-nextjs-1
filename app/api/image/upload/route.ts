@@ -61,7 +61,8 @@ export async function POST(req:NextRequest){
             })
 
             return NextResponse.json({
-                msg: publicURL,
+                msg: "Image uploaded success",
+                image: publicURL,
                 code: 1
             })
 

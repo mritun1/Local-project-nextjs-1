@@ -3,26 +3,28 @@ import React, { useState } from 'react'
 import Modal from '../../temp/Modal'
 import Alerts3 from '../../temp/Alerts3'
 import ButtonLoading from '../../temp/ButtonLoading'
+import ProgressBar from '../../temp/ProgressBar'
+import axios from 'axios'
 
 const CreatePost = () => {
     //CHECK AND CREATE DRAFT POST
-    const checkCreateDraft = async (url:string) =>{
-        const res = await fetch(url,{
-            method:"POST",
+    const checkCreateDraft = async (url: string) => {
+        const res = await fetch(url, {
+            method: "POST",
             headers: {
-                "Content-Type":"application/json"
+                "Content-Type": "application/json"
             },
-            
-            body:JSON.stringify({
-                check:"checking"
+
+            body: JSON.stringify({
+                check: "checking"
             })
         })
         return res
     }
 
     const [modalHidden, setModalHidden] = useState<boolean>(false)
-    const [modalEventHidden,setModalEventHidden] = useState<boolean>(false)
-    
+    const [modalEventHidden, setModalEventHidden] = useState<boolean>(false)
+
 
     const [alertClass, setAlertClass] = useState<string>("danger")
     const [msg, setMsg] = useState<string>("")
@@ -86,8 +88,8 @@ const CreatePost = () => {
     //FOR EVENTS
     const [eventStartDate, setEventStartDate] = useState<string>("")
     const [eventEndDate, setEventEndDate] = useState<string>("")
-    const [eventTitle,setEventTitle] = useState<string>("")
-    const [eventDes,setEventDes] = useState<string>("")
+    const [eventTitle, setEventTitle] = useState<string>("")
+    const [eventDes, setEventDes] = useState<string>("")
 
     const showEventModal = async () => {
         setModalEventHidden(!modalEventHidden)
@@ -96,12 +98,12 @@ const CreatePost = () => {
 
             if (res.ok) {
                 const data = await res.json();
-                if(data && data.res && data.res.startDate){
+                if (data && data.res && data.res.startDate) {
                     const isoDate = data.res.startDate;
                     const formattedDate = new Date(isoDate).toISOString().split('T')[0];
                     setEventStartDate(formattedDate);
                 }
-                if(data && data.res && data.res.endDate){
+                if (data && data.res && data.res.endDate) {
                     const isoDate = data.res.endDate;
                     const formattedDate = new Date(isoDate).toISOString().split('T')[0];
                     setEventEndDate(formattedDate);
@@ -149,49 +151,81 @@ const CreatePost = () => {
         }
     }
 
-    const submitPost = async (name:string,url:string,title:string,des:string,startDate:string,endDate:string) =>{
+    const submitPost = async (name: string, url: string, title: string, des: string, startDate: string, endDate: string) => {
         setSubmitBtn(false)
-        const res = await fetch(url,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            body:JSON.stringify({
-                title:title,
-                des:des,
-                startDate:startDate || "",
-                endDate:endDate || ""
+            body: JSON.stringify({
+                title: title,
+                des: des,
+                startDate: startDate || "",
+                endDate: endDate || ""
             })
         })
-        if(res.ok){
+        if (res.ok) {
             setSubmitBtn(true)
             const data = await res.json()
             console.log(data)
-            if (name === "news") { 
+            if (name === "news") {
                 setNewsTitle("")
                 setNewsDes("")
-                setModalHidden(!modalHidden) 
+                setModalHidden(!modalHidden)
             }
-            if (name === "events") { 
+            if (name === "events") {
                 setEventTitle("")
                 setEventDes("")
                 setEventStartDate("")
                 setEventEndDate("")
-                setModalEventHidden(!modalEventHidden) 
+                setModalEventHidden(!modalEventHidden)
             }
-        }else{
+        } else {
             console.log("something went wrong")
         }
     }
 
     const submitHandler = async (e: any) => {
         e.preventDefault()
-        await submitPost("news","/api/posts/news/create/",newsTitle,newsDes,"","")
+        await submitPost("news", "/api/posts/news/create/", newsTitle, newsDes, "", "")
     }
 
-    const submitEventHandler = async (e:any) =>{
+    const submitEventHandler = async (e: any) => {
         e.preventDefault()
-        await submitPost("events", "/api/posts/events/create/", eventTitle, eventDes, eventStartDate,eventEndDate)
+        await submitPost("events", "/api/posts/events/create/", eventTitle, eventDes, eventStartDate, eventEndDate)
+    }
+
+    //UPLOAD IMAGE - NEWS
+    const [imgUploadState, setImgUploadState] = useState<boolean>(true)
+    const [imgUploadNum,setImgUploadNum] = useState<number>(0)
+    const newsImgUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const fileObj = e.target.files?.[0]
+        if (fileObj) {
+            setImgUploadState(!imgUploadState)
+            const formData = new FormData();
+            formData.set("imgFile", fileObj)
+
+            axios.post("/api/image/upload",formData,{
+                headers:{
+                    "Content-Type":"multipart/form-data"
+                },
+                onUploadProgress:(event)=>{
+                    if (event.total !== undefined) {
+                        const progress = (event.loaded / event.total) * 100;
+                        setImgUploadNum(Math.round(progress));
+                    }
+                }
+            })
+            .then((response) => {
+                console.log('Response data:', response.data);
+                setImgUploadState(true)
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        }
     }
 
     return (
@@ -238,19 +272,26 @@ const CreatePost = () => {
 
                         <div className="sign_up_one_col">
                             <div><input type={'text'} name={'newsTitle'} placeholder={'News Title'}
-                                onChange={(e)=>postUpdate(e,"title")}
+                                onChange={(e) => postUpdate(e, "title")}
                                 value={newsTitle}
                                 required /></div>
                         </div>
 
                         <div className="sign_up_one_col" >
-                            <div style={{height:`100px`}}><textarea name={'newsDescription'} placeholder={'News Description'}
+                            <div style={{ height: `100px` }}><textarea name={'newsDescription'} placeholder={'News Description'}
                                 onChange={(e) => postUpdate(e, "des")}
                                 value={newsDes}
                                 required ></textarea></div>
                         </div>
 
-                        <input type="file" name="img_file" id="img_file" style={{display:`none`}} />
+
+
+                        <ProgressBar
+                            width={imgUploadNum.toString()}
+                            display={imgUploadState}
+                        ></ProgressBar>
+
+                        <input type="file" onChange={(e) => newsImgUpload(e)} name="img_file" id="img_file" style={{ display: `none` }} />
 
                         <div className="img_upload_bar">
 
@@ -258,11 +299,11 @@ const CreatePost = () => {
                                 <label htmlFor="img_file">
                                     <div >
                                         <div></div>
-                                        
-                                            <div className='btn_plus' >
-                                                <div><i className="fa-solid fa-plus"></i></div>
-                                            </div>
-                                        
+
+                                        <div className='btn_plus' >
+                                            <div><i className="fa-solid fa-plus"></i></div>
+                                        </div>
+
                                     </div>
                                 </label>
                             </div>
@@ -302,7 +343,7 @@ const CreatePost = () => {
                                     </div>
                                 </div>
                             </div>
-                            
+
 
                         </div>
 
@@ -348,7 +389,7 @@ const CreatePost = () => {
                             <div>
                                 <div><input type="date" name="start_date" placeholder="Start Date" required
                                     value={eventStartDate}
-                                    onChange={(e) => eventUpdate(e,"startDate")}
+                                    onChange={(e) => eventUpdate(e, "startDate")}
                                 /></div>
                             </div>
                             <div>

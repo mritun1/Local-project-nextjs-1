@@ -2128,3 +2128,27 @@ body {
         @include img_upload_cont();
     }
 }
+//-----------------------------------------------------
+// PROGRESS BAR - START
+//-----------------------------------------------------
+.progressBar{
+    @include pad_mar(6px, 0px);
+    &>div{
+        background-color: $text-color;
+        &>div {
+            background-color: green;
+            &>p{
+                font-size: 12px;
+                color: rgb(5, 31, 5);
+            }
+        }
+    }
+}
+// <div className='progressBar'>
+//     <div>
+//         <div style={{width:`30%`}}><p>uploading...32% </p></div>
+//     </div>
+// </div>
+//-----------------------------------------------------
+// PROGRESS BAR - END
+//-----------------------------------------------------

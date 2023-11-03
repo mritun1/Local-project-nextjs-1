@@ -23,8 +23,9 @@ export async function PATCH(req: NextRequest) {
                 code: 0
             })
         }
+
         //Check and create the draft post
-        const draftPost = await draftNewsPost.findOneAndUpdate({userId:userID},body,{new:true})
+        const draftPost = await draftNewsPost.findOneAndUpdate({ userId: userID }, body,{new:true})
         if (!draftPost){
             return NextResponse.json({
                 msg: "Sorry, Update Failed",

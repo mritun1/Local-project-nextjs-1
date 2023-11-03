@@ -1,8 +1,25 @@
+"use client"
 import CreatePost from '@/app/components/pages/posts/CreatePost'
 import AppContent from '@/app/components/templates/AppContent'
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const page = () => {
+const Page = () => {
+
+    // //LOAD ITEMS FROM BACKEND
+    // const loadContents = async() =>{
+    //     const res = await fetch("/api/posts/admin/lists/")
+    //     if(res.ok){
+    //         const data = await res.json()
+    //         console.log(data.data)
+    //     }else{
+    //         console.log("Fetching error")
+    //     }
+    // }
+    // //EXECUTE WHILE PAGE LOAD
+    // useEffect(()=>{
+    //     //loadContents()
+    // })
+
     return (
         <>
 
@@ -131,4 +148,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

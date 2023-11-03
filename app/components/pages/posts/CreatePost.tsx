@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from 'react'
 import Modal from '../../temp/Modal'
-import Alerts3 from '../../temp/Alerts3'
 import ButtonLoading from '../../temp/ButtonLoading'
 import ImageInput from '../../temp/ImageInput'
 
@@ -24,16 +23,11 @@ const CreatePost = () => {
     const [modalHidden, setModalHidden] = useState<boolean>(false)
     const [modalEventHidden, setModalEventHidden] = useState<boolean>(false)
 
-
-    const [alertClass, setAlertClass] = useState<string>("danger")
-    const [msg, setMsg] = useState<string>("")
-    const [alert, setAlert] = useState<boolean>(false)
     const [submitBtn, setSubmitBtn] = useState<boolean>(true)
     const [newsTitle, setNewsTitle] = useState<string>("")
     const [newsDes, setNewsDes] = useState<string>("")
-    const closeAlert = () => {
-        setAlert(!alert)
-    }
+    const [imgLists, setImgLists] = useState<Array<string>>([])
+    const [imgEventLists, setImgEventLists] = useState<Array<string>>([])
 
     const showModal = async () => {
         setModalHidden(!modalHidden);
@@ -55,6 +49,13 @@ const CreatePost = () => {
                 } else {
                     console.log("No description in the response data.");
                 }
+
+                if (data && data.res && data.res.images) {
+                    setImgLists(data.res.images);
+                } else {
+                    console.log("No description in the response data.");
+                }
+
             } else {
                 console.log("Response not OK.");
             }
@@ -119,6 +120,11 @@ const CreatePost = () => {
                 } else {
                     console.log("No description in the response data.");
                 }
+
+                if (data && data.res && data.res.images) {
+                    setImgEventLists(data.res.images);
+                } 
+
             } else {
                 console.log("Response not OK.");
             }
@@ -161,7 +167,7 @@ const CreatePost = () => {
                 title: title,
                 des: des,
                 startDate: startDate || "",
-                endDate: endDate || ""
+                endDate: endDate || "",
             })
         })
         if (res.ok) {
@@ -195,7 +201,7 @@ const CreatePost = () => {
         await submitPost("events", "/api/posts/events/create/", eventTitle, eventDes, eventStartDate, eventEndDate)
     }
 
-    
+
 
     return (
         <>
@@ -227,13 +233,6 @@ const CreatePost = () => {
                 closeBtn={showModal}
             >
 
-                <Alerts3
-                    alert={alertClass}
-                    msg={`${msg}`}
-                    isHidden={alert}
-                    onClick={closeAlert}
-                ></Alerts3>
-
                 <div className="sign_up_form">
                     <form onSubmit={submitHandler}>
 
@@ -254,8 +253,11 @@ const CreatePost = () => {
                         </div>
 
 
-                        <ImageInput></ImageInput>
-                        
+                        <ImageInput
+                            service='news'
+                            imgLists={imgLists}
+                        ></ImageInput>
+
 
                         <p className='text-color2'>Pin: 783360</p>
 
@@ -282,13 +284,6 @@ const CreatePost = () => {
                 additionBtn={''}
                 closeBtn={showEventModal}
             >
-
-                <Alerts3
-                    alert={alertClass}
-                    msg={`${msg}`}
-                    isHidden={alert}
-                    onClick={closeAlert}
-                ></Alerts3>
 
                 <div className="sign_up_form">
                     <form onSubmit={submitEventHandler}>
@@ -326,59 +321,10 @@ const CreatePost = () => {
 
                         <input type="file" name="img_file" id="img_file" style={{ display: `none` }} />
 
-                        <div className="img_upload_bar">
-
-                            <div className='btn_upload' >
-                                <label htmlFor="img_file">
-                                    <div >
-                                        <div></div>
-
-                                        <div className='btn_plus' >
-                                            <div><i className="fa-solid fa-plus"></i></div>
-                                        </div>
-
-                                    </div>
-                                </label>
-                            </div>
-
-                            <div className='btn_img' >
-                                <div >
-                                    <div style={{ backgroundImage: `url(https://deep-image.ai/blog/content/images/2022/09/underwater-magic-world-8tyxt9yz.jpeg)` }}></div>
-                                    <div className='btn_minus'>
-                                        <div><i className="fa-solid fa-minus"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='btn_img' >
-                                <div >
-                                    <div style={{ backgroundImage: `url(https://deep-image.ai/blog/content/images/2022/09/underwater-magic-world-8tyxt9yz.jpeg)` }}></div>
-                                    <div className='btn_minus'>
-                                        <div><i className="fa-solid fa-minus"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='btn_img' >
-                                <div >
-                                    <div style={{ backgroundImage: `url(https://deep-image.ai/blog/content/images/2022/09/underwater-magic-world-8tyxt9yz.jpeg)` }}></div>
-                                    <div className='btn_minus'>
-                                        <div><i className="fa-solid fa-minus"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='btn_img' >
-                                <div >
-                                    <div style={{ backgroundImage: `url(https://deep-image.ai/blog/content/images/2022/09/underwater-magic-world-8tyxt9yz.jpeg)` }}></div>
-                                    <div className='btn_minus'>
-                                        <div><i className="fa-solid fa-minus"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
+                        <ImageInput
+                            service='events'
+                            imgLists={imgEventLists}
+                        ></ImageInput>
 
                         <p className='text-color2'>Pin: 783360</p>
 

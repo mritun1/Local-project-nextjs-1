@@ -18,11 +18,14 @@ export async function POST(req: NextRequest) {
                 code: 0
             })
         }
+        //GET IMAGE ARRAY
+        const getImgs = await draftEventsPost.findOne({ userId: userID })
         //Check and create the draft post
         const createDraft = await eventsPost.create({
             des, title, startDate, endDate,
             pin: getToken.pinCode(),
-            userId: getToken.userID()
+            userId: getToken.userID(),
+            images: getImgs.images
         })
         createDraft.save()
         if (createDraft) {

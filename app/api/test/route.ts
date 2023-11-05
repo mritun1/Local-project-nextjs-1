@@ -1,34 +1,36 @@
 import { NextResponse } from "next/server";
-import { MongoClient } from 'mongodb';
-
+import LinkedList from "@/app/lib/dsa/linkedList/linkedList";
+import NewsPost from "@/app/models/posts/newsPost";
+import eventsPost from "@/app/models/posts/eventsPost";
 
 export async function GET(){
-    const conn: any = process.env.MONGODB_URI
-    const client = new MongoClient(conn);
-
     try {
-        await client.connect();
-        const db = client.db();
+        const linkedList = new LinkedList();
 
-        const data = await db.collection('draftnewsposts').aggregate([
-            {
-                $unionWith: {
-                    coll: 'drafteventsposts',
-                },
-            },
-            {
-                $sort: {
-                    createdDate: -1, // 1 for ascending order, -1 for descending order
-                },
-            },
-        ]).toArray();
+        const eventsPostData = await eventsPost.find({});
+        eventsPostData.forEach(ele => {
+            linkedList.insertToArray(ele)
+        });
+
+        const NewsPostData = await NewsPost.find({});
+        NewsPostData.forEach(ele=>{
+            linkedList.insertToArray(ele)
+        });
+
+        const test = linkedList.printArray();
+
+        test.sort((a, b) => b.createdDate - a.createdDate)
 
         return NextResponse.json({
-            data: data,
+            data: test,
+            date: Date.now(),
             msg: "Lists of Data",
             code: 1
         });
-    } finally {
-        client.close();
+    }catch(err){
+        return NextResponse.json({
+            msg:err,
+            code:0
+        })
     }
 }

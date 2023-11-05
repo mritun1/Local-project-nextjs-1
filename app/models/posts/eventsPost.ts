@@ -27,10 +27,10 @@ let eventsPostSchema = new mongoose.Schema({
     },
     images: [],
     createdDate: {
-        type: Date,
+        type: Number,
         default: Date.now()
     }
 })
 
-let eventsPost = mongoose.models.eventsPost || mongoose.model("eventsPost", eventsPostSchema)
+let eventsPost = mongoose.models.eventsPost3 || mongoose.model("eventsPost3", eventsPostSchema)
 export default eventsPost

@@ -25,9 +25,9 @@ export async function POST(req: NextRequest) {
             des, title, startDate, endDate,
             pin: getToken.pinCode(),
             userId: getToken.userID(),
-            images: getImgs.images
+            images: getImgs.images,
+            createdDate: Date.now()
         })
-        createDraft.save()
         if (createDraft) {
             //DELETE FROM DRAFT
             await draftEventsPost.deleteOne({ userId: userID })

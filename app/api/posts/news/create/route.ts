@@ -22,16 +22,30 @@ export async function POST(req: NextRequest) {
         const getImgs = await draftNewsPost.findOne({userId:userID})
         //Check and create the draft post
         const createDraft = await NewsPost.create({
-            des,title,
+            des,
+            title,
             pin: getToken.pinCode(),
             userId: getToken.userID(),
-            images: getImgs.images
-        })
-        createDraft.save()
-        if (createDraft){
-            //DELETE FROM DRAFT
-            await draftNewsPost.deleteOne({userId:userID})
+            images: getImgs.images,
+            createdDate: Date.now()
+        });
+
+        try {
+            if (createDraft) {
+                // The document was saved successfully
+                // You can continue with your logic here
+                await draftNewsPost.deleteOne({ userId: userID })
+            }
+        } catch (error) {
+            // Handle any errors that occurred during saving
+            return NextResponse.json({
+                msg: error,
+                code: 0
+            })
+            // You may want to send an error response if there's an issue
+            // res.status(500).json({ error: "Internal server error" });
         }
+
         return NextResponse.json({
             msg: "News created success",
             code: 1,

@@ -19,10 +19,10 @@ let NewsPostSchema = new mongoose.Schema({
     },
     images: [],
     createdDate: {
-        type: Date,
+        type: Number,
         default: Date.now()
     }
-})
+});
 
-let NewsPost = mongoose.models.NewsPost || mongoose.model("NewsPost", NewsPostSchema)
+let NewsPost = mongoose.models.NewsPost2 || mongoose.model("NewsPost2", NewsPostSchema)
 export default NewsPost

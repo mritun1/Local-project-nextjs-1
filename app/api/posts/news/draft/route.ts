@@ -30,7 +30,7 @@ export async function POST(req:NextRequest){
             //Draft not found create it
             const createDraft = await draftNewsPost.create({
                 pin:getToken.pinCode(),
-                userId:getToken.userID()
+                userId:getToken.userID(),
             })
             createDraft.save()
         }

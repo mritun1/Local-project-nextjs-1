@@ -1,5 +1,6 @@
 "use client"
 import CreatePost from '@/app/components/pages/posts/CreatePost'
+import EditPost from '@/app/components/pages/posts/EditPost';
 import AppContent from '@/app/components/templates/AppContent'
 import customDate from '@/app/lib/customDate';
 import React, { useEffect, useState } from 'react'
@@ -101,9 +102,10 @@ const Page = () => {
                                         <p>{ele.postType}</p>
                                     </div>
                                     <div>
-                                        <button className="edit"><i className="fa-solid fa-pen-to-square"></i> Edit</button>
-                                        <button className="del"><i className="fa-solid fa-trash"></i> Delete</button>
-                                        <button className="view"><i className="fa-solid fa-eye"></i> preview</button>
+                                        <EditPost
+                                            postType={ele.postType}
+                                            postId={ele._doc._id}
+                                        ></EditPost>
                                     </div>
                                 </div>
                             </div>

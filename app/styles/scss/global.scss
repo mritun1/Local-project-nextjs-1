@@ -1730,7 +1730,7 @@ body {
                     flex: 8;
                     color: $text-color2;
                     padding: 6px;
-
+                    text-align: left;
                     &>h2 {
                         padding-bottom: 0px;
                     }
@@ -1775,6 +1775,7 @@ body {
     }
 }
 .sign_up_form {
+    text-align: left;
     &>form {
         &>div {
             margin: 6px 0px;

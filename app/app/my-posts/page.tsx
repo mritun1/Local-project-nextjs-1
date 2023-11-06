@@ -1,24 +1,43 @@
 "use client"
 import CreatePost from '@/app/components/pages/posts/CreatePost'
 import AppContent from '@/app/components/templates/AppContent'
-import React, { useEffect } from 'react'
+import customDate from '@/app/lib/customDate';
+import React, { useEffect, useState } from 'react'
+
+interface Posts {
+    _doc: {
+        _id: string;
+        title: string;
+        des: string;
+        pin: number;
+        userId: string;
+        images: string[];
+        createdDate: number;
+        __v: number;
+    };
+    postType: string;
+}
 
 const Page = () => {
 
-    // //LOAD ITEMS FROM BACKEND
-    // const loadContents = async() =>{
-    //     const res = await fetch("/api/posts/admin/lists/")
-    //     if(res.ok){
-    //         const data = await res.json()
-    //         console.log(data.data)
-    //     }else{
-    //         console.log("Fetching error")
-    //     }
-    // }
-    // //EXECUTE WHILE PAGE LOAD
-    // useEffect(()=>{
-    //     //loadContents()
-    // })
+    const [postLists, setPostLists] = useState<Posts[]>([]);
+    const theDate:any = new customDate();
+
+    //LOAD ITEMS FROM BACKEND
+    const loadContents = async() =>{
+        const res = await fetch("/api/posts/admin/lists/")
+        if(res.ok){
+            const data = await res.json();
+            console.log(data.data);
+            setPostLists(data.data);
+        }else{
+            console.log("Fetching error")
+        }
+    }
+    //EXECUTE WHILE PAGE LOAD
+    useEffect(()=>{
+        loadContents();
+    },[])
 
     return (
         <>
@@ -64,78 +83,31 @@ const Page = () => {
                             </div>
                         </div>
 
-                        <div className="post_box">
-                            <div>
+                        {postLists.map((ele,index)=>(
+                            <div key={index} className="post_box">
                                 <div>
-                                    <p>20 Jan,23</p>
+                                    <div>
+                                        <p>{theDate.millisecondToString('dmy',ele._doc.createdDate)} </p>
+                                    </div>
+                                    <div>
+                                        <button>Approved</button>
+                                    </div>
                                 </div>
                                 <div>
-                                    <button>Approved</button>
-                                </div>
-                            </div>
-                            <div>
-                                <h4>This is the name of the world</h4>
-                            </div>
-                            <div>
-                                <div>
-                                    <p>Post</p>
+                                    <h4>{ele._doc.title}</h4>
                                 </div>
                                 <div>
-                                    <button className="edit"><i className="fa-solid fa-pen-to-square"></i> Edit</button>
-                                    <button className="del"><i className="fa-solid fa-trash"></i> Delete</button>
-                                    <button className="view"><i className="fa-solid fa-eye"></i> preview</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="post_box">
-                            <div>
-                                <div>
-                                    <p>20 Jan,23</p>
-                                </div>
-                                <div>
-                                    <button>Approved</button>
+                                    <div>
+                                        <p>{ele.postType}</p>
+                                    </div>
+                                    <div>
+                                        <button className="edit"><i className="fa-solid fa-pen-to-square"></i> Edit</button>
+                                        <button className="del"><i className="fa-solid fa-trash"></i> Delete</button>
+                                        <button className="view"><i className="fa-solid fa-eye"></i> preview</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div>
-                                <h4>This is the name of the world</h4>
-                            </div>
-                            <div>
-                                <div>
-                                    <p>Post</p>
-                                </div>
-                                <div>
-                                    <button className="edit"><i className="fa-solid fa-pen-to-square"></i> Edit</button>
-                                    <button className="del"><i className="fa-solid fa-trash"></i> Delete</button>
-                                    <button className="view"><i className="fa-solid fa-eye"></i> preview</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="post_box">
-                            <div>
-                                <div>
-                                    <p>20 Jan,23</p>
-                                </div>
-                                <div>
-                                    <button>Approved</button>
-                                </div>
-                            </div>
-                            <div>
-                                <h4>This is the name of the world</h4>
-                            </div>
-                            <div>
-                                <div>
-                                    <p>Post</p>
-                                </div>
-                                <div>
-                                    <button className="edit"><i className="fa-solid fa-pen-to-square"></i> Edit</button>
-                                    <button className="del"><i className="fa-solid fa-trash"></i> Delete</button>
-                                    <button className="view"><i className="fa-solid fa-eye"></i> preview</button>
-                                </div>
-                            </div>
-                        </div>
-
+                        ))}
 
 
                     </div>

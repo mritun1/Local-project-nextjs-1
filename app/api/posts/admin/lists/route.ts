@@ -1,40 +1,58 @@
 import { NextRequest, NextResponse } from "next/server";
-import getTokenData from "@/app/lib/getTokenData";
-import connectDB from "@/app/db/config";
+import LinkedList from "@/app/lib/dsa/linkedList/linkedList";
 import NewsPost from "@/app/models/posts/newsPost";
 import eventsPost from "@/app/models/posts/eventsPost";
+import connectDB from "@/app/db/config";
+import getTokenData from "@/app/lib/getTokenData";
 
-export async function GET(req: NextRequest) {
+export async function GET(req:NextRequest) {
     try {
-        await connectDB()
+        const linkedList = new LinkedList();
 
-        const getToken = new getTokenData(req)
-        const userID = getToken.userID()
+        await connectDB();
 
-        if (!userID) {
+        const token = new getTokenData(req);
+        const uId = token.userID();
+
+        if(!token && !uId){
             return NextResponse.json({
-                msg: "User not allowed"
-            }, { status: 405 })
+                msg: "You are not logged in.",
+                code: 0
+            })
         }
 
-        
-        
+        const eventsPostData = await eventsPost.find({userId:uId});
+        eventsPostData.forEach(ele => {
+            const newDoc = {
+                ...ele,
+                postType: 'Event',
+            };
+            linkedList.insertToArray(newDoc)
+        });
+
+        const NewsPostData = await NewsPost.find({ userId: uId });
+        NewsPostData.forEach(ele => {
+            const newDoc = {
+                ...ele,
+                postType: 'News',
+            };
+            linkedList.insertToArray(newDoc)
+        });
+
+        const result = linkedList.printArray();
+
+        result.sort((a, b) => b._doc.createdDate - a._doc.createdDate)
 
         return NextResponse.json({
-            data: "Api not done"
-        })
+            data: result,
+            msg: "Lists of Data",
+            code: 1
+        });
 
     } catch (err) {
         return NextResponse.json({
-            msg: err
+            msg: err,
+            code: 0
         })
     }
-}
-
-function dt(dateStr:Date){
-    const dateObject = new Date(dateStr);
-    const milliseconds = dateObject.getTime();
-
-    return milliseconds
-
 }

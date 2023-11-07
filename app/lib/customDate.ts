@@ -27,4 +27,11 @@ export default class customDate{
 
     }
 
+    isoToInput(dateStr:string){
+        const dateObject = new Date(dateStr);
+        // Format the date as "YYYY-MM-DD"
+        const formattedDate = dateObject.toISOString().split('T')[0];
+        return formattedDate;
+    }
+
 }

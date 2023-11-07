@@ -29,7 +29,6 @@ const Page = () => {
         const res = await fetch("/api/posts/admin/lists/")
         if(res.ok){
             const data = await res.json();
-            console.log(data.data);
             setPostLists(data.data);
         }else{
             console.log("Fetching error")
@@ -62,7 +61,9 @@ const Page = () => {
 
                         
 
-                        <CreatePost></CreatePost>
+                        <CreatePost
+                        loadCont={loadContents}
+                        ></CreatePost>
 
 
                         <div className="tab_menu">
@@ -105,6 +106,7 @@ const Page = () => {
                                         <EditPost
                                             postType={ele.postType}
                                             postId={ele._doc._id}
+                                            loadCont={loadContents}
                                         ></EditPost>
                                     </div>
                                 </div>

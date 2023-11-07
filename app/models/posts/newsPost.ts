@@ -21,8 +21,12 @@ let NewsPostSchema = new mongoose.Schema({
     createdDate: {
         type: Number,
         default: Date.now()
+    },
+    updatedDate: {
+        type: Number,
+        default: Date.now()
     }
 });
 
-let NewsPost = mongoose.models.NewsPost2 || mongoose.model("NewsPost2", NewsPostSchema)
+let NewsPost = mongoose.models.NewsPost4 || mongoose.model("NewsPost4", NewsPostSchema)
 export default NewsPost

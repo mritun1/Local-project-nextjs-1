@@ -4,7 +4,11 @@ import Modal from '../../temp/Modal'
 import ButtonLoading from '../../temp/ButtonLoading'
 import ImageInput from '../../temp/ImageInput'
 
-const CreatePost = () => {
+type propsType = {
+    loadCont: ()=>void,
+}
+
+const CreatePost = (props:propsType) => {
     //CHECK AND CREATE DRAFT POST
     const checkCreateDraft = async (url: string) => {
         const res = await fetch(url, {
@@ -186,6 +190,7 @@ const CreatePost = () => {
                 setEventEndDate("")
                 setModalEventHidden(!modalEventHidden)
             }
+            props.loadCont();
         } else {
             console.log("something went wrong")
         }

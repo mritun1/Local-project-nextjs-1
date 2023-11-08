@@ -1,11 +1,13 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ProgressBar from './ProgressBar'
 import axios from 'axios'
 
 type propsType = {
     service: string,
-    imgLists: Array<string>
+    serviceFor: string,
+    postId:any,
+    imgLists: Array<string>,
 }
 
 const ImageInput = (props: propsType) => {
@@ -14,14 +16,17 @@ const ImageInput = (props: propsType) => {
     const [imgUploadNum, setImgUploadNum] = useState<number>(0)
     const [imgLists, setImgLists] = useState<Array<string>>([])
 
+
     useEffect(() => {
         if (props.imgLists) {
             setImgLists(props.imgLists)
-        }
+        }        
+        
     }, [props.imgLists])
 
     let source = axios.CancelToken.source();
     const newsImgUpload = async (e: React.ChangeEvent<HTMLInputElement>, service: string) => {
+        
         source.cancel(); // Cancel the previous request, if any
         source = axios.CancelToken.source();
         const fileObj = e.target.files?.[0]
@@ -30,10 +35,13 @@ const ImageInput = (props: propsType) => {
             const formData = new FormData();
             formData.set("imgFile", fileObj)
             formData.set("service", service)
+            formData.set("serviceType",props.serviceFor)
+            formData.set("postId", props.postId)
 
             axios.post("/api/image/upload", formData, {
                 headers: {
-                    "Content-Type": "multipart/form-data"
+                    "Content-Type": "multipart/form-data",
+                    'Cache-Control': 'no-cache',
                 },
                 onUploadProgress: (event) => {
                     if (event.total !== undefined) {
@@ -46,7 +54,7 @@ const ImageInput = (props: propsType) => {
                 .then((response) => {
                     //console.log('Response data:', response.data);
                     setImgUploadState(true)
-
+                    console.log("imageinput " + props.postId)
                     setImgLists([...imgLists, response.data.image])
                     console.log(imgLists)
 
@@ -69,7 +77,9 @@ const ImageInput = (props: propsType) => {
                 },
                 body: JSON.stringify({
                     id: imgName,
-                    service: service
+                    service: service,
+                    serviceType: props.serviceFor,
+                    postId: props.postId
                 })
             })
             if (res.ok) {
@@ -90,12 +100,18 @@ const ImageInput = (props: propsType) => {
                 display={imgUploadState}
             ></ProgressBar>
 
-            <input type="file" onChange={(e) => newsImgUpload(e, props.service)} name={props.service} id={props.service} style={{ display: `none` }} />
+            <input 
+                type="file" 
+                onChange={(e) => newsImgUpload(e, props.service)} 
+                name={props.service} 
+                id={"y" + props.postId} 
+                style={{ display: `none` }} 
+            />
 
             <div id='imgGal' className="img_upload_bar">
 
                 <div className='btn_upload' >
-                    <label htmlFor={props.service}>
+                    <label htmlFor={"y" + props.postId}>
                         <div >
                             <div></div>
 

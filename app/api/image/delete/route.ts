@@ -3,10 +3,12 @@ import { Storage } from '@google-cloud/storage';
 import draftNewsPost from "@/app/models/posts/draftNewsPost";
 import getTokenData from "@/app/lib/getTokenData";
 import draftEventsPost from "@/app/models/posts/draftEventsPost";
+import NewsPost from "@/app/models/posts/newsPost";
+import eventsPost from "@/app/models/posts/eventsPost";
 
 export async function DELETE(req:NextRequest){
     try {
-        const { id,service } = await req.json();
+        const { id, service, serviceType, postId } = await req.json();
 
         const token = new getTokenData(req)
         const userID = token.userID()
@@ -20,21 +22,40 @@ export async function DELETE(req:NextRequest){
 
         try{
             await imgUpload.file(id).delete()
+            const gcp_loc = process.env.GCP_PUBLIC_LOC
 
             //INSERT THE IMAGE INTO DATABASE
-            if (service === 'news') {
-                await draftNewsPost.findOneAndUpdate({ userId: userID }, {
-                    $pull: {
-                        images: "https://storage.googleapis.com/localnii-testing/" + id
-                    }
-                }, { new: true })
+            if (serviceType === 'draft') {
+                if (service === 'news') {
+                    await draftNewsPost.findOneAndUpdate({ userId: userID }, {
+                        $pull: {
+                            images: gcp_loc + id
+                        }
+                    }, { new: true })
+                }
+                if (service === 'events') {
+                    await draftEventsPost.findOneAndUpdate({ userId: userID }, {
+                        $pull: {
+                            images: gcp_loc + id
+                        }
+                    }, { new: true })
+                }
             }
-            if (service === 'events') {
-                await draftEventsPost.findOneAndUpdate({ userId: userID }, {
-                    $pull: {
-                        images: "https://storage.googleapis.com/localnii-testing/" + id
-                    }
-                }, { new: true })
+            if (serviceType === 'published') {
+                if (service === 'news1') {
+                    await NewsPost.findOneAndUpdate({ _id: Object(postId) }, {
+                        $pull: {
+                            images: gcp_loc + id
+                        }
+                    }, { new: true })
+                }
+                if (service === 'events1') {
+                    await eventsPost.findOneAndUpdate({ _id: Object(postId) }, {
+                        $pull: {
+                            images: gcp_loc + id
+                        }
+                    }, { new: true })
+                }
             }
 
             return NextResponse.json({

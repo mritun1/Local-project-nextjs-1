@@ -2,6 +2,7 @@
 import CreatePost from '@/app/components/pages/posts/CreatePost'
 import EditPost from '@/app/components/pages/posts/EditPost';
 import AppContent from '@/app/components/templates/AppContent'
+import Loading from '@/app/components/templates/Loading';
 import customDate from '@/app/lib/customDate';
 import React, { useEffect, useState } from 'react'
 
@@ -22,25 +23,37 @@ interface Posts {
 const Page = () => {
 
     const [postLists, setPostLists] = useState<Posts[]>([]);
+    const [notFound,setNotFound] = useState<boolean>(false);
+    const [load,setLoad] = useState<boolean>(false);
     const theDate:any = new customDate();
 
     //LOAD ITEMS FROM BACKEND
-    const loadContents = async() =>{
-        const res = await fetch("/api/posts/admin/lists/")
-        if(res.ok){
+    
+    const loadContents = async () => {
+        setLoad(true);
+        const res = await fetch("/api/posts/admin/lists/");
+        if (res.ok) {
             const data = await res.json();
             setPostLists(data.data);
-        }else{
-            console.log("Fetching error")
+            if (data.data !== undefined && data.data.length > 0) {
+                setNotFound(true);
+            }
+        } else {
+            console.log("Fetching error");
         }
-    }
+        setLoad(false);
+    };
+    
     //EXECUTE WHILE PAGE LOAD
     useEffect(()=>{
         loadContents();
-    },[])
+    }, [])
 
     return (
         <>
+            {load?(
+                <Loading></Loading>
+            ):('')}
 
             <AppContent
                 mainContent={
@@ -85,33 +98,42 @@ const Page = () => {
                             </div>
                         </div>
 
-                        {postLists.map((ele,index)=>(
-                            <div key={index} className="post_box">
-                                <div>
+                        {notFound?(
+                            postLists.map((ele, index) => (
+                                <div key={index} className="post_box">
                                     <div>
-                                        <p>{theDate.millisecondToString('dmy',ele._doc.createdDate)} </p>
+                                        <div>
+                                            <p>{theDate.millisecondToString('dmy', ele._doc.createdDate)} </p>
+                                        </div>
+                                        <div>
+                                            <button>Approved</button>
+                                        </div>
                                     </div>
                                     <div>
-                                        <button>Approved</button>
+                                        <h4>{ele._doc.title}</h4>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <p>{ele.postType}</p>
+                                        </div>
+                                        <div>
+                                            <EditPost
+                                                postType={ele.postType}
+                                                postId={ele._doc._id}
+                                                loadCont={loadContents}
+                                            ></EditPost>
+                                        </div>
                                     </div>
                                 </div>
+                            ))
+                        ):(
+                            <div className="service-not-available">
                                 <div>
-                                    <h4>{ele._doc.title}</h4>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p>{ele.postType}</p>
-                                    </div>
-                                    <div>
-                                        <EditPost
-                                            postType={ele.postType}
-                                            postId={ele._doc._id}
-                                            loadCont={loadContents}
-                                        ></EditPost>
-                                    </div>
+                                    <h2><i className="fa-solid fa-triangle-exclamation"></i></h2>
+                                    <h3>Sorry! No content Found.</h3>
                                 </div>
                             </div>
-                        ))}
+                        )}
 
 
                     </div>

@@ -259,8 +259,11 @@ const CreatePost = (props:propsType) => {
 
 
                         <ImageInput
+                            key={"c3"}
                             service='news'
                             imgLists={imgLists}
+                            serviceFor='draft'
+                            postId={''}
                         ></ImageInput>
 
 
@@ -324,11 +327,14 @@ const CreatePost = (props:propsType) => {
                                 required ></textarea></div>
                         </div>
 
-                        <input type="file" name="img_file" id="img_file" style={{ display: `none` }} />
+                        {/* <input type="file" name="img_file" id="img_file" style={{ display: `none` }} /> */}
 
                         <ImageInput
+                            key={"c4"}
                             service='events'
                             imgLists={imgEventLists}
+                            serviceFor='draft'
+                            postId={''}
                         ></ImageInput>
 
                         <p className='text-color2'>Pin: 783360</p>

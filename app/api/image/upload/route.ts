@@ -7,6 +7,9 @@ import fs from 'fs';
 import getTokenData from "@/app/lib/getTokenData";
 import draftNewsPost from "@/app/models/posts/draftNewsPost";
 import draftEventsPost from "@/app/models/posts/draftEventsPost";
+import NewsPost from "@/app/models/posts/newsPost";
+import eventsPost from "@/app/models/posts/eventsPost";
+import customMath from "@/app/lib/customMath";
 
 export async function POST(req:NextRequest){
     try{
@@ -14,6 +17,8 @@ export async function POST(req:NextRequest){
         const formData = await req.formData()
         const img: File = formData.get("imgFile") as File
         const service:String = formData.get("service") as String
+        const serviceType: String = formData.get("serviceType") as String
+        const postId: String = formData.get("postId") as String
         //IF IMAGE EXISTS
         if(!img){
             return NextResponse.json({
@@ -53,31 +58,54 @@ export async function POST(req:NextRequest){
         const bucketName: any = process.env.GCP_BUCKET_NAME
         const imgUpload = storage.bucket(bucketName)
 
-        const options = {
-            destination: img.name,
-        };
-
         try {
+
+            const math = new customMath();
+            const ran: number = math.randomNum(1000);
+            const imgName: string = ran + `_` + img.name;
+
+            const options = {
+                destination: imgName,
+            };
+
             const newImg = await imgUpload.upload("uploaded/" + img.name, options);
             console.log("Image uploaded at path: " + newImg);
 
             // Construct the public URL for the uploaded image
-            const publicURL = `https://storage.googleapis.com/${bucketName}/${img.name}`;
+            const publicURL = `https://storage.googleapis.com/${bucketName}/${imgName}`;
 
             //INSERT THE IMAGE INTO DATABASE
-            if(service === 'news'){
-                await draftNewsPost.findOneAndUpdate({userId:userID},{
-                    $push:{
-                        images: publicURL
-                    }
-                },{new:true})
+            if (serviceType === 'draft'){
+                if(service === 'news'){
+                    await draftNewsPost.findOneAndUpdate({userId:userID},{
+                        $push:{
+                            images: publicURL
+                        }
+                    },{new:true})
+                }
+                if (service === 'events') {
+                    await draftEventsPost.findOneAndUpdate({ userId: userID }, {
+                        $push: {
+                            images: publicURL
+                        }
+                    }, { new: true })
+                }
             }
-            if (service === 'events') {
-                await draftEventsPost.findOneAndUpdate({ userId: userID }, {
-                    $push: {
-                        images: publicURL
-                    }
-                }, { new: true })
+            if (serviceType === 'published') {
+                if (service === 'news1') {
+                    await NewsPost.findOneAndUpdate({ _id: Object(postId) }, {
+                        $push: {
+                            images: publicURL
+                        }
+                    }, { new: true })
+                }
+                if (service === 'events1') {
+                    await eventsPost.findOneAndUpdate({ _id: Object(postId) }, {
+                        $push: {
+                            images: publicURL
+                        }
+                    }, { new: true })
+                }
             }
 
             fs.unlink("uploaded/" + img.name, error => {
@@ -91,6 +119,7 @@ export async function POST(req:NextRequest){
 
             return NextResponse.json({
                 msg: "Image uploaded success",
+                id:postId,
                 image: publicURL,
                 code: 1
             })

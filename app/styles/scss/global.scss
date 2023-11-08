@@ -2153,3 +2153,47 @@ body {
 //-----------------------------------------------------
 // PROGRESS BAR - END
 //-----------------------------------------------------
+//-----------------------------------------------------
+// CONFIRM - START
+//-----------------------------------------------------
+.confirmCont{
+    display: flex;
+    height: 40px;
+    &>div:nth-child(1){
+        flex:5;
+        text-align: left;
+        @include flex(center, left);
+        color: $text-color2;
+    }
+    &>div:nth-child(2){
+        flex: 5;
+        @include flex(center, center);
+        &>div>button{
+            @include pad_mar(6px, 6px);
+            color: $text-color2;
+            font-weight: bold;
+        }
+        &>div>.confirm{
+            @include green_btn();
+        }
+        &>div>.cancel {
+            @include red_btn();
+        }
+    }
+}
+// <div className="confirmCont">
+//     <div>
+//         <div>
+//             <h5>Are you sure to Delete?</h5>
+//         </div>
+//     </div>
+//     <div>
+//         <div>
+//             <button className='confirm'><i className="fa-solid fa-circle-check"></i> Confirm</button>
+//             <button className='cancel'><i className="fa-solid fa-xmark"></i> Cancel</button>
+//         </div>
+//     </div>
+// </div>
+//-----------------------------------------------------
+// CONFIRM - END
+//-----------------------------------------------------

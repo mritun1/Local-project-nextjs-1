@@ -3,11 +3,12 @@ import Modal from '../../temp/Modal'
 import ImageInput from '../../temp/ImageInput';
 import ButtonLoading from '../../temp/ButtonLoading';
 import customDate from '@/app/lib/customDate';
+import Confirmation from '../../temp/Confirmation';
 
 type propsType = {
     postType: String,
     postId: String,
-    loadCont: ()=>void,
+    loadCont: () => void,
 }
 
 const EditPost = (props: propsType) => {
@@ -32,13 +33,13 @@ const EditPost = (props: propsType) => {
     const [eventDes, setEventDes] = useState<string>("");
     const [eventStartDate, setEventStartDate] = useState<string>("");
     const [eventEndDate, setEventEndDate] = useState<string>("");
-    const [eventId,setEventId] = useState<string>("")
-    const [eventLoad,setEventLoad] = useState<boolean>(true);
+    const [eventId, setEventId] = useState<string>("")
+    const [eventLoad, setEventLoad] = useState<boolean>(true);
 
     const [newsTitle, setNewsTitle] = useState<string>('');
     const [newsDes, setNewsDes] = useState<string>("");
     const [newsId, setNewsId] = useState<string>("");
-    const [newsLoad,setNewsLoad] = useState<boolean>(true);
+    const [newsLoad, setNewsLoad] = useState<boolean>(true);
 
     const editModalClick = async (e: String) => {
         if (e === 'News') {
@@ -62,7 +63,7 @@ const EditPost = (props: propsType) => {
                 setEventTitle(data.data[0].title)
                 setEventDes(data.data[0].des)
                 setEventId(data.data[0]._id)
-                
+
                 const date_obj = new customDate();
 
                 const start_date = data.data[0].startDate;
@@ -80,34 +81,34 @@ const EditPost = (props: propsType) => {
         }
     }
 
-    const updateEvent = async (e:React.FormEvent<HTMLFormElement>) => {
+    const updateEvent = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setEventLoad(!eventLoad)
-        const res = await fetch("/api/posts/events/create/",{
-            method:"PUT",
-            headers:{
-                "Content-Type":"application/json"
+        const res = await fetch("/api/posts/events/create/", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 id: eventId,
-                title:eventTitle,
+                title: eventTitle,
                 des: eventDes,
                 startDate: eventStartDate,
                 endDate: eventEndDate
             })
         })
-        if(res.ok){
+        if (res.ok) {
             const data = await res.json();
             console.log(data);
             setEventLoad(true);
             setEditEvents(!editEvents);
             props.loadCont();
-        }else{
+        } else {
             console.log("Error, while getting updating");
         }
     }
 
-    const updateNews = async (e:React.FormEvent<HTMLFormElement>)=>{
+    const updateNews = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setNewsLoad(!newsLoad)
         const res = await fetch("/api/posts/news/create/", {
@@ -132,11 +133,47 @@ const EditPost = (props: propsType) => {
         }
     }
 
+    const [delModal, setDelModal] = useState<boolean>(false);
+    const clickDelModal = () => {
+        setDelModal(!delModal);
+    }
+
+    const delFetch = async (url:string) => {
+        const res = await fetch(url, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                id: props.postId,
+                postType: props.postType
+            }),
+        })
+        if (res.ok) {
+            const data = await res.json();
+            console.log(data);
+            setDelModal(!delModal);
+            props.loadCont();
+        } else {
+            console.log("Error, while Deleting");
+        }
+    }
+
+    const delFunc =  async() => {
+        await delFetch("/api/posts/delete/");
+    }
     return (
         <>
             <button onClick={() => editModalClick(props.postType)} className="edit"><i className="fa-solid fa-pen-to-square"></i> Edit</button>
-            <button className="del"><i className="fa-solid fa-trash"></i> Delete</button>
+            <button onClick={() => clickDelModal()} className="del"><i className="fa-solid fa-trash"></i> Delete</button>
             <button className="view"><i className="fa-solid fa-eye"></i> preview</button>
+
+            <Confirmation
+                modalTitle='Are you sure to delete?'
+                modalState={delModal}
+                modalClick={clickDelModal}                
+                func={delFunc}
+            ></Confirmation>
 
             <Modal
                 id="editNews"
@@ -167,10 +204,12 @@ const EditPost = (props: propsType) => {
                                 required ></textarea></div>
                         </div>
 
-
                         <ImageInput
-                            service='news'
+                            key={"c1"}
+                            service='news1'
                             imgLists={imgLists}
+                            serviceFor={"published"}
+                            postId={props.postId}
                         ></ImageInput>
 
 
@@ -231,22 +270,22 @@ const EditPost = (props: propsType) => {
                         <div className="sign_up_one_col">
                             <div>
                                 <input
-                                type={'text'}
-                                name={'eventTitle'}
-                                placeholder={'Event Title'}
-                                onChange={(e) => setEventTitle(e.target.value)}
-                                value={eventTitle}
-                                required /></div>
+                                    type={'text'}
+                                    name={'eventTitle'}
+                                    placeholder={'Event Title'}
+                                    onChange={(e) => setEventTitle(e.target.value)}
+                                    value={eventTitle + ' ' + eventTitle}
+                                    required /></div>
                         </div>
 
                         <div className="sign_up_one_col" >
                             <div style={{ height: `100px` }}>
                                 <textarea
-                                name={'eventDescription'}
-                                placeholder={'Event Description'}
-                                onChange={(e) => setEventDes(e.target.value)}
-                                value={eventDes}
-                                required ></textarea></div>
+                                    name={'eventDescription'}
+                                    placeholder={'Event Description'}
+                                    onChange={(e) => setEventDes(e.target.value)}
+                                    value={eventDes}
+                                    required ></textarea></div>
                         </div>
 
                         <input
@@ -257,8 +296,11 @@ const EditPost = (props: propsType) => {
                         />
 
                         <ImageInput
-                            service='events'
+                            key={"c2"}
+                            service='events1'
                             imgLists={imgEventLists}
+                            serviceFor={"published"}
+                            postId={props.postId}
                         ></ImageInput>
 
                         <p className='text-color2'>Pin: 783360</p>

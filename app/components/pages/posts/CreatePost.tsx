@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import Modal from '../../temp/Modal'
 import ButtonLoading from '../../temp/ButtonLoading'
 import ImageInput from '../../temp/ImageInput'
+import axios from 'axios'
 
 type propsType = {
-    loadCont: ()=>void,
+    loadCont: () => void,
 }
 
-const CreatePost = (props:propsType) => {
+const CreatePost = (props: propsType) => {
+    const [postT, setPostT] = useState<string>("")
     //CHECK AND CREATE DRAFT POST
     const checkCreateDraft = async (url: string) => {
         const res = await fetch(url, {
@@ -35,7 +37,7 @@ const CreatePost = (props:propsType) => {
 
     const showModal = async () => {
         setModalHidden(!modalHidden);
-
+        setPostT("news")
         try {
             const res = await checkCreateDraft("/api/posts/news/draft/");
 
@@ -97,6 +99,7 @@ const CreatePost = (props:propsType) => {
 
     const showEventModal = async () => {
         setModalEventHidden(!modalEventHidden)
+        setPostT("events")
         try {
             const res = await checkCreateDraft("/api/posts/events/draft/");
 
@@ -127,7 +130,7 @@ const CreatePost = (props:propsType) => {
 
                 if (data && data.res && data.res.images) {
                     setImgEventLists(data.res.images);
-                } 
+                }
 
             } else {
                 console.log("Response not OK.");
@@ -208,6 +211,51 @@ const CreatePost = (props:propsType) => {
 
 
 
+    const [imgUploadState1, setImgUploadState1] = useState<boolean>(true)
+    const [imgUploadNum1, setImgUploadNum1] = useState<string>('0')
+    let source = axios.CancelToken.source();
+    const newsImgUpload1 = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        source.cancel(); // Cancel the previous request, if any
+        source = axios.CancelToken.source();
+        const fileObj = e.target.files?.[0]
+        if (fileObj) {
+            setImgUploadState1(!imgUploadState1);
+
+            const formData = new FormData();
+            formData.set("imgFile", fileObj)
+            formData.set("service", postT)
+            formData.set("serviceType", 'draft')
+            formData.set("postId", '')
+
+            axios.post("/api/image/upload", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+                onUploadProgress: (event) => {
+                    if (event.total !== undefined) {
+                        const progress = (event.loaded / event.total) * 100;
+                        setImgUploadNum1(Math.round(progress).toString());
+                    }
+                },
+                cancelToken: source.token,
+            })
+                .then((response) => {
+                    // console.log('Response data:', response.data);
+                    setImgUploadState1(true);
+                    if (postT === 'events'){
+                        setImgEventLists([...imgEventLists, response.data.image]);
+                    }
+                    if(postT === 'news'){
+                        setImgLists([...imgLists, response.data.image]);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+        }
+    }
+
     return (
         <>
 
@@ -229,61 +277,6 @@ const CreatePost = (props:propsType) => {
             </div>
 
             <Modal
-                id="createPost"
-                title="Create News Post"
-                isHidden={modalHidden}
-                zIndex={1}
-                modalClass={''}
-                additionBtn={''}
-                closeBtn={showModal}
-            >
-
-                <div className="sign_up_form">
-                    <form onSubmit={submitHandler}>
-
-                        <p className='text-color2'>Date: 30 sept, 2023</p>
-
-                        <div className="sign_up_one_col">
-                            <div><input type={'text'} name={'newsTitle'} placeholder={'News Title'}
-                                onChange={(e) => postUpdate(e, "title")}
-                                value={newsTitle}
-                                required /></div>
-                        </div>
-
-                        <div className="sign_up_one_col" >
-                            <div style={{ height: `100px` }}><textarea name={'newsDescription'} placeholder={'News Description'}
-                                onChange={(e) => postUpdate(e, "des")}
-                                value={newsDes}
-                                required ></textarea></div>
-                        </div>
-
-
-                        <ImageInput
-                            key={"c3"}
-                            service='news'
-                            imgLists={imgLists}
-                            serviceFor='draft'
-                            postId={''}
-                        ></ImageInput>
-
-
-                        <p className='text-color2'>Pin: 783360</p>
-
-                        <ButtonLoading
-                            submitLoad={submitBtn}
-                        >
-                            <div className="btn-box right">
-                                <div>
-                                    <button type='submit' className='save'><i className="fa-solid fa-plus"></i> Create</button>
-                                </div>
-                            </div>
-                        </ButtonLoading>
-
-                    </form>
-                </div>
-            </Modal>
-
-            <Modal
                 id="createEvents"
                 title="Create Events Post"
                 isHidden={modalEventHidden}
@@ -293,7 +286,7 @@ const CreatePost = (props:propsType) => {
                 closeBtn={showEventModal}
             >
 
-                <div className="sign_up_form">
+                <div id='fromForEvent' className="sign_up_form">
                     <form onSubmit={submitEventHandler}>
 
                         <p className='text-color2'>Start Date and End Date</p>
@@ -327,14 +320,17 @@ const CreatePost = (props:propsType) => {
                                 required ></textarea></div>
                         </div>
 
-                        {/* <input type="file" name="img_file" id="img_file" style={{ display: `none` }} /> */}
+
 
                         <ImageInput
-                            key={"c4"}
-                            service='events'
+                            key="imgForEventDraft"
+                            service={postT}
                             imgLists={imgEventLists}
                             serviceFor='draft'
                             postId={''}
+                            pWidth={imgUploadNum1}
+                            pDisplay={imgUploadState1}
+                            uploadImg={newsImgUpload1}
                         ></ImageInput>
 
                         <p className='text-color2'>Pin: 783360</p>
@@ -352,6 +348,66 @@ const CreatePost = (props:propsType) => {
                     </form>
                 </div>
             </Modal>
+
+            <Modal
+                id="createNews"
+                title="Create News Post"
+                isHidden={modalHidden}
+                zIndex={1}
+                modalClass={''}
+                additionBtn={''}
+                closeBtn={showModal}
+            >
+
+                <div id='formForNews' className="sign_up_form">
+                    <form onSubmit={submitHandler}>
+
+                        <p className='text-color2'>Date: 30 sept, 2023</p>
+
+                        <div className="sign_up_one_col">
+                            <div><input type={'text'} name={'newsTitle'} placeholder={'News Title'}
+                                onChange={(e) => postUpdate(e, "title")}
+                                value={newsTitle}
+                                required /></div>
+                        </div>
+
+                        <div className="sign_up_one_col" >
+                            <div style={{ height: `100px` }}><textarea name={'newsDescription'} placeholder={'News Description'}
+                                onChange={(e) => postUpdate(e, "des")}
+                                value={newsDes}
+                                required ></textarea></div>
+                        </div>
+
+
+                        <ImageInput
+                            key="imgForNewsDraft"
+                            service={postT}
+                            imgLists={imgLists}
+                            serviceFor='draft'
+                            postId={''}
+                            pWidth={imgUploadNum1}
+                            pDisplay={imgUploadState1}
+                            uploadImg={newsImgUpload1}
+                        ></ImageInput>
+
+
+                        <p className='text-color2'>Pin: 783360</p>
+
+                        <ButtonLoading
+                            submitLoad={submitBtn}
+                        >
+                            <div className="btn-box right">
+                                <div>
+                                    <button type='submit' className='save'><i className="fa-solid fa-plus"></i> Create</button>
+                                </div>
+                            </div>
+                        </ButtonLoading>
+
+                    </form>
+                </div>
+            </Modal>
+
+
 
         </>
     )

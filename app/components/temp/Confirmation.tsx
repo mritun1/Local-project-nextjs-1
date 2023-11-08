@@ -15,6 +15,9 @@ const Confirmation = (props:propsType) => {
         setBtnLoad(false);
         props.func();
     }
+    useEffect(()=>{
+        setBtnLoad(true)
+    },[])
     return (
         <>
             <Modal

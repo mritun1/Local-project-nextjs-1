@@ -1,70 +1,21 @@
-"use client"
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProgressBar from './ProgressBar'
-import axios from 'axios'
 
 type propsType = {
     service: string,
     serviceFor: string,
     postId:any,
     imgLists: Array<string>,
+    pWidth:string,
+    pDisplay:boolean,
+    uploadImg:(e:any)=>void
 }
 
-const ImageInput = (props: propsType) => {
+const ImageInputEvents = (props: propsType) => {
     //UPLOAD IMAGE - NEWS
-    const [imgUploadState, setImgUploadState] = useState<boolean>(true)
-    const [imgUploadNum, setImgUploadNum] = useState<number>(0)
     const [imgLists, setImgLists] = useState<Array<string>>([])
 
-
-    useEffect(() => {
-        if (props.imgLists) {
-            setImgLists(props.imgLists)
-        }        
-        
-    }, [props.imgLists])
-
-    let source = axios.CancelToken.source();
-    const newsImgUpload = async (e: React.ChangeEvent<HTMLInputElement>, service: string) => {
-        
-        source.cancel(); // Cancel the previous request, if any
-        source = axios.CancelToken.source();
-        const fileObj = e.target.files?.[0]
-        if (fileObj) {
-            setImgUploadState(!imgUploadState)
-            const formData = new FormData();
-            formData.set("imgFile", fileObj)
-            formData.set("service", service)
-            formData.set("serviceType",props.serviceFor)
-            formData.set("postId", props.postId)
-
-            axios.post("/api/image/upload", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    'Cache-Control': 'no-cache',
-                },
-                onUploadProgress: (event) => {
-                    if (event.total !== undefined) {
-                        const progress = (event.loaded / event.total) * 100;
-                        setImgUploadNum(Math.round(progress));
-                    }
-                },
-                cancelToken: source.token,
-            })
-                .then((response) => {
-                    //console.log('Response data:', response.data);
-                    setImgUploadState(true)
-                    console.log("imageinput " + props.postId)
-                    setImgLists([...imgLists, response.data.image])
-                    console.log(imgLists)
-
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-
-        }
-    }
+    
     //DLETE IMAGE FUNCTION
     const delImg = async (url: string, index: number, service: string) => {
         const confrimState = window.confirm("Are you sure to Delete")
@@ -93,25 +44,32 @@ const ImageInput = (props: propsType) => {
             }
         }
     }
+    useEffect(() => {
+        setImgLists(props.imgLists);
+    }, [props.imgLists])
     return (
         <>
-            <ProgressBar
-                width={imgUploadNum.toString()}
-                display={imgUploadState}
+            <ProgressBar 
+                width={props.pWidth}
+                display={props.pDisplay}
             ></ProgressBar>
+
+            {/* <h2>Hello world</h2>
+            <p>{props.service}</p>
+            <p>{props.postId}</p> */}
 
             <input 
                 type="file" 
-                onChange={(e) => newsImgUpload(e, props.service)} 
+                onChange={(e) => props.uploadImg(e)} 
                 name={props.service} 
-                id={"y" + props.postId} 
+                id={props.service + props.postId} 
                 style={{ display: `none` }} 
             />
 
-            <div id='imgGal' className="img_upload_bar">
+            <div className="img_upload_bar">
 
                 <div className='btn_upload' >
-                    <label htmlFor={"y" + props.postId}>
+                    <label htmlFor={props.service + props.postId}>
                         <div >
                             <div></div>
 
@@ -123,8 +81,7 @@ const ImageInput = (props: propsType) => {
                     </label>
                 </div>
 
-                {imgLists ? (
-                    imgLists.map((image, index) => (
+                {imgLists.map((image, index) => (
                         <div key={index} className="btn_img">
                             <div onClick={() => delImg(image, index, props.service)} >
                                 <div style={{ backgroundImage: `url(${image})` }}></div>
@@ -135,8 +92,7 @@ const ImageInput = (props: propsType) => {
                                 </div>
                             </div>
                         </div>
-                    ))
-                ) : ""}
+                    ))}
 
 
             </div>
@@ -144,4 +100,4 @@ const ImageInput = (props: propsType) => {
     )
 }
 
-export default ImageInput
+export default ImageInputEvents

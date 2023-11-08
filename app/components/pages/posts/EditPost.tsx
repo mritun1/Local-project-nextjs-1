@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import Modal from '../../temp/Modal'
-import ImageInput from '../../temp/ImageInput';
 import ButtonLoading from '../../temp/ButtonLoading';
 import customDate from '@/app/lib/customDate';
 import Confirmation from '../../temp/Confirmation';
+import ImageInput from '../../temp/ImageInput';
+import axios from 'axios';
 
 type propsType = {
     postType: String,
@@ -12,6 +13,8 @@ type propsType = {
 }
 
 const EditPost = (props: propsType) => {
+    const [postT,setPostT] = useState<string>("")
+    const [postID,setPostID] = useState<String>("")
     const [editNews, setEditNews] = useState<boolean>(false);
     const [editEvents, setEditEvents] = useState<boolean>(false);
     const [imgLists, setImgLists] = useState<Array<string>>([]);
@@ -42,8 +45,12 @@ const EditPost = (props: propsType) => {
     const [newsLoad, setNewsLoad] = useState<boolean>(true);
 
     const editModalClick = async (e: String) => {
+
+        setPostID(props.postId);
+
         if (e === 'News') {
             setEditNews(!editNews);
+            setPostT("news1")
             const res = await getPostById("/api/posts/news/" + props.postId);
             if (res.ok) {
                 const data = await res.json();
@@ -57,6 +64,7 @@ const EditPost = (props: propsType) => {
         }
         if (e === 'Event') {
             setEditEvents(!editEvents);
+            setPostT("events1")
             const res = await getPostById("/api/posts/events/" + props.postId);
             if (res.ok) {
                 const data = await res.json();
@@ -100,12 +108,12 @@ const EditPost = (props: propsType) => {
         if (res.ok) {
             const data = await res.json();
             console.log(data);
-            setEventLoad(true);
             setEditEvents(!editEvents);
             props.loadCont();
         } else {
             console.log("Error, while getting updating");
         }
+        setEventLoad(true);
     }
 
     const updateNews = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -125,12 +133,12 @@ const EditPost = (props: propsType) => {
         if (res.ok) {
             const data = await res.json();
             console.log(data);
-            setNewsLoad(true);
             setEditNews(!editNews);
             props.loadCont();
         } else {
             console.log("Error, while getting updating");
         }
+        setNewsLoad(true);
     }
 
     const [delModal, setDelModal] = useState<boolean>(false);
@@ -162,6 +170,52 @@ const EditPost = (props: propsType) => {
     const delFunc =  async() => {
         await delFetch("/api/posts/delete/");
     }
+
+    const [imgUploadState1, setImgUploadState1] = useState<boolean>(true)
+    const [imgUploadNum1, setImgUploadNum1] = useState<string>('0')
+    let source = axios.CancelToken.source();
+    const newsImgUpload1 = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        source.cancel(); // Cancel the previous request, if any
+        source = axios.CancelToken.source();
+        const fileObj = e.target.files?.[0]
+        if (fileObj) {
+            setImgUploadState1(!imgUploadState1);
+
+            const formData = new FormData();
+            formData.set("imgFile", fileObj)
+            formData.set("service", postT)
+            formData.set("serviceType", 'published')
+            formData.set("postId", props.postId.toString())
+
+            axios.post("/api/image/upload", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+                onUploadProgress: (event) => {
+                    if (event.total !== undefined) {
+                        const progress = (event.loaded / event.total) * 100;
+                        setImgUploadNum1(Math.round(progress).toString());
+                    }
+                },
+                cancelToken: source.token,
+            })
+                .then((response) => {
+                    // console.log('Response data:', response.data);
+                    setImgUploadState1(true);
+                    if (postT === 'events1') {
+                        setImgEventLists([...imgEventLists, response.data.image]);
+                    }
+                    if (postT === 'news1') {
+                        setImgLists([...imgLists, response.data.image]);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+        }
+    }
+
     return (
         <>
             <button onClick={() => editModalClick(props.postType)} className="edit"><i className="fa-solid fa-pen-to-square"></i> Edit</button>
@@ -169,6 +223,7 @@ const EditPost = (props: propsType) => {
             <button className="view"><i className="fa-solid fa-eye"></i> preview</button>
 
             <Confirmation
+                key={props.postId.toString()}
                 modalTitle='Are you sure to delete?'
                 modalState={delModal}
                 modalClick={clickDelModal}                
@@ -176,7 +231,7 @@ const EditPost = (props: propsType) => {
             ></Confirmation>
 
             <Modal
-                id="editNews"
+                id={"editNews" + props.postId}
                 title="Edit News"
                 isHidden={editNews}
                 zIndex={1}
@@ -204,12 +259,22 @@ const EditPost = (props: propsType) => {
                                 required ></textarea></div>
                         </div>
 
+                        {/* <input
+                            type="file"
+                            name="img_file"
+                            id="img_file"
+                            style={{ display: `none` }}
+                        /> */}
+
                         <ImageInput
-                            key={"c1"}
-                            service='news1'
+                            key={"c1" + postID}
+                            service={postT}
                             imgLists={imgLists}
                             serviceFor={"published"}
-                            postId={props.postId}
+                            postId={postID}
+                            pWidth={imgUploadNum1}
+                            pDisplay={imgUploadState1}
+                            uploadImg={newsImgUpload1}
                         ></ImageInput>
 
 
@@ -230,7 +295,7 @@ const EditPost = (props: propsType) => {
             </Modal>
 
             <Modal
-                id="editEvents"
+                id={"editEvents"+props.postId}
                 title="Edit Events"
                 isHidden={editEvents}
                 zIndex={1}
@@ -288,19 +353,22 @@ const EditPost = (props: propsType) => {
                                     required ></textarea></div>
                         </div>
 
-                        <input
+                        {/* <input
                             type="file"
                             name="img_file"
                             id="img_file"
                             style={{ display: `none` }}
-                        />
+                        /> */}
 
                         <ImageInput
-                            key={"c2"}
-                            service='events1'
+                            key={"c2" + postID}
+                            service={postT}
                             imgLists={imgEventLists}
                             serviceFor={"published"}
-                            postId={props.postId}
+                            postId={postID}
+                            pWidth={imgUploadNum1}
+                            pDisplay={imgUploadState1}
+                            uploadImg={newsImgUpload1}
                         ></ImageInput>
 
                         <p className='text-color2'>Pin: 783360</p>

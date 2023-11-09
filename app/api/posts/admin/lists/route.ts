@@ -46,6 +46,8 @@ export async function GET(req:NextRequest) {
         return NextResponse.json({
             data: result,
             msg: "Lists of Data",
+            total: result.length,
+            approved: result.length,
             code: 1
         });
 

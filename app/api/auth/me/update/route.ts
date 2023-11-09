@@ -7,23 +7,41 @@ export async function PATCH(req:NextRequest){
     try{
         await connectDB();
         const body = await req.json();
+        const { firstName, lastName, profession, gender, mobile, pinCode } = body
 
-        const getData = new getTokenData(req)
-        const userID = getData.userID()
-        const todayDate = Date.now()
-        const res = await User.findByIdAndUpdate({ _id: userID }, { body, updatedDate: todayDate }, { new: true })
-        if (!res) {
+        try{
+            const getData = new getTokenData(req)
+            const userID = getData.userID()
+            const todayDate = Date.now()
+
+            console.log(userID)
+
+            const res = await User.findByIdAndUpdate(
+                { _id: Object(userID) }, // Filter
+                { 
+                    firstName,lastName, 
+                    profession,
+                    gender,
+                    mobile,
+                    pinCode,
+                    updatedDate: todayDate 
+                }, // Update
+                { new: true } // Options
+            );
+
+            console.log(res)
+
             return NextResponse.json({
-                msg: "Sorry, Update failed",
+                msg: "Update success",
+                code: 1,
+                response: body
+            })
+        }catch(err){
+            return NextResponse.json({
+                msg: err,
                 code: 0
             })
         }
-
-        return NextResponse.json({
-            msg: "Update success",
-            code: 1,
-            response: body
-        })
 
     }catch(err){
         return NextResponse.json({

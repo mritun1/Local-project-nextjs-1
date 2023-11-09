@@ -21,6 +21,10 @@ let eventsPostSchema = new mongoose.Schema({
         type: Number,
         require: true
     },
+    report: {
+        type: Number,
+        default: 0
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',

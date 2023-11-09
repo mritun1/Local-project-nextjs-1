@@ -1,12 +1,38 @@
 "use client"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const LeftMenu = () => {
       const pathname = usePathname();
+
+      const [pin,setPin] = useState<number>(0)
+
+      const loadLeft = async() =>{
+            const res = await fetch("/api/onload/leftmenu/");
+            if (res.ok) {
+                  const data = await res.json();
+                  console.log(data)
+                  if (data.code === 1) {
+                        setPin(data.pin)
+                  } else {
+                        console.log("Your are not logged in")
+                  }
+            } else {
+                  console.log("Error: fetching layout")
+            }
+      }
+
+      useEffect(()=>{
+            loadLeft()
+      },[])
+
       return (
             <>
+                  <div className="left_pin">
+                        <button><i className="fa-solid fa-street-view"></i> {pin}</button>
+                  </div>
+
                   <div className="left_menu" style={{ borderBottom: `none` }}>
                         <ul className="vertical_list">
                               <Link href="/app/local-news" className="link_color">

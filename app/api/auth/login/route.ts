@@ -42,6 +42,9 @@ export async function POST(req: Request) {
                     )
                     const logCookie: any = process.env.LOGIN_COOKIE
                     response.cookies.set(logCookie, token)
+                    //SET PIN CODE IN COOKIE
+                    const pinCookie: any = process.env.PIN_CODE
+                    response.cookies.set(pinCookie,pin_code)
                     return response
                 }else{
                     return NextResponse.json({ msg: "Sorry! Wrong Password", code: 0 })

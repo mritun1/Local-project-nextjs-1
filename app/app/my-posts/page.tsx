@@ -26,6 +26,8 @@ const Page = () => {
     const [notFound,setNotFound] = useState<boolean>(false);
     const [load,setLoad] = useState<boolean>(false);
     const theDate:any = new customDate();
+    const [total, setTotal] = useState<number>(0);
+    const [approved, setApproved] = useState<number>(0);
 
     //LOAD ITEMS FROM BACKEND
     
@@ -38,6 +40,8 @@ const Page = () => {
             if (data.data !== undefined && data.data.length > 0) {
                 setNotFound(true);
             }
+            setTotal(data.total);
+            setApproved(data.approved);
         } else {
             console.log("Fetching error");
         }
@@ -81,19 +85,19 @@ const Page = () => {
 
                         <div className="tab_menu">
                             <div>
-                                <h3>34</h3>
+                                <h3>{total}</h3>
                                 <p>Total</p>
                             </div>
                             <div>
-                                <h3>34</h3>
+                                <h3>{approved}</h3>
                                 <p>Approved</p>
                             </div>
                             <div>
-                                <h3>34</h3>
+                                <h3>0</h3>
                                 <p>Rejected</p>
                             </div>
                             <div>
-                                <h3>34</h3>
+                                <h3>0</h3>
                                 <p>Reported</p>
                             </div>
                         </div>

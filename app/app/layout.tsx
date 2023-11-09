@@ -16,13 +16,13 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
-    
+
     return (
         <main>
-            
+
             <div className={inter.className}>
 
-                
+
 
                 <MenuModal></MenuModal>
 
@@ -31,10 +31,7 @@ export default function RootLayout({
                         <div className="col_left">
 
                             <div>
-                                <div className="left_pin">
-                                    <button><i className="fa-solid fa-street-view"></i> 783360</button>
-                                </div>
-
+                                
                                 <LeftMenu></LeftMenu>
 
                             </div>
@@ -46,10 +43,10 @@ export default function RootLayout({
                     </div>
                 </div>
 
-                
-                
+
+
             </div>
-            
+
         </main>
     )
 }

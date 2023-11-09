@@ -12,12 +12,12 @@ const Page = () => {
     const [isRadioHidden, setRadioHidden] = useState<boolean>(false)
     const [isProfession, setIsProfession] = useState<boolean>(false)
 
-    const [firstName, setFirstName] = useState<any>("")
-    const [lastName, setLastName] = useState<any>("")
+    const [firstName, setFirstName] = useState<string>("")
+    const [lastName, setLastName] = useState<string>("")
     const [professionX, setProfession] = useState<string>("")
-    const [gender, setGender] = useState<any | null>(null)
-    const [mobile, setMobile] = useState<number | null>(null)
-    const [pincode, setPincode] = useState<number | null>(null)
+    const [gender, setGender] = useState<string>("")
+    const [mobile, setMobile] = useState<number>(0)
+    const [pincode, setPincode] = useState<number>(0)
 
     const loadMe = async () => {
         try {
@@ -68,7 +68,7 @@ const Page = () => {
 
             <AppContent
                 mainContent={
-                    <div className="main_content">
+                    <div id='profile_set' className="main_content">
 
                         <div className="title_bar">
                             <div>

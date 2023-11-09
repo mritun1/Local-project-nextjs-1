@@ -22,8 +22,6 @@ export default function RootLayout({
 
             <div className={inter.className}>
 
-
-
                 <MenuModal></MenuModal>
 
                 <div className="container_full">

@@ -34,4 +34,16 @@ export default class customDate{
         return formattedDate;
     }
 
+    isoToMonth(inputDateString:string){
+        //const inputDateString = "2023-11-03T00:00:00.000Z";
+        const dateObject = new Date(inputDateString);
+
+        const day = dateObject.getDate();
+        const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(dateObject);
+
+        const formattedDate = `${day} ${month}`;
+        //console.log(formattedDate); // Output: 3 Nov
+        return formattedDate;
+    }
+
 }

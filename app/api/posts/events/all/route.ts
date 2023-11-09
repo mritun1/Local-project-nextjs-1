@@ -14,12 +14,14 @@ export async function GET(
 
         if (cursor.length === 0){
             return NextResponse.json({
+                pin: pin,
                 msg: "Data Not found",
                 code: 0
             })
         }
 
         return NextResponse.json({
+            pin: pin,
             msg: "Data found",
             data: cursor,
             code: 1

@@ -29,9 +29,9 @@ const Page = () => {
         const res = await fetch("/api/posts/events/all/");
         if(res.ok){
             const data = await res.json()
+            setPin(data.pin)
             if (data.code === 1){
                 setEventLists(data.data)
-                setPin(data.data[0].pin)
                 setTotal(data.data.length)
                 if (data.data.length>0){
                     setNotFound(true)

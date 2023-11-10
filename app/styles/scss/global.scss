@@ -522,7 +522,7 @@ body {
     }
 
     &>div:nth-child(2) {
-        width: 90px;
+        width: 130px;
 
         &>div {
             text-align: right;
@@ -696,7 +696,6 @@ body {
 }
 
 .product_title {
-    padding-left: 15px;
 
     &>h2 {
         @include pad_mar(3px, 0px);

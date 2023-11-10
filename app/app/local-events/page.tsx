@@ -5,17 +5,23 @@ import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedLis
 import React, { SetStateAction, useEffect, useRef, useState } from 'react'
 
 interface EventItems {
-    createdDate:number;
-    des: string;
-    endDate: string;
-    images: Array<string>;
-    pin:number;
-    report:number;
-    startDate: string;
-    title: string;
-    updatedDate: number;
-    userId: string;
-    _id: string;
+    item:{
+        createdDate:number;
+        des: string;
+        endDate: string;
+        images: Array<string>;
+        pin:number;
+        report:number;
+        startDate: string;
+        title: string;
+        updatedDate: number;
+        userId: string;
+        _id: string;
+    };
+    user: {
+        firstName: string;
+        lastName: string;
+    };
 }
 
 const Page = () => {
@@ -33,6 +39,7 @@ const Page = () => {
             const data = await res.json()
             setPin(data.pin)
             if (data.code === 1){
+
                 setEventLists(data.data)
                 setTotal(data.data.length)
                 if (data.data.length>0){
@@ -43,7 +50,7 @@ const Page = () => {
                     const doublyLinkedLists: DoublyCircularLinkedList[] = [];
                     arr.forEach((ele: EventItems) => {
                         const doublyLL = new DoublyCircularLinkedList();
-                        ele.images.forEach((item) => {
+                        ele.item.images.forEach((item) => {
                             doublyLL.append(item);
                         });
                         doublyLinkedLists.push(doublyLL);
@@ -102,7 +109,7 @@ const Page = () => {
                                             <div>
                                                 
                                                 <div className="event_date">
-                                                    <h3><span className="event_date">Date:</span> {newDate.isoToMonth(ele.startDate)} - {newDate.isoToMonth(ele.endDate)}</h3>
+                                                    <h3><span className="event_date">Date:</span> {newDate.isoToMonth(ele.item.startDate)} - {newDate.isoToMonth(ele.item.endDate)}</h3>
                                                 </div>
 
                                                 <div className="product_images">
@@ -110,7 +117,7 @@ const Page = () => {
                                                         style={{ 
                                                             backgroundImage: `url(${
                                                                 imgState === index? imgUrl:
-                                                                ele.images[0]
+                                                                ele.item.images[0]
                                                             })` 
                                                         }}>
                                                         <div className="news_img_btn_left">
@@ -123,11 +130,11 @@ const Page = () => {
                                                 </div>
                                                 
                                                 <div className="product_title">
-                                                    <h2>{ele.title}</h2>
+                                                    <h2>{ele.item.title}</h2>
                                                 </div>
                                                 <div className="news_des">
                                                     <div>
-                                                        <p className="text-color">{ele.des}</p>
+                                                        <p className="text-color">{ele.item.des}</p>
                                                     </div>
                                                 </div>
 
@@ -135,7 +142,7 @@ const Page = () => {
                                         </div>
                                         <div className="profile">
                                             <div className="profile_name">
-                                                <a href=""><h5>Hero Name</h5></a>
+                                                <a href=""><h5>{ele.user.firstName} {ele.user.lastName}</h5></a>
                                             </div>
                                             <div className="profile_img">
                                                 <div style={{ backgroundImage: `url(https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg)` }}></div>
@@ -153,7 +160,6 @@ const Page = () => {
                                         </div>
                                     </div>
                             )}
-
 
 
                         </div>

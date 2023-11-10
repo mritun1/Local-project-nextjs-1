@@ -1,92 +1,63 @@
-// // Structure for a node
-// class Node {
-//     constructor(data, imageUrl) {
-//         this.data = data;
-//         this.imageUrl = imageUrl;
-//         this.next = null;
-//     }
-// }
+import customDoublyNode from "../customDoublyNode";
 
-// // Circular Linked List for the slideshow
-// class Slideshow {
-//     constructor() {
-//         this.head = null;
-//         this.current = null;
-//     }
+export default class DoublyCircularLinkedList {
+    head: customDoublyNode | null;
+    current: customDoublyNode | null;
 
-//     // Function to insert a node at the end of the circular linked list
-//     insert(data, imageUrl) {
-//         const newNode = new Node(data, imageUrl);
+    constructor() {
+        this.head = null;
+        this.current = null;
+    }
 
-//         if (!this.head) {
-//             this.head = newNode;
-//             newNode.next = this.head;
-//             this.current = this.head;
-//         } else {
-//             let temp = this.head;
-//             while (temp.next !== this.head) {
-//                 temp = temp.next;
-//             }
-//             temp.next = newNode;
-//             newNode.next = this.head;
-//         }
-//     }
+    // Function to insert a node at the end of the doubly circular linked list
+    append(data:any) {
+        const newNode = new customDoublyNode(data);
 
-//     // Function to move to the next image in the slideshow
-//     nextImage() {
-//         if (this.current) {
-//             this.current = this.current.next;
-//             return this.current;
-//         }
-//         return null;
-//     }
-// }
+        if (!this.head) {
+            this.head = newNode;
+            newNode.next = newNode;
+            newNode.prev = newNode;
+            this.current = newNode;
+        } else {
+            const tail:any = this.head.prev;
+            tail.next = newNode;
+            newNode.prev = tail;
+            newNode.next = this.head;
+            this.head.prev = newNode;
+        }
+    }
 
-// // Create a slideshow with images
-// const slideshow = new Slideshow();
-// slideshow.insert(1, 'image1.jpg');
-// slideshow.insert(2, 'image2.jpg');
-// slideshow.insert(3, 'image3.jpg');
-// // Add more images as needed
+    getNextData(): any | null {
+        if (!this.current) {
+            return null;
+        }
+        const nextNode = this.current.next;
+        if (nextNode) {
+            this.current = nextNode;
+            return nextNode.data;
+        } else {
+            return null; // Reached the end of the list
+        }
+    }
 
-// // Function to display the current image
-// function displayCurrentImage() {
-//     if (slideshow.current) {
-//         console.log(`Displaying Image ${slideshow.current.data}: ${slideshow.current.imageUrl}`);
-//     }
-// }
+    getPrevData(): any | null {
+        if (!this.current) {
+            return null;
+        }
+        const prevNode = this.current.prev;
+        if (prevNode) {
+            this.current = prevNode;
+            return prevNode.data;
+        } else {
+            return null; // Reached the end of the list
+        }
+    }
 
-// // Example: Clicking the "Next" button
-// // Display the initial image
-// displayCurrentImage();
-
-// // Click the "Next" button
-// slideshow.nextImage();
-// // Display the next image
-// displayCurrentImage();
-
-// // Click the "Next" button again (circular behavior)
-// slideshow.nextImage();
-// // Display the next image or go back to the first one if it reaches the end
-// displayCurrentImage();
-
-// // Click the "Next" button again (circular behavior)
-// slideshow.nextImage();
-// // Display the next image or go back to the first one if it reaches the end
-// displayCurrentImage();
-
-// // Click the "Next" button again (circular behavior)
-// slideshow.nextImage();
-// // Display the next image or go back to the first one if it reaches the end
-// displayCurrentImage();
-
-// // Click the "Next" button again (circular behavior)
-// slideshow.nextImage();
-// // Display the next image or go back to the first one if it reaches the end
-// displayCurrentImage();
-
-// // Click the "Next" button again (circular behavior)
-// slideshow.nextImage();
-// // Display the next image or go back to the first one if it reaches the end
-// displayCurrentImage();
-
+    printFirstElement() {
+        if (this.head) {
+            return this.head.data;
+        } else {
+            return null;
+        }
+    }
+}

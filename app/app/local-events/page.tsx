@@ -1,7 +1,8 @@
 "use client"
 import AppContent from '@/app/components/templates/AppContent'
 import customDate from '@/app/lib/customDate';
-import React, { useEffect, useState } from 'react'
+import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
+import React, { SetStateAction, useEffect, useRef, useState } from 'react'
 
 interface EventItems {
     createdDate:number;
@@ -24,6 +25,7 @@ const Page = () => {
     const [pin, setPin] = useState<number>(0);
     const [total, setTotal] = useState<number>(0);
     const [notFound,setNotFound] = useState<boolean>(false);
+    const [doublyLinkedLists, setDoublyLinkedLists] = useState<DoublyCircularLinkedList[]>([]);
 
     const loadEvents = async() =>{
         const res = await fetch("/api/posts/events/all/");
@@ -35,16 +37,43 @@ const Page = () => {
                 setTotal(data.data.length)
                 if (data.data.length>0){
                     setNotFound(true)
+                    //Create Image Circular linked list array
+                    const arr = data.data;
+                    
+                    const doublyLinkedLists: DoublyCircularLinkedList[] = [];
+                    arr.forEach((ele: EventItems) => {
+                        const doublyLL = new DoublyCircularLinkedList();
+                        ele.images.forEach((item) => {
+                            doublyLL.append(item);
+                        });
+                        doublyLinkedLists.push(doublyLL);
+                    });
+                    setDoublyLinkedLists(doublyLinkedLists)
+
                 }
-            }
+            } 
         }else{
             setNotFound(false)
             console.log("Error: something wrong fetching")
         }
     }
+
+    const [imgState, setImgState] = useState<number | null>(null)
+    const [imgUrl,setImgUrl] = useState<string | null>(null)
+    const getNextImg = (index: number) => (event: React.MouseEvent<HTMLDivElement>) => {
+        setImgState(index);
+        setImgUrl(doublyLinkedLists[index].getNextData());
+    };
+    const getPrevImg = (index: number) => (event: React.MouseEvent<HTMLDivElement>) => {
+        setImgState(index);
+        setImgUrl(doublyLinkedLists[index].getPrevData());
+    };
+
     useEffect(()=>{
         loadEvents();
+        
     },[])
+
     return (
         <>
             <AppContent
@@ -68,24 +97,31 @@ const Page = () => {
                             {notFound?(
                                 eventList.map((ele,index)=>(
                                     <div key={index} className="offer_post event_posts" style={{ height: `520px` }}>
+                                        
                                         <div className="events_cont">
                                             <div>
-
+                                                
                                                 <div className="event_date">
                                                     <h3><span className="event_date">Date:</span> {newDate.isoToMonth(ele.startDate)} - {newDate.isoToMonth(ele.endDate)}</h3>
                                                 </div>
 
                                                 <div className="product_images">
-                                                    <div className="news_img_sec" style={{ backgroundImage: `url(https://newspaperads.ads2publish.com/wp-content/uploads/2017/10/56th-sunder-nagar-diwali-mela-ad-delhi-times-13-10-2017.jpg)` }}>
+                                                    <div className="news_img_sec" 
+                                                        style={{ 
+                                                            backgroundImage: `url(${
+                                                                imgState === index? imgUrl:
+                                                                ele.images[0]
+                                                            })` 
+                                                        }}>
                                                         <div className="news_img_btn_left">
-                                                            <div><i className="fa-solid fa-angle-left"></i></div>
+                                                            <div onClick={getPrevImg(index)}><i className="fa-solid fa-angle-left"></i></div>
                                                         </div>
                                                         <div className="news_img_btn_right">
-                                                            <div><i className="fa-solid fa-angle-right"></i></div>
+                                                            <div onClick={getNextImg(index)} ><i className="fa-solid fa-angle-right"></i></div>
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                
                                                 <div className="product_title">
                                                     <h2>{ele.title}</h2>
                                                 </div>

@@ -215,7 +215,9 @@ const Page = () => {
 
                         <ButtonLoading
                             submitLoad={infinityLod}
-                        >Not found</ButtonLoading>
+                        >
+                            <p className='text-center'>Not found</p>
+                        </ButtonLoading>
 
                     </div>
                 }

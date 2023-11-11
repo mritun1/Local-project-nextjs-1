@@ -76,6 +76,9 @@ export async function POST(req: Request) {
             const isUserActive: any = process.env.IS_USER_ACTIVE
             response.cookies.set(logCookie, token)
             response.cookies.set(isUserActive,isUserActiveCookie)
+            //SET PIN CODE IN COOKIE
+            const pinCookie: any = process.env.PIN_CODE
+            response.cookies.set(pinCookie, pinCode)
             return response
             
         } catch (error) {

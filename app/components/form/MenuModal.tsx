@@ -9,6 +9,7 @@ const MenuModal = () => {
     const router = useRouter();
 
     const [fullName,setFullName] = useState<string>("")
+    const [profilePic, setProfilePic] = useState<string>("/icons/others/profile.webp")
 
     useEffect(()=>{
 
@@ -18,6 +19,7 @@ const MenuModal = () => {
                 const data = await res.json();
                 console.log("MenuModal.tsx")
                 setFullName(data.firstName + " " + data.lastName);
+                setProfilePic(data.profilePic)
             }
         };
 
@@ -84,7 +86,7 @@ const MenuModal = () => {
 
                             <div onClick={displayModal} className="profile_img">
                                 <div>
-                                    <div style={{ backgroundImage: `url(https://i.kinja-img.com/gawker-media/image/upload/c_fit,f_auto,g_center,q_60,w_645/0ac071df51837e4b91b71842ea368862.jpg)` }} ></div>
+                                    <div style={{ backgroundImage: `url(${profilePic})` }} ></div>
                                 </div>
                                 <div><i className="fa-solid fa-ellipsis-vertical"></i></div>
                             </div>
@@ -120,7 +122,7 @@ const MenuModal = () => {
 
                             <div className="profile_bar_btn">
                                 <div>
-                                    <div className="img" style={{ backgroundImage: `url(https://th-i.thgim.com/public/incoming/9uvnty/article67222424.ece/alternates/BASE_SQUARE/2023-08-04T094328Z_1224629970_RC2WG2AC6YU7_RTRMADP_3_WPP-RESULTS-TWITTER.JPG)` }}></div>
+                                    <div className="img" style={{ backgroundImage: `url(${profilePic})` }}></div>
                                 </div>
                                 <div>
                                     <div><Link href=""><h4>{fullName}</h4></Link></div>

@@ -259,13 +259,6 @@ const EditPost = (props: propsType) => {
                                 required ></textarea></div>
                         </div>
 
-                        {/* <input
-                            type="file"
-                            name="img_file"
-                            id="img_file"
-                            style={{ display: `none` }}
-                        /> */}
-
                         <ImageInput
                             key={"c1" + postID}
                             service={postT}
@@ -352,13 +345,6 @@ const EditPost = (props: propsType) => {
                                     value={eventDes}
                                     required ></textarea></div>
                         </div>
-
-                        {/* <input
-                            type="file"
-                            name="img_file"
-                            id="img_file"
-                            style={{ display: `none` }}
-                        /> */}
 
                         <ImageInput
                             key={"c2" + postID}

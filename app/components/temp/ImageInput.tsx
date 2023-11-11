@@ -4,18 +4,18 @@ import ProgressBar from './ProgressBar'
 type propsType = {
     service: string,
     serviceFor: string,
-    postId:any,
+    postId: any,
     imgLists: Array<string>,
-    pWidth:string,
-    pDisplay:boolean,
-    uploadImg:(e:any)=>void
+    pWidth: string,
+    pDisplay: boolean,
+    uploadImg: (e: any) => void
 }
 
 const ImageInputEvents = (props: propsType) => {
     //UPLOAD IMAGE - NEWS
     const [imgLists, setImgLists] = useState<Array<string>>([])
 
-    
+
     //DLETE IMAGE FUNCTION
     const delImg = async (url: string, index: number, service: string) => {
         const confrimState = window.confirm("Are you sure to Delete")
@@ -49,21 +49,17 @@ const ImageInputEvents = (props: propsType) => {
     }, [props.imgLists])
     return (
         <>
-            <ProgressBar 
+            <ProgressBar
                 width={props.pWidth}
                 display={props.pDisplay}
             ></ProgressBar>
 
-            {/* <h2>Hello world</h2>
-            <p>{props.service}</p>
-            <p>{props.postId}</p> */}
-
-            <input 
-                type="file" 
-                onChange={(e) => props.uploadImg(e)} 
-                name={props.service} 
-                id={props.service + props.postId} 
-                style={{ display: `none` }} 
+            <input
+                type="file"
+                onChange={(e) => props.uploadImg(e)}
+                name={props.service}
+                id={props.service + props.postId}
+                style={{ display: `none` }}
             />
 
             <div className="img_upload_bar">
@@ -82,17 +78,17 @@ const ImageInputEvents = (props: propsType) => {
                 </div>
 
                 {imgLists.map((image, index) => (
-                        <div key={index} className="btn_img">
-                            <div onClick={() => delImg(image, index, props.service)} >
-                                <div style={{ backgroundImage: `url(${image})` }}></div>
-                                <div className="btn_minus">
-                                    <div>
-                                        <i className="fa-solid fa-minus"></i>
-                                    </div>
+                    <div key={index} className="btn_img">
+                        <div onClick={() => delImg(image, index, props.service)} >
+                            <div style={{ backgroundImage: `url(${image})` }}></div>
+                            <div className="btn_minus">
+                                <div>
+                                    <i className="fa-solid fa-minus"></i>
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    </div>
+                ))}
 
 
             </div>

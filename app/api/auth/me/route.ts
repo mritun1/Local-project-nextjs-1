@@ -15,7 +15,8 @@ export async function GET(req: NextRequest) {
             mobile: getDB.mobile,
             pinCode: getDB.pinCode,
             gender: getDB.gender,
-            profession: getDB.profession
+            profession: getDB.profession,
+            profilePic: getDB.profilePic,
         });
     }catch(err){
         return NextResponse.json({

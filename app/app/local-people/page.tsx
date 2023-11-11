@@ -1,8 +1,15 @@
+"use client"
 import AppContent from '@/app/components/templates/AppContent'
+import customDate from '@/app/lib/customDate';
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const page = () => {
+
+
+const Page = () => {
+
+    
+
     return (
         <>
 
@@ -76,4 +83,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

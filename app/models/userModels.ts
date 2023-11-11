@@ -10,6 +10,9 @@ let userSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    profilePic:{
+        type:String
+    },
     pinCode:{
         type:Number,
         require: true
@@ -50,5 +53,5 @@ let userSchema = new mongoose.Schema({
 
 
 
-let User = mongoose.models.user || mongoose.model("user", userSchema);
+let User = mongoose.models.user1 || mongoose.model("user1", userSchema);
 export default User;

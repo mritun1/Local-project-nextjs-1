@@ -10,6 +10,7 @@ import draftEventsPost from "@/app/models/posts/draftEventsPost";
 import NewsPost from "@/app/models/posts/newsPost";
 import eventsPost from "@/app/models/posts/eventsPost";
 import customMath from "@/app/lib/customMath";
+import User from "@/app/models/userModels";
 
 export async function POST(req:NextRequest){
     try{
@@ -41,7 +42,7 @@ export async function POST(req:NextRequest){
         const buffer = Buffer.from(bytes)
 
         const path = join("uploaded/", img.name)
-        await writeFile(path, buffer, 'utf8', (err) => {
+        writeFile(path, buffer, 'utf8', (err) => {
             if (err) {
                 return NextResponse.json({
                     msg: err,
@@ -105,6 +106,22 @@ export async function POST(req:NextRequest){
                             images: publicURL
                         }
                     }, { new: true })
+                }
+            }
+            //PROFILE IMAGES
+            if (serviceType === 'profile') {
+                if (service === 'profile_img') {
+                    //FIND PREVIOUS IMAGE
+                    const usr = await User.findById({ _id: Object(userID) })
+                    //DELETE PREVIOUS IMAGE
+                    const rm = `https://storage.googleapis.com/localnii-testing/`
+                    if (usr && usr.profilePic) {
+                        const oldImg = usr.profilePic;
+                        const delImg = oldImg.replace(rm, "");
+                        await imgUpload.file(delImg).delete()
+                    }
+                    //UPDATE NEW IMAGE TO DATABASE
+                    await User.findByIdAndUpdate({ _id: Object(userID) }, { profilePic:publicURL})
                 }
             }
 

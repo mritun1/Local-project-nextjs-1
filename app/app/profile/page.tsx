@@ -2,8 +2,10 @@
 import DoubleInput from '@/app/components/form/singleData/DoubleInput'
 import RadioInput from '@/app/components/form/singleData/RadioInput'
 import SingleInput from '@/app/components/form/singleData/SingleInput'
+import ProgressBar from '@/app/components/temp/ProgressBar'
 import AppContent from '@/app/components/templates/AppContent'
-import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useRef, useState } from 'react'
 
 const Page = () => {
     const [isSingleInputHidden, setIsSingleInputHidden] = useState<boolean>(false)
@@ -18,6 +20,7 @@ const Page = () => {
     const [gender, setGender] = useState<string>("")
     const [mobile, setMobile] = useState<number>(0)
     const [pincode, setPincode] = useState<number>(0)
+    const [profileImg, setProfileImg] = useState<string>("")
 
     const loadMe = async () => {
         try {
@@ -30,6 +33,7 @@ const Page = () => {
                 setGender(data.gender)
                 setMobile(data.mobile)
                 setPincode(data.pinCode)
+                setProfileImg(data.profilePic)
             } else {
                 console.log("something wrong")
             }
@@ -41,7 +45,7 @@ const Page = () => {
         loadMe()
     }, [])
 
-    const showModal = () =>{
+    const showModal = () => {
         setIsSingleInputHidden(!isSingleInputHidden)
     }
 
@@ -61,7 +65,63 @@ const Page = () => {
         setIsProfession(!isProfession)
     }
 
-    
+    //IMAGE UPLOAD
+    const [imgProgress, setImgProgress] = useState<string>("0")
+    const [progress,setProgress] = useState<boolean>(true)
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    let source = axios.CancelToken.source();
+    const uploadProfile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        setProgress(false)
+        source.cancel(); // Cancel the previous request, if any
+        source = axios.CancelToken.source();
+        const fileObj = e.target.files?.[0]
+        if (fileObj) {
+
+            const formData = new FormData();
+            formData.set("imgFile", fileObj)
+            formData.set("service", "profile_img")
+            formData.set("serviceType", 'profile')
+            formData.set("postId", "")
+
+            axios.post("/api/image/upload", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+                onUploadProgress: (event) => {
+                    if (event.total !== undefined) {
+                        const progress = (event.loaded / event.total) * 100;
+                        setImgProgress(Math.round(progress).toString());
+                    }
+                },
+                cancelToken: source.token,
+            })
+                .then((response) => {
+                    setProgress(true)
+                    // console.log(response)
+                    if (response.data.code === 1){
+                        // console.log(response.data.image)
+                        setProfileImg(response.data.image);
+                        // console.log(profileImg)
+                    }
+                    
+                    if (fileInputRef.current) {
+                        // Clear the value of the file input
+                        fileInputRef.current.value = '';
+                    }
+                    
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+        }
+    }
+
+    const handleButtonClick = () => {
+        // Programmatically trigger the file input
+        fileInputRef.current?.click();
+    };
 
     return (
         <>
@@ -81,6 +141,74 @@ const Page = () => {
                                     <h4>78336  <button ><i className="fa-solid fa-location-dot"></i></button></h4>
                                 </div>
                             </div>
+                        </div>
+
+
+
+                        <div className="profile_sec">
+                            <div >
+                                <div className="center_profile">
+                                    <div>
+                                        <div style={{ backgroundImage: `url(${!profileImg?'/icons/others/profile.webp':profileImg})` }}></div>
+                                    </div>
+                                    <div>
+                                        {/* <div>
+                                            <h3>Justin Electric store</h3>
+                                        </div> */}
+                                        <div>
+
+                                            {/* <label className="online_offline">
+                                                <input type="checkbox" defaultChecked={true} />
+                                                <span className="slider round"></span>
+                                            </label> */}
+
+                                            <br /><br />
+                                            <ProgressBar
+                                                    width={imgProgress}
+                                                    display={progress}
+                                                ></ProgressBar>
+
+                                            {progress?(
+                                                <button style={{ padding: `6px` }} className='orange_btn text-color2' onClick={handleButtonClick}>
+                                                    <b><i className="fa-solid fa-pen-to-square"></i> Change</b>
+                                                </button>
+                                            ):(
+                                                null
+                                            )}
+                                            
+                                            <input
+                                                type="file"
+                                                className='text-color2'
+                                                name="upload_file"
+                                                id="upload_file"
+                                                style={{ display: 'none' }}
+                                                onChange={(e) => uploadProfile(e)}
+                                                ref={fileInputRef}
+                                            />
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            {/* <div>
+                                <div>
+                                    <button>Delivery Boy (1)</button>
+                                </div>
+                                <div>
+
+                                    <div className="more_btn">
+                                        783360
+
+                                        <MoreBtn>
+                                            <li><i className="fa-solid fa-pen-to-square"></i> Edit</li>
+                                            <li><i className="fa-solid fa-rectangle-ad"></i> Promote</li>
+                                            <li><i className="fa-solid fa-share"></i> Share</li>
+                                        </MoreBtn>
+                                    </div>
+
+                                </div>
+                            </div> */}
                         </div>
 
 
@@ -112,7 +240,7 @@ const Page = () => {
                             onClick={professionModal}
                         >{professionX}</SingleInput>
 
-                        
+
                         <RadioInput
                             id="genders"
                             title='Gender'

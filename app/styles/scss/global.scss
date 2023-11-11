@@ -240,6 +240,10 @@ $btn-orange-hov: rgb(126, 82, 2);
     color: $text-color2;
 }
 
+.orange_btn{
+    @include orange_btn();
+}
+
 @mixin input_class($mx-bo, $mx-border-radius, $mx-height) {
     border: $mx-bo;
     border-radius: $mx-border-radius;

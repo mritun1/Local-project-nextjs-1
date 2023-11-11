@@ -339,7 +339,7 @@ const EditPost = (props: propsType) => {
                                     name={'eventTitle'}
                                     placeholder={'Event Title'}
                                     onChange={(e) => setEventTitle(e.target.value)}
-                                    value={eventTitle + ' ' + eventTitle}
+                                    value={eventTitle}
                                     required /></div>
                         </div>
 

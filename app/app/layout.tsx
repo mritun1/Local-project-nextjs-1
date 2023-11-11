@@ -22,7 +22,7 @@ export default function RootLayout({
 
             <div className={inter.className}>
 
-                <MenuModal></MenuModal>
+                <MenuModal />
 
                 <div className="container_full">
                     <div className="container content_col">

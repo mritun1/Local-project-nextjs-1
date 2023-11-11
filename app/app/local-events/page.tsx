@@ -1,17 +1,18 @@
 "use client"
+import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
 import customDate from '@/app/lib/customDate';
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
-import React, { SetStateAction, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface EventItems {
-    item:{
-        createdDate:number;
+    item: {
+        createdDate: number;
         des: string;
         endDate: string;
         images: Array<string>;
-        pin:number;
-        report:number;
+        pin: number;
+        report: number;
         startDate: string;
         title: string;
         updatedDate: number;
@@ -30,43 +31,80 @@ const Page = () => {
     const newDate = new customDate();
     const [pin, setPin] = useState<number>(0);
     const [total, setTotal] = useState<number>(0);
-    const [notFound,setNotFound] = useState<boolean>(false);
+    const [notFound, setNotFound] = useState<boolean>(false);
     const [doublyLinkedLists, setDoublyLinkedLists] = useState<DoublyCircularLinkedList[]>([]);
+    const [infinityLod, setInfinityLoad] = useState<boolean>(true)
+    const [pNum,setPnum] = useState<number>(1);
 
-    const loadEvents = async() =>{
-        const res = await fetch("/api/posts/events/all/");
-        if(res.ok){
-            const data = await res.json()
-            setPin(data.pin)
-            if (data.code === 1){
+    const loadEvents2 = (num: number) => {
+        setInfinityLoad(false)
+        const res = fetch(`/api/posts/events/all/${num}/`, {
+            method: 'GET',
+            headers: {
+                'Cache-Control': 'no-cache, no-store',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                setPin(data.pin)
+                if (data.code === 1) {
+                
+                    setEventLists((prevData) => [...prevData, ...data.data]);
+                    setTotal((prevData) => prevData + data.data.length);
+                    setPnum((prev)=>prev + 1)
 
-                setEventLists(data.data)
-                setTotal(data.data.length)
-                if (data.data.length>0){
-                    setNotFound(true)
-                    //Create Image Circular linked list array
-                    const arr = data.data;
-                    
-                    const doublyLinkedLists: DoublyCircularLinkedList[] = [];
-                    arr.forEach((ele: EventItems) => {
-                        const doublyLL = new DoublyCircularLinkedList();
-                        ele.item.images.forEach((item) => {
-                            doublyLL.append(item);
+                    if (data.data.length > 0) {
+                        setNotFound(true)
+                        //Create Image Circular linked list array
+                        const arr = data.data;
+
+                        const doublyLinkedLists: DoublyCircularLinkedList[] = [];
+                        arr.forEach((ele: EventItems) => {
+                            const doublyLL = new DoublyCircularLinkedList();
+                            ele.item.images.forEach((item) => {
+                                doublyLL.append(item);
+                            });
+                            doublyLinkedLists.push(doublyLL);
                         });
-                        doublyLinkedLists.push(doublyLL);
-                    });
-                    setDoublyLinkedLists(doublyLinkedLists)
+                        setDoublyLinkedLists(prevData => [...prevData, ...doublyLinkedLists])
 
+                    }
+                    setInfinityLoad(true)
+                } else {
+                    setInfinityLoad(true)
                 }
-            } 
-        }else{
-            setNotFound(false)
-            console.log("Error: something wrong fetching")
-        }
+            })
     }
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+                loadEvents2(pNum);
+            }
+        };
+
+        // Add the event listener
+        if (typeof window !== 'undefined') {
+            window.addEventListener('scroll', handleScroll);
+        }
+
+        // Remove the event listener when the component unmounts
+        return () => {
+            if (typeof window !== 'undefined') {
+                window.removeEventListener('scroll', handleScroll);
+            }
+        };
+    }, [pNum]);
+
+
+    useEffect(() => {
+        return () => {
+            loadEvents2(1);
+        };
+    }, []);
+
     const [imgState, setImgState] = useState<number | null>(null)
-    const [imgUrl,setImgUrl] = useState<string | null>(null)
+    const [imgUrl, setImgUrl] = useState<string | null>(null)
     const getNextImg = (index: number) => (event: React.MouseEvent<HTMLDivElement>) => {
         setImgState(index);
         setImgUrl(doublyLinkedLists[index].getNextData());
@@ -75,11 +113,6 @@ const Page = () => {
         setImgState(index);
         setImgUrl(doublyLinkedLists[index].getPrevData());
     };
-
-    useEffect(()=>{
-        loadEvents();
-        
-    },[])
 
     return (
         <>
@@ -101,24 +134,23 @@ const Page = () => {
                                 </div>
                             </div>
 
-                            {notFound?(
-                                eventList.map((ele,index)=>(
+                            {notFound ? (
+                                eventList.map((ele, index) => (
                                     <div key={index} className="offer_post event_posts" style={{ height: `520px` }}>
-                                        
+
                                         <div className="events_cont">
                                             <div>
-                                                
+
                                                 <div className="event_date">
                                                     <h3><span className="event_date">Date:</span> {newDate.isoToMonth(ele.item.startDate)} - {newDate.isoToMonth(ele.item.endDate)}</h3>
                                                 </div>
 
                                                 <div className="product_images">
-                                                    <div className="news_img_sec" 
-                                                        style={{ 
-                                                            backgroundImage: `url(${
-                                                                imgState === index? imgUrl:
-                                                                ele.item.images[0]
-                                                            })` 
+                                                    <div className="news_img_sec"
+                                                        style={{
+                                                            backgroundImage: `url(${imgState === index ? imgUrl :
+                                                                    ele.item.images[0]
+                                                                })`
                                                         }}>
                                                         <div className="news_img_btn_left">
                                                             <div onClick={getPrevImg(index)}><i className="fa-solid fa-angle-left"></i></div>
@@ -128,7 +160,7 @@ const Page = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div className="product_title">
                                                     <h2>{ele.item.title}</h2>
                                                 </div>
@@ -151,20 +183,24 @@ const Page = () => {
                                         </div>
                                     </div>
                                 ))
-                                
-                            ):(
-                                    <div className="service-not-available">
-                                        <div>
-                                            <h2><i className="fa-solid fa-triangle-exclamation"></i></h2>
-                                            <h3>Sorry! No content Found.</h3>
-                                        </div>
+
+                            ) : (
+                                <div className="service-not-available">
+                                    <div>
+                                        <h2><i className="fa-solid fa-triangle-exclamation"></i></h2>
+                                        <h3>Sorry! No content Found.</h3>
                                     </div>
+                                </div>
                             )}
+
+                            <ButtonLoading
+                                submitLoad={infinityLod}
+                            >Not found</ButtonLoading>
 
 
                         </div>
 
-                        
+
 
                     </>
                 }
@@ -175,3 +211,7 @@ const Page = () => {
 }
 
 export default Page
+
+function loadEventsIfNeeded() {
+    throw new Error('Function not implemented.');
+}

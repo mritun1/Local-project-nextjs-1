@@ -36,6 +36,7 @@ const Page = () => {
         const res = await fetch("/api/posts/admin/lists/");
         if (res.ok) {
             const data = await res.json();
+            console.log(data)
             setPostLists(data.data);
             if (data.data !== undefined && data.data.length > 0) {
                 setNotFound(true);

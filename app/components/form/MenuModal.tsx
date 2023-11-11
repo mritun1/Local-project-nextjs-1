@@ -10,17 +10,22 @@ const MenuModal = () => {
 
     const [fullName,setFullName] = useState<string>("")
 
-    const loadMe = async () =>{
-        const res = await fetch("/api/auth/me")
-        if(res.ok){
-            const data = await res.json()
-            setFullName(data.firstName + " " + data.lastName)
-        }
-    }
-
     useEffect(()=>{
-        loadMe()
-    })
+
+        const fetchData = async () => {
+            const res = await fetch("/api/auth/me");
+            if (res.ok) {
+                const data = await res.json();
+                console.log("MenuModal.tsx")
+                setFullName(data.firstName + " " + data.lastName);
+            }
+        };
+
+        return () => {
+            fetchData();
+        };
+        
+    },[])
 
     const [isHidden, setIsHidden] = useState<boolean>(false);
     const displayModal = () => {

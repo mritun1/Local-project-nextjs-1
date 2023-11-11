@@ -8,23 +8,30 @@ const LeftMenu = () => {
 
       const [pin,setPin] = useState<number>(0)
 
-      const loadLeft = async() =>{
-            const res = await fetch("/api/onload/leftmenu/");
-            if (res.ok) {
-                  const data = await res.json();
-                  console.log(data)
-                  if (data.code === 1) {
-                        setPin(data.pin)
-                  } else {
-                        console.log("Your are not logged in")
-                  }
-            } else {
-                  console.log("Error: fetching layout")
-            }
-      }
-
       useEffect(()=>{
-            loadLeft()
+            const fetchData = async()=>{
+                  const res = await fetch("/api/onload/leftmenu/",{
+                        method:'GET',
+                        headers: {
+                              'Cache-Control': 'no-cache, no-store',
+                        },
+                  });
+                  if (res.ok) {
+                        const data = await res.json();
+                        console.log("LeftMenu.tsx - loaded")
+                        if (data.code === 1) {
+                              setPin(data.pin)
+                        } else {
+                              console.log("Your are not logged in")
+                        }
+                  } else {
+                        console.log("Error: fetching layout")
+                  }
+            }
+            return () => {
+                  fetchData();
+                  
+            }
       },[])
 
       return (

@@ -1,24 +1,24 @@
 import connectDB from "@/app/db/config";
-import eventsPost from "@/app/models/posts/eventsPost";
+import NewsPost from "@/app/models/posts/newsPost";
 import User from "@/app/models/userModels";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
     req: NextRequest,
-    {params}:{params:{page:number}}
+    { params }: { params: { page: number } }
 ) {
     try {
 
-        let page:number = params.page;
+        let page: number = params.page;
 
-        const limit:number = 2;
-        let offset:number = (page-1) * limit;
+        const limit: number = 2;
+        let offset: number = (page - 1) * limit;
 
         await connectDB();
 
         const pinCookie: any = process.env.PIN_CODE;
         const pin = req.cookies.get(pinCookie)?.value || "";
-        const cursor = await eventsPost.find({ pin: pin }).sort({ createdDate: -1 }).skip(offset).limit(limit);
+        const cursor = await NewsPost.find({ pin: pin }).sort({ createdDate: -1 }).skip(offset).limit(limit);
 
         if (cursor.length == 0) {
             return NextResponse.json({
@@ -36,10 +36,12 @@ export async function GET(
                 firstName: 1,
                 lastName: 1
             }); // Specify the fields you want to include
-            ArrayItems.push({ item, user: {
-                firstName: user.firstName,
-                lastName: user.lastName
-            } }); // Include only the desired fields
+            ArrayItems.push({
+                item, user: {
+                    firstName: user.firstName,
+                    lastName: user.lastName
+                }
+            }); // Include only the desired fields
         });
 
         // Wait for all promises to resolve

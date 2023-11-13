@@ -1,6 +1,5 @@
 import mongoose from "mongoose"
 
-
 let userSchema = new mongoose.Schema({
     firstName:{
         type: String,
@@ -42,16 +41,16 @@ let userSchema = new mongoose.Schema({
         default: 0,
     },
     createdDate:{
-        type: Date,
+        type: Number,
         default: Date.now()
     },
     updatedDate: {
-        type: Date,
+        type: Number,
         default: Date.now()
     },
 })
 
 
 
-let User = mongoose.models.user1 || mongoose.model("user1", userSchema);
+let User = mongoose.models.user2 || mongoose.model("user2", userSchema);
 export default User;

@@ -6,12 +6,12 @@ import React, { useEffect, useState } from 'react'
 const LeftMenu = () => {
       const pathname = usePathname();
 
-      const [pin,setPin] = useState<number>(0)
+      const [pin, setPin] = useState<number>(0)
 
-      useEffect(()=>{
-            const fetchData = async()=>{
-                  const res = await fetch("/api/onload/leftmenu/",{
-                        method:'GET',
+      useEffect(() => {
+            const fetchData = async () => {
+                  const res = await fetch("/api/onload/leftmenu/", {
+                        method: 'GET',
                         headers: {
                               'Cache-Control': 'no-cache, no-store',
                         },
@@ -30,9 +30,49 @@ const LeftMenu = () => {
             }
             return () => {
                   fetchData();
-                  
+
             }
-      },[])
+      }, [])
+
+      const [eventsCount, setEventsCount] = useState<number>(0);
+      const [newsCount, setNewsCount] = useState<number>(0);
+      const [peopleCount, setPeopleCount] = useState<number>(0);
+      const [offersCount, setOffersCount] = useState<number>(0);
+      const [marketCount, setMarketCount] = useState<number>(0);
+      const [secondhandCount, setSecondhandCount] = useState<number>(0);
+      const [businessCount, setBusinessCount] = useState<number>(0);
+      const [groupsCount, setGroupsCount] = useState<number>(0);
+
+      useEffect(() => {
+            // This function will be executed when the URL changes
+            const handleUrlChange = async () => {
+                  const res = await fetch("/api/onload/leftmenunum/", {
+                        method: 'POST',
+                        headers: {
+                              "Content-Type":"application/json"
+                        },
+                        body:JSON.stringify({
+                              code: 1
+                        })
+                  });
+                  if (res.ok) {
+                        const data = await res.json();
+                        setEventsCount(data.eventsCount)
+                        setNewsCount(data.newsCount)
+                        setPeopleCount(data.peopleCount)
+                        setOffersCount(data.offersCount)
+                        setMarketCount(data.marketCount)
+                        setSecondhandCount(data.secondhandCount)
+                        setBusinessCount(data.businessCount)
+                        setGroupsCount(data.groupsCounts)
+                  } else {
+                        console.log("Error: fetching left menu count")
+                  }
+            };
+            return () => {
+                  handleUrlChange()
+            };
+      }, [pathname]);
 
       return (
             <>
@@ -45,30 +85,30 @@ const LeftMenu = () => {
                               <Link href="/app/local-news" className="link_color">
                                     <li
                                           className={pathname === '/app/local-news' ? 'active' : ''}
-                                    ><i className="fa-solid fa-clipboard-list icon-list"></i> Local News <span className="level">0</span></li>
+                                    ><i className="fa-solid fa-clipboard-list icon-list"></i> Local News <span className="level">{newsCount}</span></li>
                               </Link>
                               <Link href="/app/local-events" className="link_color">
-                                    <li className={pathname === '/app/local-events' ? 'active' : ''}><i className="fa-regular fa-calendar icon-list"></i> Local Events <span className="level">0</span></li>
+                                    <li className={pathname === '/app/local-events' ? 'active' : ''}><i className="fa-regular fa-calendar icon-list"></i> Local Events <span className="level">{eventsCount}</span></li>
                               </Link>
                               <Link href="/app/local-offers" className="link_color">
                                     <li
                                           className={pathname === '/app/local-offers' ? 'active' : ''}
-                                    ><i className="fa-solid fa-bolt icon-list"></i> Local offers <span className="level">0</span></li>
+                                    ><i className="fa-solid fa-bolt icon-list"></i> Local offers <span className="level">{offersCount}</span></li>
                               </Link>
                               <Link href="/app/local-market" className="link_color">
-                                    <li className={pathname === '/app/local-market' ? 'active' : ''}><i className="fa-solid fa-bag-shopping icon-list"></i> Local Market <span className="level">0</span></li>
+                                    <li className={pathname === '/app/local-market' ? 'active' : ''}><i className="fa-solid fa-bag-shopping icon-list"></i> Local Market <span className="level">{marketCount}</span></li>
                               </Link>
                               <Link href="/app/local-secondhand" className="link_color">
-                                    <li className={pathname === '/app/local-secondhand' ? 'active' : ''}><i className="fa-solid fa-bag-shopping icon-list"></i> Local Secondhand <span className="level">0</span></li>
+                                    <li className={pathname === '/app/local-secondhand' ? 'active' : ''}><i className="fa-solid fa-bag-shopping icon-list"></i> Local Secondhand <span className="level">{secondhandCount}</span></li>
                               </Link>
                               <Link href="/app/local-business" className="link_color">
-                                    <li className={pathname === '/app/local-business' || pathname === '/app/local-business-cat' ? 'active' : ''}><i className="fa-solid fa-briefcase icon-list"></i> Local Business <span className="level">0</span></li>
+                                    <li className={pathname === '/app/local-business' || pathname === '/app/local-business-cat' ? 'active' : ''}><i className="fa-solid fa-briefcase icon-list"></i> Local Business <span className="level">{businessCount}</span></li>
                               </Link>
                               <Link href="/app/local-groups" className="link_color">
-                                    <li className={pathname === '/app/local-groups' ? 'active' : ''}><i className="fa-solid fa-users-rectangle icon-list"></i> Local Groups <span className="level">0</span></li>
+                                    <li className={pathname === '/app/local-groups' ? 'active' : ''}><i className="fa-solid fa-users-rectangle icon-list"></i> Local Groups <span className="level">{groupsCount}</span></li>
                               </Link>
                               <Link href="/app/local-people" className="link_color">
-                                    <li className={pathname === '/app/local-people' || pathname === '/app/local-people-cat' ? 'active' : ''}><i className="fa-solid fa-users icon-list"></i> Local People <span className="level">0</span></li>
+                                    <li className={pathname === '/app/local-people' || pathname === '/app/local-people-cat' ? 'active' : ''}><i className="fa-solid fa-users icon-list"></i> Local People <span className="level">{peopleCount}</span></li>
                               </Link>
                         </ul>
                   </div>

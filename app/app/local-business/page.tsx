@@ -1,8 +1,21 @@
+"use client"
 import AppContent from '@/app/components/templates/AppContent'
+import seenUpdate from '@/app/customlib/seenUpdate';
 import Link from 'next/link'
-import React from 'react'
+import { usePathname } from 'next/navigation';
+import React, { useEffect } from 'react'
 
-const page = () => {
+const Page = () => {
+
+    const seenUpdater = new seenUpdate();
+    const pathname = usePathname();
+
+    useEffect(() => {
+        return () => {
+            seenUpdater.update(pathname);
+        };
+    }, []);
+
   return (
     <>
           
@@ -77,4 +90,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

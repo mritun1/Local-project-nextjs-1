@@ -2,8 +2,10 @@
 import MoreBtn from '@/app/components/buttons/MoreBtn'
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
+import seenUpdate from '@/app/customlib/seenUpdate';
 import customDate from '@/app/lib/customDate';
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 interface NewsItems {
@@ -96,10 +98,13 @@ const Page = () => {
         };
     }, [pNum]);
 
+    const seenUpdater = new seenUpdate();
+    const pathname = usePathname();
 
     useEffect(() => {
         return () => {
             loadNews(1);
+            seenUpdater.update(pathname);
         };
     }, []);
 

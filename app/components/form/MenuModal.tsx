@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from 'react'
 import style from '@/app/styles/scss/localoffers.module.scss'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 const MenuModal = () => {
     const router = useRouter();
+    const pathname = usePathname();
 
     const [fullName,setFullName] = useState<string>("")
     const [profilePic, setProfilePic] = useState<string>("/icons/others/profile.webp")
@@ -14,10 +15,17 @@ const MenuModal = () => {
     useEffect(()=>{
 
         const fetchData = async () => {
-            const res = await fetch("/api/auth/me");
+            const res = await fetch("/api/auth/me",{
+                method:"POST",
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({
+                    code:1
+                })
+            });
             if (res.ok) {
                 const data = await res.json();
-                console.log("MenuModal.tsx")
                 setFullName(data.firstName + " " + data.lastName);
                 setProfilePic(data.profilePic)
             }

@@ -1,14 +1,20 @@
 "use client"
 import AppContent from '@/app/components/templates/AppContent'
-import customDate from '@/app/lib/customDate';
+import seenUpdate from '@/app/customlib/seenUpdate';
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
-
-
+import { usePathname } from 'next/navigation';
+import React, { useEffect } from 'react'
 
 const Page = () => {
 
-    
+    const seenUpdater = new seenUpdate();
+    const pathname = usePathname();
+
+    useEffect(() => {
+        return () => {
+            seenUpdater.update(pathname);
+        };
+    }, []);
 
     return (
         <>

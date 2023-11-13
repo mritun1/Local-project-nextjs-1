@@ -1,9 +1,9 @@
 "use client"
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
-import customDate from '@/app/lib/customDate';
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import goBack from '@/app/lib/goBack';
 
 interface UserItems {
     _id: string;
@@ -70,12 +70,18 @@ const Page = () => {
         };
     }, [pNum]);
 
-
+    const getBackFunc = new goBack();
+    
+    const [backUrl,setBackUrl] = useState<string>("/");
     useEffect(() => {
         return () => {
             loadPeople(1);
+            setBackUrl(getBackFunc.getUrl())
         };
     }, []);
+
+    
+    
     return (
         <>
             <AppContent
@@ -222,9 +228,9 @@ const Page = () => {
 
                         <div className="cat_title">
                             <div>
-                                <a href="/local-people">
+                                <Link href={backUrl} as={backUrl} >
                                     <div><div><i className="fa-solid fa-left-long"></i></div></div>
-                                </a>
+                                </Link>
                             </div>
                             <div>
                                 <div><h5>Other Categories</h5></div>

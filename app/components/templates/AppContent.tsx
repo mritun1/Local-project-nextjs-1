@@ -1,7 +1,8 @@
 "use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
+import goBack from '@/app/lib/goBack'
 
 type templateType = {
     mainContent: any,
@@ -10,6 +11,15 @@ type templateType = {
 
 const AppContent = (props: templateType) => {
     const pathname = usePathname();
+
+    const goBackFunc = new goBack();
+
+    useEffect(()=>{
+        return ()=>{
+            goBackFunc.setHistory(pathname);
+        }
+    },[])
+
     return (
         <>
             <div className="col_center">

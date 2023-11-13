@@ -3,7 +3,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
-const LeftMenu = () => {
+interface propsTypes {
+      toggleModal: () => void;
+}
+
+const LeftMenu = (props: propsTypes) => {
       const pathname = usePathname();
 
       const [pin, setPin] = useState<number>(0)
@@ -49,9 +53,9 @@ const LeftMenu = () => {
                   const res = await fetch("/api/onload/leftmenunum/", {
                         method: 'POST',
                         headers: {
-                              "Content-Type":"application/json"
+                              "Content-Type": "application/json"
                         },
-                        body:JSON.stringify({
+                        body: JSON.stringify({
                               code: 1
                         })
                   });
@@ -76,8 +80,9 @@ const LeftMenu = () => {
 
       return (
             <>
+
                   <div className="left_pin">
-                        <button><i className="fa-solid fa-street-view"></i> {pin}</button>
+                        <button onClick={props.toggleModal} ><i className="fa-solid fa-street-view"></i> {pin}</button>
                   </div>
 
                   <div className="left_menu" style={{ borderBottom: `none` }}>

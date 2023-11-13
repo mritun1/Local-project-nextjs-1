@@ -4,7 +4,6 @@ import eventsPost from "@/app/models/posts/eventsPost";
 import NewsPost from "@/app/models/posts/newsPost";
 import seenModels from "@/app/models/seenModels";
 import User from "@/app/models/userModels";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req:NextRequest){

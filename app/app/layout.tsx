@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import '../styles/scss/global.scss'
 import LeftMenu from '../components/templates/LeftMenu'
 import MenuModal from '../components/form/MenuModal'
+import MainContent from '../components/templates/MainContent'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,22 +27,15 @@ export default function RootLayout({
 
                 <div className="container_full">
                     <div className="container content_col">
-                        <div className="col_left">
-
-                            <div>
-                                
-                                <LeftMenu></LeftMenu>
-
-                            </div>
-
-                        </div>
+                
+                        <MainContent></MainContent>
 
                         {children}
 
                     </div>
                 </div>
 
-
+                
 
             </div>
 

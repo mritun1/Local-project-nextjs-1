@@ -31,14 +31,14 @@ const Page = () => {
     const newDate = new customDate();
     const [pin, setPin] = useState<number>(0);
     const [total, setTotal] = useState<number>(0);
-    const [notFound, setNotFound] = useState<boolean>(false);
+    const [notFound, setNotFound] = useState<boolean>(true);
     const [doublyLinkedLists, setDoublyLinkedLists] = useState<DoublyCircularLinkedList[]>([]);
     const [infinityLod, setInfinityLoad] = useState<boolean>(true)
     const [pNum, setPnum] = useState<number>(1);
 
     const loadNews = (num: number) => {
         setInfinityLoad(false)
-        const res = fetch(`/api/posts/news/all/${num}/`, {
+        fetch(`/api/posts/news/all/${num}/0/`, {
             method: 'GET',
             headers: {
                 'Cache-Control': 'no-cache, no-store',
@@ -56,7 +56,7 @@ const Page = () => {
                     setPnum((prev) => prev + 1)
 
                     if (data.data.length > 0) {
-                        setNotFound(true)
+                        
                         //Create Image Circular linked list array
                         const arr = data.data;
 
@@ -70,10 +70,13 @@ const Page = () => {
                         });
                         setDoublyLinkedLists(prevData => [...prevData, ...doublyLinkedLists])
 
+                    }else{
+                        setNotFound(false)
                     }
                     setInfinityLoad(true)
                 } else {
                     setInfinityLoad(true)
+                    setNotFound(false)
                 }
             })
     }
@@ -146,7 +149,7 @@ const Page = () => {
                                         <div className="product_news">
                                             <div className="news_date" >
                                                 <div>
-                                                    <h3 ><span className="date">Date:</span> {newDate.millisecondToString("dmy",ele.item.createdDate)}</h3>
+                                                    <h3 ><span className="date">Date:</span> {newDate.millisecondToString("dmy", ele.item.createdDate)}</h3>
                                                 </div>
 
                                                 <div className="more_btn" >

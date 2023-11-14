@@ -22,13 +22,13 @@ const Page = () => {
     const [peopleList, setPeopleLists] = useState<UserItems[]>([]);
     const [pin, setPin] = useState<number>(0);
     const [total, setTotal] = useState<number>(0);
-    const [notFound, setNotFound] = useState<boolean>(false);
+    const [notFound, setNotFound] = useState<boolean>(true);
     const [infinityLod, setInfinityLoad] = useState<boolean>(true)
     const [pNum, setPnum] = useState<number>(1);
 
     const loadPeople = (num: number) => {
         setInfinityLoad(false)
-        const res = fetch(`/api/people/all/${num}/`, {
+        const res = fetch(`/api/people/all/${num}/0/`, {
             method: 'GET',
             headers: {
                 'Cache-Control': 'no-cache, no-store',
@@ -46,6 +46,7 @@ const Page = () => {
                     setInfinityLoad(true)
                 } else {
                     setInfinityLoad(true)
+                    setNotFound(false)
                 }
             })
     }

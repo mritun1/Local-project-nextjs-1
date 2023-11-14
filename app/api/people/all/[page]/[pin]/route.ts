@@ -4,19 +4,27 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { page: number } }
+    { params }: {
+        params: {
+            page: number,
+            pin: string
+        }
+    }
 ) {
     try {
 
         let page: number = params.page;
+        let pin: string = params.pin;
 
         const limit: number = 2;
         let offset: number = (page - 1) * limit;
 
         await connectDB();
 
-        const pinCookie: any = process.env.PIN_CODE;
-        const pin = req.cookies.get(pinCookie)?.value || "";
+        if (pin === '0'){
+            const pinCookie: any = process.env.PIN_CODE;
+            pin = req.cookies.get(pinCookie)?.value || "";
+        }
 
         const cursor = await User.find({ pinCode: pin, isActive: 1 })
             .select('-password -otp -isActive -__v') // Exclude password and otp

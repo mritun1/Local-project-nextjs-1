@@ -33,14 +33,14 @@ const Page = () => {
     const newDate = new customDate();
     const [pin, setPin] = useState<number>(0);
     const [total, setTotal] = useState<number>(0);
-    const [notFound, setNotFound] = useState<boolean>(false);
+    const [notFound, setNotFound] = useState<boolean>(true);
     const [doublyLinkedLists, setDoublyLinkedLists] = useState<DoublyCircularLinkedList[]>([]);
     const [infinityLod, setInfinityLoad] = useState<boolean>(true)
     const [pNum,setPnum] = useState<number>(1);
 
     const loadEvents2 = (num: number) => {
         setInfinityLoad(false)
-        const res = fetch(`/api/posts/events/all/${num}/`, {
+        fetch(`/api/posts/events/all/${num}/0/`, {
             method: 'GET',
             headers: {
                 'Cache-Control': 'no-cache, no-store',
@@ -56,7 +56,7 @@ const Page = () => {
                     setPnum((prev)=>prev + 1)
 
                     if (data.data.length > 0) {
-                        setNotFound(true)
+                        
                         //Create Image Circular linked list array
                         const arr = data.data;
 
@@ -70,10 +70,13 @@ const Page = () => {
                         });
                         setDoublyLinkedLists(prevData => [...prevData, ...doublyLinkedLists])
 
+                    }else{
+                        setNotFound(false)
                     }
                     setInfinityLoad(true)
                 } else {
                     setInfinityLoad(true)
+                    setNotFound(false)
                 }
             })
     }
@@ -197,7 +200,7 @@ const Page = () => {
                                     </div>
                                 </div>
                             )}
-
+                            
                             <ButtonLoading
                                 submitLoad={infinityLod}
                             >Not found</ButtonLoading>

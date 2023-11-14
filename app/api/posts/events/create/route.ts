@@ -19,12 +19,15 @@ export async function POST(req: NextRequest) {
                 code: 0
             })
         }
+        //GET GET PIN
+        const pinCookie: any = process.env.PIN_CODE
+        const pin = req.cookies.get(pinCookie)?.value || '';
         //GET IMAGE ARRAY
         const getImgs = await draftEventsPost.findOne({ userId: userID })
         //Check and create the draft post
         const createDraft = await eventsPost.create({
             des, title, startDate, endDate,
-            pin: getToken.pinCode(),
+            pin: pin,
             userId: getToken.userID(),
             images: getImgs.images,
             createdDate: Date.now()

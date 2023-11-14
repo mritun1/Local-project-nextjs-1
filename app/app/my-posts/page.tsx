@@ -28,6 +28,7 @@ const Page = () => {
     const theDate:any = new customDate();
     const [total, setTotal] = useState<number>(0);
     const [approved, setApproved] = useState<number>(0);
+    const [pin, setPin] = useState<number>(0);
 
     //LOAD ITEMS FROM BACKEND
     
@@ -42,6 +43,7 @@ const Page = () => {
                 setNotFound(true);
             }
             setTotal(data.total);
+            setPin(data.pin)
             setApproved(data.approved);
         } else {
             console.log("Fetching error");
@@ -72,7 +74,7 @@ const Page = () => {
                             </div>
                             <div>
                                 <div>
-                                    <h4>78336 <button><i className="fa-solid fa-location-dot"></i></button></h4>
+                                    <h4>{pin} <button><i className="fa-solid fa-location-dot"></i></button></h4>
                                 </div>
                             </div>
                         </div>

@@ -4,12 +4,15 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
     try{
-        const body = await req.json()
-        const { pathUrl } = body
-
         const getData = new getTokenData(req)
 
         const getDB = await User.findOne({ _id: getData.userID() })
+        if (!getDB){
+            return NextResponse.json({
+                msg: "Sorry, no content",
+                code: 0
+            })
+        }
 
         return NextResponse.json({
             user_id: getData.userID(),

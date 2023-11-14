@@ -24,7 +24,12 @@ const Page = () => {
 
     const loadMe = async () => {
         try {
-            const res = await fetch("/api/auth/me")
+            const res = await fetch("/api/auth/me",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
             if (res.ok) {
                 const data = await res.json()
                 setFirstName(data.firstName)

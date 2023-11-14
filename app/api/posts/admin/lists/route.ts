@@ -43,11 +43,16 @@ export async function GET(req:NextRequest) {
 
         result.sort((a, b) => b._doc.createdDate - a._doc.createdDate)
 
+        //GET GET PIN
+        const pinCookie:any = process.env.PIN_CODE
+        const pin = req.cookies.get(pinCookie)?.value || '';
+
         return NextResponse.json({
             data: result,
             msg: "Lists of Data",
             total: result.length,
             approved: result.length,
+            pin: pin,
             code: 1
         });
 

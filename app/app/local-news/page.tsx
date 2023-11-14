@@ -127,12 +127,12 @@ const Page = () => {
                         <div className="title_bar">
                             <div>
                                 <div>
-                                    <h3><i className="fa-solid fa-clipboard-list icon-list"></i> Local News (23)</h3>
+                                    <h3><i className="fa-solid fa-clipboard-list icon-list"></i> Local News ({total})</h3>
                                 </div>
                             </div>
                             <div>
                                 <div>
-                                    <h4>78336 <button><i className="fa-solid fa-location-dot"></i></button></h4>
+                                    <h4>{pin} <button><i className="fa-solid fa-location-dot"></i></button></h4>
                                 </div>
                             </div>
                         </div>

@@ -27,7 +27,10 @@ const MenuModal = () => {
             if (res.ok) {
                 const data = await res.json();
                 setFullName(data.firstName + " " + data.lastName);
-                setProfilePic(data.profilePic)
+                if (data.profilePic){
+                    setProfilePic(data.profilePic)
+                }
+                
             }
         };
 

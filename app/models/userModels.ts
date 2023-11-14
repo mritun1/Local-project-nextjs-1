@@ -24,6 +24,9 @@ let userSchema = new mongoose.Schema({
         type:String,
         require:true
     },
+    professionSlug:{
+        type:String
+    },
     mobile:{
         type: Number,
         require: true,
@@ -52,5 +55,5 @@ let userSchema = new mongoose.Schema({
 
 
 
-let User = mongoose.models.user2 || mongoose.model("user2", userSchema);
+let User = mongoose.models.user3 || mongoose.model("user3", userSchema);
 export default User;

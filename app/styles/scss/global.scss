@@ -930,6 +930,7 @@ body {
                     @include green_btn();
                     font-weight: bold;
                     color: $text-color;
+                    width: 30px;
                 }
             }
         }

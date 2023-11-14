@@ -1,5 +1,7 @@
 import connectDB from "@/app/db/config";
+import customSearch from "@/app/lib/customSearch";
 import getTokenData from "@/app/lib/getTokenData";
+import peoplesCatModels from "@/app/models/peoples/peoplesCatModels";
 import User from "@/app/models/userModels";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -16,11 +18,23 @@ export async function PATCH(req:NextRequest){
 
             console.log(userID)
 
+            //SEARCH PROFESSION SLUG
+            let professionSlug = "Others"
+            const search = new customSearch();
+            const searchRes = await peoplesCatModels.find({})
+            searchRes.forEach((ele) => {
+                const result = search.searchByCommaSeparated(profession, ele.tags);
+                if (result) {
+                    professionSlug = ele.categoryName
+                }
+            })
+
             const res = await User.findByIdAndUpdate(
                 { _id: Object(userID) }, // Filter
                 { 
                     firstName,lastName, 
                     profession,
+                    professionSlug: professionSlug,
                     gender,
                     mobile,
                     pinCode,

@@ -143,7 +143,7 @@ const Page = () => {
                             </div>
                             <div>
                                 <div>
-                                    <h4>78336  <button ><i className="fa-solid fa-location-dot"></i></button></h4>
+                                    <h4>{pincode}  <button ><i className="fa-solid fa-location-dot"></i></button></h4>
                                 </div>
                             </div>
                         </div>

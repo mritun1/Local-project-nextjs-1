@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import validate from "@/app/lib/validate";
+import customSearch from "@/app/lib/customSearch";
+import peoplesCatModels from "@/app/models/peoples/peoplesCatModels";
 
 export async function POST(req: Request) {
     try {
@@ -60,8 +62,19 @@ export async function POST(req: Request) {
         let otp:string = "234";
         const hashOtp = await bcrypt.hash(otp, 10)
 
+        //SEARCH PROFESSION SLUG
+        let professionSlug = "Others"
+        const search = new customSearch();
+        const searchRes = await peoplesCatModels.find({})
+        searchRes.forEach((ele)=>{
+            const result = search.searchByCommaSeparated(profession, ele.tags);
+            if(result){
+                professionSlug = ele.categoryName
+            }
+        })
+
         try {
-            const newUser = new User({ firstName, lastName, pinCode, gender, profession, mobile, password: hashPassword, otp: hashOtp });
+            const newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, mobile, password: hashPassword, otp: hashOtp });
             newUser.save()
             
             const user_id = newUser._id

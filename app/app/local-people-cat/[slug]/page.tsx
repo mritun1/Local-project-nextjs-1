@@ -4,6 +4,7 @@ import AppContent from '@/app/components/templates/AppContent'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import goBack from '@/app/lib/goBack';
+import { useParams } from 'next/navigation';
 
 interface UserItems {
     _id: string;
@@ -19,20 +20,20 @@ interface UserItems {
 }
 
 const Page = () => {
+    const router = useParams()
+    const {slug} = router
+    
     const [peopleList, setPeopleLists] = useState<UserItems[]>([]);
     const [pin, setPin] = useState<number>(0);
     const [total, setTotal] = useState<number>(0);
     const [notFound, setNotFound] = useState<boolean>(true);
     const [infinityLod, setInfinityLoad] = useState<boolean>(true)
     const [pNum, setPnum] = useState<number>(1);
-
+    
     const loadPeople = (num: number) => {
         setInfinityLoad(false)
-        const res = fetch(`/api/people/all/${num}/0/`, {
+        const res = fetch(`/api/people/${slug}/${num}/0/`, {
             method: 'GET',
-            headers: {
-                'Cache-Control': 'no-cache, no-store',
-            },
         })
             .then(response => response.json())
             .then(data => {
@@ -46,7 +47,7 @@ const Page = () => {
                     setInfinityLoad(true)
                 } else {
                     setInfinityLoad(true)
-                    setNotFound(false)
+                    //setNotFound(false)
                 }
             })
     }

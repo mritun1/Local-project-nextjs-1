@@ -22,10 +22,13 @@ export async function POST(req: NextRequest) {
                 }
             ])
 
+            const all = await User.find({ pinCode: parseInt(pin_code, 10) })
+
             return NextResponse.json({
                 data: data,
                 code: 1,
-                pin: pin_code
+                allTotal: all.length,
+                pin:pin_code
             })
         } catch (err) {
             return NextResponse.json({

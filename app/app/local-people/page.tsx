@@ -15,6 +15,8 @@ const Page = () => {
     const seenUpdater = new seenUpdate();
     const pathname = usePathname();
     const [categories, setCategories] = useState<catAr[]>([])
+    const [total,setTotal] = useState<number>(0)
+    const [pin,setPin] = useState<number>(0)
 
     const getData = async () =>{
         const res = await fetch("/api/people/categories/all/",{
@@ -29,6 +31,8 @@ const Page = () => {
         if(res.ok){
             const data = await res.json();
             setCategories(data.data)
+            setTotal(data.allTotal)
+            setPin(data.pin)
         }
     }
 
@@ -50,12 +54,12 @@ const Page = () => {
                         <div className="title_bar">
                             <div>
                                 <div>
-                                    <h3><i className="fa-solid fa-users icon-list"></i> Local People (34)</h3>
+                                    <h3><i className="fa-solid fa-users icon-list"></i> Local People</h3>
                                 </div>
                             </div>
                             <div>
                                 <div>
-                                    <h4>78336 <button><i className="fa-solid fa-location-dot"></i></button></h4>
+                                    <h4>{pin} <button><i className="fa-solid fa-location-dot"></i></button></h4>
                                 </div>
                             </div>
                         </div>
@@ -63,17 +67,17 @@ const Page = () => {
                         <div className="categories_lists">
 
                             <div>
-                                <Link href="/app/local-people-cat">
+                                <Link href="/app/local-people-cat/all">
                                     <div style={{width:`100px`}}>
                                         <h3>All</h3>
-                                        <button>23</button>
+                                        <button>{total}</button>
                                     </div>
                                 </Link>
                             </div>
 
                             {categories.map((ele,index)=>(
                                 <div key={index}>
-                                    <Link href="/app/local-people-cat">
+                                    <Link href={"/app/local-people-cat/" + ele._id }>
                                         <div>
                                             <h3>{ele._id}</h3>
                                             <button>{ele.count}</button>

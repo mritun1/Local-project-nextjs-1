@@ -76,7 +76,7 @@ const Page = () => {
                     setInfinityLoad(true)
                 } else {
                     setInfinityLoad(true)
-                    setNotFound(false)
+                    // setNotFound(false)
                 }
             })
     }

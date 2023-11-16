@@ -67,7 +67,7 @@ export default function Home() {
             <div>
               <p>English(US)</p>
               <p>
-                <a href="">About us</a>
+                <a href="/blogs/others/about-us">About us</a>
                 <a href="">Terms & Conditions</a>
                 <a href="">Contact us</a>
                 <a href="">Feedback</a>

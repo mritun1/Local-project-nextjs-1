@@ -95,20 +95,20 @@ const LeftMenu = (props: propsTypes) => {
                               <Link href="/app/local-events" className="link_color">
                                     <li className={pathname === '/app/local-events' ? 'active' : ''}><i className="fa-regular fa-calendar icon-list"></i> Local Events <span className="level">{eventsCount}</span></li>
                               </Link>
-                              <Link href="/app/local-offers" className="link_color">
+                              {/* <Link href="/app/local-offers" className="link_color">
                                     <li
                                           className={pathname === '/app/local-offers' ? 'active' : ''}
                                     ><i className="fa-solid fa-bolt icon-list"></i> Local offers <span className="level">{offersCount}</span></li>
                               </Link>
                               <Link href="/app/local-market" className="link_color">
                                     <li className={pathname === '/app/local-market' ? 'active' : ''}><i className="fa-solid fa-bag-shopping icon-list"></i> Local Market <span className="level">{marketCount}</span></li>
-                              </Link>
+                              </Link>*/}
                               <Link href="/app/local-secondhand" className="link_color">
                                     <li className={pathname === '/app/local-secondhand' ? 'active' : ''}><i className="fa-solid fa-bag-shopping icon-list"></i> Local Secondhand <span className="level">{secondhandCount}</span></li>
                               </Link>
-                              <Link href="/app/local-business" className="link_color">
+                              {/* <Link href="/app/local-business" className="link_color">
                                     <li className={pathname === '/app/local-business' || pathname === '/app/local-business-cat' ? 'active' : ''}><i className="fa-solid fa-briefcase icon-list"></i> Local Business <span className="level">{businessCount}</span></li>
-                              </Link>
+                              </Link>  */}
                               <Link href="/app/local-groups" className="link_color">
                                     <li className={pathname === '/app/local-groups' ? 'active' : ''}><i className="fa-solid fa-users-rectangle icon-list"></i> Local Groups <span className="level">{groupsCount}</span></li>
                               </Link>
@@ -123,24 +123,24 @@ const LeftMenu = (props: propsTypes) => {
                               <Link href="/app/my-posts" className="link_color">
                                     <li className={pathname === '/app/my-posts' ? 'active' : ''}><i className="fa-solid fa-newspaper icon-list"></i> My Posts <span className="level" style={{ color: `#9ea79f` }}><i className="fa-solid fa-plus"></i></span></li>
                               </Link>
-                              <Link href="/app/my-market" className="link_color">
+                              {/* <Link href="/app/my-market" className="link_color">
                                     <li className={pathname === '/app/my-market' ? 'active' : ''}><i className="fa-solid fa-boxes-stacked icon-list"></i> My Market <span className="level" style={{ color: `#9ea79f` }}><i className="fa-solid fa-plus"></i></span></li>
                               </Link>
                               <Link href="/app/my-stores" className="link_color">
                                     <li className={pathname === '/app/my-stores' ? 'active' : ''}><i className="fa-solid fa-store icon-list"></i> My Stores <span className="level" style={{ color: `#9ea79f` }}><i className="fa-solid fa-plus"></i></span></li>
-                              </Link>
+                              </Link> */}
                               <Link href="/app/my-referral" className="link_color">
                                     <li className={pathname === '/app/my-referral' ? 'active' : ''}><i className="fa-solid fa-users-rays icon-list"></i> My Referral <span className="level" style={{ color: `#9ea79f` }}><i className="fa-solid fa-plus"></i></span></li>
                               </Link>
-                              <Link href="/app/delivery-boy" className="link_color">
+                              {/* <Link href="/app/delivery-boy" className="link_color">
                                     <li className={pathname === '/app/delivery-boy' ? 'active' : ''}><i className="fa-solid fa-truck icon-list"></i> Delivery Boy</li>
-                              </Link>
+                              </Link> */}
                               <Link href="/app/my-earnings" className="link_color">
-                                    <li className={pathname === '/app/my-earnings' ? 'active' : ''}><i className="fa-solid fa-sack-dollar icon-list"></i> My Earnings <span className="level"><i className="fa-solid fa-indian-rupee-sign"></i>200</span></li>
+                                    <li className={pathname === '/app/my-earnings' ? 'active' : ''}><i className="fa-solid fa-sack-dollar icon-list"></i> My Earnings <span className="level"><i className="fa-solid fa-indian-rupee-sign"></i>0</span></li>
                               </Link>
-                              <Link href="/app/my-advertisement" className="link_color">
+                              {/* <Link href="/app/my-advertisement" className="link_color">
                                     <li className={pathname === '/app/my-advertisement' ? 'active' : ''}><i className="fa-solid fa-bullhorn icon-list"></i> My Advertisement</li>
-                              </Link>
+                              </Link> */}
 
                         </ul>
                   </div>

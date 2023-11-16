@@ -22,7 +22,15 @@ const page = () => {
                             </div>
                         </div>
 
-                        <div className="referral_box">
+                        <div className="service-not-available">
+                            <div>
+                                <h2><i className="fa-regular fa-hourglass-half"></i></h2>
+                                <h3>Coming Soon! Please wait for some more days.</h3>
+                                <h1>Thank You.</h1>
+                            </div>
+                        </div>
+
+                        {/* <div className="referral_box">
                             <div>
                                 <h3>Referral Link</h3>
                             </div>
@@ -93,7 +101,7 @@ const page = () => {
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> */}
 
                     </div>
                 }

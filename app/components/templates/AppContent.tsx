@@ -46,19 +46,19 @@ const AppContent = (props: templateType) => {
 
                     <div className="left_menu">
                         <ul className="vertical_list">
-                            <a href="" className="link_color2">
+                            {/* <a href="" className="link_color2">
                                 <li><i className="fa-regular fa-rectangle-list icon-list"></i> My Orders <span className="level">0</span></li>
                             </a>
                             <a href="/my-business-contacts" className="link_color2">
                                 <li><i className="fa-regular fa-id-card icon-list"></i> My Business Contacts <span className="level">0</span></li>
-                            </a>
-                            <a href="/my-contacts" className="link_color2">
+                            </a> */}
+                            <a href="/app/my-contacts" className="link_color2">
                                 <li><i className="fa-solid fa-address-book icon-list"></i> My Contacts <span className="level">0</span></li>
                             </a>
-                            <a href="/my-saved" className="link_color2">
+                            <a href="/app/my-saved" className="link_color2">
                                 <li><i className="fa-solid fa-floppy-disk icon-list"></i> My Saved <span className="level">0</span></li>
                             </a>
-                            <a href="/my-groups" className="link_color2">
+                            <a href="/app/my-groups" className="link_color2">
                                 <li><i className="fa-solid fa-users-rectangle icon-list"></i> My Groups <span className="level">0</span></li>
                             </a>
                             
@@ -73,18 +73,18 @@ const AppContent = (props: templateType) => {
                             <Link href="/app/settings" className="link_color">
                                 <li className={pathname === '/app/settings' ? 'active' : ''} ><i className="fa-solid fa-gear icon-list"></i> Settings</li>
                             </Link>
-                            <Link href="/my-analytics" className="link_color2">
+                            {/* <Link href="/my-analytics" className="link_color2">
                                 <li><i className="fa-solid fa-chart-simple icon-list"></i> My Analytics</li>
-                            </Link>
+                            </Link> */}
                         </ul>
                     </div>
 
                     <div className="left_menu" style={{ borderBottom: `none` }}>
                         <ul className="vertical_list">
-                            <a href="" className="link_color2">
+                            <a href="/app/pin-code-map" className="link_color2">
                                 <li><i className="fa-solid fa-map icon-list"></i> PinCode Map</li>
                             </a>
-                            <a href="" className="link_color2">
+                            <a href="/app/blogs" className="link_color2">
                                 <li><i className="fa-solid fa-book icon-list"></i> Guide & Helps</li>
                             </a>
                         </ul>

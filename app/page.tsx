@@ -11,11 +11,11 @@ export default function Home() {
 
           <div>
 
-            <div style={{ background: `url(https://wallpaperaccess.com/full/397969.jpg)` }}>
+            <div style={{ background: `url(/icons/others/home.webp)` }}>
 
               <div>
                 <h1>Localnii</h1>
-                <p>To stay connected locally. Local Social network for business only. Hyperlocal content sharing platform.</p>
+                <p>To stay connected locally. Local Social network for business only. Hyper local content sharing platform.</p>
               </div>
 
             </div>

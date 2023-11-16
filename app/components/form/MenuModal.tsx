@@ -62,6 +62,11 @@ const MenuModal = () => {
         }
     }
 
+    const goHref = (e:string) =>{
+        router.push(e)
+        setIsHidden(false)
+    }
+
     return (
         <>
 
@@ -78,21 +83,21 @@ const MenuModal = () => {
                     <div >
 
                         <div className="menu">
-                            <div title="Delivery Order">
+                            {/* <div title="Delivery Order">
                                 <button><i className="fa-solid fa-truck"></i></button>
                                 <button>2</button>
                             </div>
                             <div title="Sell Order">
                                 <button><i className="fa-solid fa-clipboard-check"></i></button>
                                 <button>2</button>
-                            </div>
-                            <div title="Messages">
+                            </div> */}
+                            <div title="Messages" onClick={() => goHref('/app/message')}>
                                 <button><i className="fa-solid fa-message"></i></button>
-                                <button>2</button>
+                                <button>0</button>
                             </div>
-                            <div title="Notification">
+                            <div title="Notification" onClick={() => goHref('/app/notification')}>
                                 <button><i className="fa-solid fa-bell"></i></button>
-                                <button>9+</button>
+                                <button>0</button>
                             </div>
 
                             <div onClick={displayModal} className="profile_img">
@@ -152,7 +157,7 @@ const MenuModal = () => {
 
                                 <div className='circle-gal-btn'>
                                     <div className="img">
-                                        <div><i className="fa-solid fa-sack-dollar"></i></div>
+                                        <div onClick={()=>goHref('/app/my-earnings')}><i className="fa-solid fa-sack-dollar"></i></div>
                                     </div>
                                     <div className="btn">
                                         <p>Earnings</p>
@@ -161,28 +166,28 @@ const MenuModal = () => {
 
                                 <div className='circle-gal-btn'>
                                     <div className="img">
-                                        <div><i className="fa-solid fa-bullhorn"></i></div>
+                                        <div onClick={() => goHref('/app/my-groups')}><i className="fa-solid fa-users-rectangle"></i></div>
                                     </div>
                                     <div className="btn">
-                                        <p>My Ads</p>
+                                        <p>Groups</p>
                                     </div>
                                 </div>
 
                                 <div className='circle-gal-btn'>
                                     <div className="img">
-                                        <div><i className="fa-solid fa-chart-simple"></i></div>
+                                        <div onClick={() => goHref('/app/my-contacts')}><i className="fa-solid fa-address-book"></i></div>
                                     </div>
                                     <div className="btn">
-                                        <p>Analytics</p>
+                                        <p>Contacts</p>
                                     </div>
                                 </div>
 
                                 <div className='circle-gal-btn'>
                                     <div className="img">
-                                        <div><i className="fa-solid fa-map"></i></div>
+                                        <div onClick={() => goHref('/app/my-saved')}><i className="fa-solid fa-floppy-disk"></i></div>
                                     </div>
                                     <div className="btn">
-                                        <p>Map</p>
+                                        <p>Saved</p>
                                     </div>
                                 </div>
 
@@ -210,8 +215,8 @@ const MenuModal = () => {
                             </div>
                             {/* ROW 1 END */}
 
-                            {/* ROW 1 START */}
-                            <div className='display-flex'>
+                            {/* ROW 2 START */}
+                            {/* <div className='display-flex'>
 
                                 <div className='circle-gal-btn'>
                                     <div className="img">
@@ -233,32 +238,32 @@ const MenuModal = () => {
 
                                 <div className='circle-gal-btn'>
                                     <div className="img">
-                                        <div><i className="fa-solid fa-address-book"></i></div>
+                                        <div><i className="fa-solid fa-chart-simple"></i></div>
                                     </div>
                                     <div className="btn">
-                                        <p>Contacts</p>
+                                        <p>Analytics</p>
                                     </div>
                                 </div>
 
                                 <div className='circle-gal-btn'>
                                     <div className="img">
-                                        <div><i className="fa-solid fa-floppy-disk"></i></div>
+                                        <div><i className="fa-solid fa-map"></i></div>
                                     </div>
                                     <div className="btn">
-                                        <p>Saved</p>
+                                        <p>Map</p>
                                     </div>
                                 </div>
 
                                 <div className='circle-gal-btn'>
                                     <div className="img">
-                                        <div><i className="fa-solid fa-users-rectangle"></i></div>
+                                        <div><i className="fa-solid fa-bullhorn"></i></div>
                                     </div>
                                     <div className="btn">
-                                        <p>Groups</p>
+                                        <p>My Ads</p>
                                     </div>
                                 </div>
 
-                            </div>
+                            </div> */}
                             {/* ROW 2 END */}
 
                         </div>

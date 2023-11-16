@@ -76,7 +76,9 @@ const Page = () => {
                     setInfinityLoad(true)
                 } else {
                     setInfinityLoad(true)
-                    // setNotFound(false)
+                    if (num === 1) {
+                        setNotFound(false)
+                    }
                 }
             })
     }
@@ -203,7 +205,7 @@ const Page = () => {
                             
                             <ButtonLoading
                                 submitLoad={infinityLod}
-                            >Not found</ButtonLoading>
+                            >.</ButtonLoading>
 
 
                         </div>

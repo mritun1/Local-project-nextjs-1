@@ -23,7 +23,15 @@ const Page = () => {
                             </div>
                         </div>
 
-                        <div className="post_create_btns">
+                        <div className="service-not-available">
+                            <div>
+                                <h2><i className="fa-regular fa-hourglass-half"></i></h2>
+                                <h3>Coming Soon! Please wait for some more days.</h3>
+                                <h1>Thank You.</h1>
+                            </div>
+                        </div>
+
+                        {/* <div className="post_create_btns">
                             <div>
                                 <div>
                                     <h5>Total Balance</h5>
@@ -160,7 +168,7 @@ const Page = () => {
                                     <button>Withdraw</button>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
 
                     </div>

@@ -93,7 +93,7 @@ const Page = () => {
                         <div className="title_bar">
                             <div>
                                 <div>
-                                    <h3><i className="fa-solid fa-tag"></i> Software Engineers ({total})</h3>
+                                    <h3><i className="fa-solid fa-tag"></i> {slug} ({total})</h3>
                                 </div>
                             </div>
                             <div>
@@ -142,7 +142,7 @@ const Page = () => {
 
                         <ButtonLoading
                             submitLoad={infinityLod}
-                        >Not found</ButtonLoading>
+                        >.</ButtonLoading>
 
                         {/* <div className="business">
                             <div>

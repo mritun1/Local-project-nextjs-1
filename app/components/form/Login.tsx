@@ -48,7 +48,7 @@ const Login = () => {
             setMsg(data.msg)
             if (data.code === 1) {
                 setStatus('success')
-                router.push("app/local-offers")
+                router.push("app/local-news")
             }else if (data.code === 2){
                 setActivateModal(false)
                 setStatus('danger')

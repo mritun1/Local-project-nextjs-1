@@ -60,6 +60,8 @@ const SecondHandPublicPostBtn = (props:propsType) => {
                 <h3 className='text-color2'>{props.contact1}</h3>
                 <p className='text-color2'>{props.contact2}</p>
 
+                
+
             </Modal>
         </>
     )

@@ -114,7 +114,8 @@ button {
 }
 
 input,
-textarea {
+textarea,
+select {
     padding: 6px;
     outline: none;
     border: none;
@@ -251,7 +252,8 @@ $btn-orange-hov: rgb(126, 82, 2);
     height: $mx-height;
 
     &>input,
-    &>textarea {
+    &>textarea,
+    &>select {
         border-radius: $mx-border-radius;
         @include position(absolute, 0px, 0px);
         right: 0px;
@@ -1792,7 +1794,8 @@ body {
                 @include input_class(none, 6px, 30px);
 
                 &>input,
-                &>textarea {
+                &>textarea,
+                &>select {
                     background-color: $text-color;
                 }
             }

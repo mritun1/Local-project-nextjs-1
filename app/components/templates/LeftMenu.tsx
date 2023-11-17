@@ -121,13 +121,16 @@ const LeftMenu = (props: propsTypes) => {
                   <div className="left_menu">
                         <ul className="vertical_list">
                               <Link href="/app/my-posts" className="link_color">
-                                    <li className={pathname === '/app/my-posts' ? 'active' : ''}><i className="fa-solid fa-newspaper icon-list"></i> My Posts <span className="level" style={{ color: `#9ea79f` }}><i className="fa-solid fa-plus"></i></span></li>
+                                    <li className={pathname === '/app/my-posts' ? 'active' : ''}><i className="fa-solid fa-newspaper icon-list"></i> Add Posts <span className="level" style={{ color: `#9ea79f` }}><i className="fa-solid fa-plus"></i></span></li>
+                              </Link>
+                              <Link href="/app/my-secondhand" className="link_color">
+                                    <li className={pathname === '/app/my-secondhand' ? 'active' : ''}><i className="fa-solid fa-recycle icon-list"></i> Add Secondhand <span className="level" style={{ color: `#9ea79f` }}><i className="fa-solid fa-plus"></i></span></li>
                               </Link>
                               {/* <Link href="/app/my-market" className="link_color">
-                                    <li className={pathname === '/app/my-market' ? 'active' : ''}><i className="fa-solid fa-boxes-stacked icon-list"></i> My Market <span className="level" style={{ color: `#9ea79f` }}><i className="fa-solid fa-plus"></i></span></li>
+                                    <li className={pathname === '/app/my-market' ? 'active' : ''}><i className="fa-solid fa-boxes-stacked icon-list"></i> Add Market <span className="level" style={{ color: `#9ea79f` }}><i className="fa-solid fa-plus"></i></span></li>
                               </Link>
                               <Link href="/app/my-stores" className="link_color">
-                                    <li className={pathname === '/app/my-stores' ? 'active' : ''}><i className="fa-solid fa-store icon-list"></i> My Stores <span className="level" style={{ color: `#9ea79f` }}><i className="fa-solid fa-plus"></i></span></li>
+                                    <li className={pathname === '/app/my-stores' ? 'active' : ''}><i className="fa-solid fa-store icon-list"></i> Add Stores <span className="level" style={{ color: `#9ea79f` }}><i className="fa-solid fa-plus"></i></span></li>
                               </Link> */}
                               <Link href="/app/my-referral" className="link_color">
                                     <li className={pathname === '/app/my-referral' ? 'active' : ''}><i className="fa-solid fa-users-rays icon-list"></i> My Referral <span className="level" style={{ color: `#9ea79f` }}><i className="fa-solid fa-plus"></i></span></li>

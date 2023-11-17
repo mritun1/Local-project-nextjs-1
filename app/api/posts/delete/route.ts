@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Storage } from '@google-cloud/storage';
 import eventsPost from "@/app/models/posts/eventsPost";
 import NewsPost from "@/app/models/posts/newsPost";
+import productSecondHand from "@/app/models/products/secondHand";
 
 export async function DELETE(req: NextRequest) {
     try{
@@ -52,6 +53,19 @@ export async function DELETE(req: NextRequest) {
             }
             //DELETE EVENT
             await NewsPost.findOneAndDelete({ _id: Object(id), userId: uId });
+        }
+        if (postType === "SecondHand") {
+            const imgAll = await productSecondHand.findOne({ _id: Object(id) });
+            //DELETE IMAGES
+            const imgs = imgAll.images;
+            if (imgs.length > 0) {
+                imgs.forEach(async (ele: string) => {
+                    const imgName = ele.replace("https://storage.googleapis.com/localnii-testing/", "");
+                    await imgUpload.file(imgName).delete();
+                });
+            }
+            //DELETE EVENT
+            await productSecondHand.findOneAndDelete({ _id: Object(id), userId: uId });
         }
 
         return NextResponse.json({

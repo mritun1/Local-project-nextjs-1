@@ -1,17 +1,43 @@
 "use client"
 import AppContent from '@/app/components/templates/AppContent'
 import seenUpdate from '@/app/customlib/seenUpdate';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { useEffect } from 'react'
-
+import React, { useEffect, useState } from 'react'
+interface catAr {
+    _id: string;
+    count: number;
+}
 const Page = () => {
 
     const seenUpdater = new seenUpdate();
     const pathname = usePathname();
+    const [categories, setCategories] = useState<catAr[]>([])
+    const [total, setTotal] = useState<number>(0)
+    const [pin, setPin] = useState<number>(0)
+
+    const getData = async () => {
+        const res = await fetch("/api/products/categories/all/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                code: 1
+            })
+        })
+        if (res.ok) {
+            const data = await res.json();
+            setCategories(data.data)
+            setTotal(data.allTotal)
+            setPin(data.pin)
+        }
+    }
 
     useEffect(() => {
         return () => {
             seenUpdater.update(pathname);
+            getData();
         };
     }, []);
 
@@ -24,74 +50,44 @@ const Page = () => {
                         <div className="title_bar">
                             <div>
                                 <div>
-                                    <h3><i className="fa-solid fa-tag"></i> Secondhand (0)</h3>
+                                    <h3><i className="fa-solid fa-tag"></i> Secondhand ({total})</h3>
                                 </div>
                             </div>
                             <div>
                                 <div>
-                                    <h4>0 <button><i className="fa-solid fa-location-dot"></i></button></h4>
+                                    <h4>{pin} <button><i className="fa-solid fa-location-dot"></i></button></h4>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="service-not-available">
+                        <div className="categories_lists">
+
                             <div>
-                                <h2><i className="fa-regular fa-hourglass-half"></i></h2>
-                                <h3>Coming Soon! Please wait for some more days.</h3>
-                                <h1>Thank You.</h1>
+                                <Link href="/app/local-secondhand-cat/all">
+                                    <div style={{ width: `100px` }}>
+                                        <h3>All</h3>
+                                        <button>{total}</button>
+                                    </div>
+                                </Link>
                             </div>
+
+                            {categories.map((ele, index) => (
+                                <div key={index}>
+                                    <Link href={"/app/local-secondhand-cat/" + ele._id}>
+                                        <div>
+                                            <h3>{ele._id}</h3>
+                                            <button>{ele.count}</button>
+                                        </div>
+                                    </Link>
+                                </div>
+                            ))}
+
                         </div>
 
 
                     </div>
                 }
-                rightBar={
-                    <div className="cat_right">
-
-                        <div className="cat_title">
-                            <div>
-                                <a href="/local-market">
-                                    <div><div><i className="fa-solid fa-left-long"></i></div></div>
-                                </a>
-                            </div>
-                            <div>
-                                <div><h5>Other Categories</h5></div>
-                            </div>
-                        </div>
-
-                        <div className="cat_list">
-
-                            <div className="cat">
-                                <a href="/local-market-cat">
-                                    <h5>Bycycle <button>23</button></h5>
-                                </a>
-                            </div>
-
-                            <div className="cat">
-                                <a href="/local-market-cat">
-                                    <h5>Cars <button>23</button></h5>
-                                </a>
-                            </div>
-                            <div className="cat">
-                                <a href="/local-market-cat">
-                                    <h5>Mobile phone <button>23</button></h5>
-                                </a>
-                            </div>
-                            <div className="cat">
-                                <a href="/local-market-cat">
-                                    <h5>Laptops <button>23</button></h5>
-                                </a>
-                            </div>
-                            <div className="cat">
-                                <a href="/local-market-cat">
-                                    <h5>Banglow <button>23</button></h5>
-                                </a>
-                            </div>
-
-                        </div>
-
-                    </div>
-                }
+                rightBar={``}
             ></AppContent>
 
 

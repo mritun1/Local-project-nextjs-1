@@ -257,16 +257,18 @@ const Page = () => {
                             onClick={radioBtn}
                         >{gender}</RadioInput>
 
-                        <SingleInput
-                            id="mobile"
-                            title='Mobile Number'
-                            inputName='mobile'
-                            inputType='number'
-                            isModalHidden={isSingleInputHidden}
-                            modalClass=''
-                            additionalBtn={''}
-                            onClick={showModal}
-                        >{mobile}</SingleInput>
+                        <div className="singleData">
+                            <div>
+                                <p>Mobile Number</p>
+                            </div>
+                            <div>
+                                <div>
+                                    <div><h3>{mobile}</h3></div>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
 
                         <SingleInput
                             id="pin"

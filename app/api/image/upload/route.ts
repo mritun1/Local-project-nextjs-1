@@ -11,6 +11,8 @@ import NewsPost from "@/app/models/posts/newsPost";
 import eventsPost from "@/app/models/posts/eventsPost";
 import customMath from "@/app/lib/customMath";
 import User from "@/app/models/userModels";
+import productSecondHandDraft from "@/app/models/products/secondHandDraft";
+import productSecondHand from "@/app/models/products/secondHand";
 
 export async function POST(req:NextRequest){
     try{
@@ -91,6 +93,13 @@ export async function POST(req:NextRequest){
                         }
                     }, { new: true })
                 }
+                if (service === 'secondHand') {
+                    await productSecondHandDraft.findOneAndUpdate({ userId: userID }, {
+                        $push: {
+                            images: publicURL
+                        }
+                    }, { new: true })
+                }
             }
             if (serviceType === 'published') {
                 if (service === 'news1') {
@@ -102,6 +111,13 @@ export async function POST(req:NextRequest){
                 }
                 if (service === 'events1') {
                     await eventsPost.findOneAndUpdate({ _id: Object(postId) }, {
+                        $push: {
+                            images: publicURL
+                        }
+                    }, { new: true })
+                }
+                if (service === 'secondHand') {
+                    await productSecondHand.findOneAndUpdate({ userId: userID }, {
                         $push: {
                             images: publicURL
                         }

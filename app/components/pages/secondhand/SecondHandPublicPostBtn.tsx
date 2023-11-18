@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Modal from '../../temp/Modal'
+import SecondHandSingleEle from './SecondHandSingleEle'
 
 type propsType = {
     name: String,
@@ -17,6 +18,7 @@ const SecondHandPublicPostBtn = (props:propsType) => {
     const openModalContact = () => {
         setModalContact(!modalContact)
     }
+    
     return (
         <>
             <div className="secondhand_btns">
@@ -36,15 +38,19 @@ const SecondHandPublicPostBtn = (props:propsType) => {
 
             <Modal
                 id="moreModal"
-                title="More"
+                title={props.name.toString()}
                 isHidden={modal}
                 zIndex={1}
                 modalClass={''}
                 additionBtn={''}
                 closeBtn={openModal}
             >
-                <h3 className='text-color2'>{props.name}</h3>
-                <p className='text-color2'>{props.des}</p>
+                
+                <div className='div-box'>
+                    <div className="single-ele-text">
+                        <p className='text-color2'>{props.des}</p>
+                    </div>
+                </div>
                 
             </Modal>
 
@@ -57,10 +63,15 @@ const SecondHandPublicPostBtn = (props:propsType) => {
                 additionBtn={''}
                 closeBtn={openModalContact}
             >
-                <h3 className='text-color2'>{props.contact1}</h3>
-                <p className='text-color2'>{props.contact2}</p>
-
                 
+                <div className='div-box'>
+                    <SecondHandSingleEle 
+                        content={props.contact1.toString()}
+                    ></SecondHandSingleEle>
+                    <SecondHandSingleEle
+                        content={props.contact2.toString()}
+                    ></SecondHandSingleEle>
+                </div>
 
             </Modal>
         </>

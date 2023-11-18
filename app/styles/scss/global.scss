@@ -61,17 +61,17 @@
     }
 }
 
-@mixin btn($background-color, $background-color-hov, $color, $font-size, $pad, $mar) {
-    background-color: $background-color;
+@mixin btn($mx-background-color, $mx-background-color-hov, $mx-color, $mx-font-size, $mx-pad, $mx-mar) {
+    background-color: $mx-background-color;
 
     &:hover {
-        background-color: $background-color-hov;
+        background-color: $mx-background-color-hov;
     }
 
-    color: $color;
-    font-size: $font-size;
-    padding: $pad;
-    margin: $mar;
+    color: $mx-color;
+    font-size: $mx-font-size;
+    padding: $mx-pad;
+    margin: $mx-mar;
     border-radius: 6px;
 }
 
@@ -2203,4 +2203,56 @@ body {
 // </div>
 //-----------------------------------------------------
 // CONFIRM - END
+//-----------------------------------------------------
+//-----------------------------------------------------
+// SINGLE ELEMENT SHOW - START
+//-----------------------------------------------------
+.single-ele{
+    margin: 6px 0px;
+    @include div_bg();
+    display: flex;
+    &>div:nth-child(1){
+        flex:7;
+    }
+    &>div:nth-child(2){
+        flex: 3;
+        @include flex(center, right);
+        &>div>button{
+            @include green_btn();
+            @include btn($btn-color, $btn-hov-color, $text-color2, auto, 6px, 6px);
+        }
+    }
+}
+.div-box{
+    @include pad_mar(0px, 6px);
+}
+// <div className='div-box'>
+//     <div className="single-ele">
+//         <div>
+//             <h3 className='text-color2'>{props.contact1}</h3>
+//         </div>
+//         <div>
+//             <div>
+//                 <button>Copy</button>
+//             </div>
+//         </div>
+//     </div>
+// </div>
+//-----------------------------------------------------
+// SINGLE ELEMENT SHOW - END
+//-----------------------------------------------------
+//-----------------------------------------------------
+// SINGLE ELEMENT TEXT SHOW - START
+//-----------------------------------------------------
+.single-ele-text{
+    margin: 6px 0px;
+    @include div_bg();
+}
+// <div className='div-box'>
+//     <div className="single-ele-text">
+//         <h3 className='text-color2'>{props.name}</h3>
+//     </div>
+// </div>
+//-----------------------------------------------------
+// SINGLE ELEMENT TEXT SHOW - END
 //-----------------------------------------------------

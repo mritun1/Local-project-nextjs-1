@@ -5,6 +5,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import goBack from '@/app/lib/goBack';
 import { useParams } from 'next/navigation';
+import PeoplesBtn from '@/app/components/pages/people/PeoplesBtn';
 
 interface UserItems {
     _id: string;
@@ -82,8 +83,6 @@ const Page = () => {
         };
     }, []);
 
-    
-    
     return (
         <>
             <AppContent
@@ -114,20 +113,9 @@ const Page = () => {
                                             <h3>{ele.firstName} {ele.lastName}</h3>
                                             <p><i className="fa-solid fa-location-dot"></i> {ele.pinCode} <button className="cat_text">{ele.profession}</button></p>
                                         </div>
-                                        <div className="secondhand_btns">
-                                            <div>
-                                                <button><i className="fa-solid fa-ellipsis"></i></button>
-                                                <p>More</p>
-                                            </div>
-                                            <div>
-                                                <button><i className="fa-solid fa-phone-volume"></i></button>
-                                                <p>Contact</p>
-                                            </div>
-                                            <div>
-                                                <button><i className="fa-solid fa-floppy-disk"></i></button>
-                                                <p>Save</p>
-                                            </div>
-                                        </div>
+                                        <PeoplesBtn 
+                                        id={ele._id}
+                                        ></PeoplesBtn>
                                     </div>
                                 </div>
                             ))

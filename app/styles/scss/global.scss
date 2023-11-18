@@ -204,6 +204,15 @@ $btn-orange-hov: rgb(126, 82, 2);
         background-color: $btn-hov-color;
     }
 }
+.green-btn{
+    @include green_btn();
+}
+.bg-light-green {
+    background-color: rgb(52, 95, 52);
+}
+.bg-dark-green {
+    background-color: rgb(21, 54, 21);
+}
 @mixin red_btn() {
     background-color: $btn-red;
     &:hover {
@@ -288,7 +297,11 @@ $btn-orange-hov: rgb(126, 82, 2);
         @include flex(center, right);
     }
 }
-
+@mixin roundBtn($mx-w, $mx-h) {
+    @include w_h($mx-w, $mx-h);
+    color: $text-color2;
+    border-radius: 50%;
+}
 // ****************************************************************************
 body {
     background-color: $bg-color;
@@ -952,10 +965,8 @@ body {
             width: 40px;
 
             &>a>div {
-                @include w_h(30px, 30px);
+                @include roundBtn(30px, 30px);
                 @include green_btn();
-                color: $text-color2;
-                border-radius: 50%;
                 @include flex(center, center);
             }
         }
@@ -2256,3 +2267,87 @@ body {
 //-----------------------------------------------------
 // SINGLE ELEMENT TEXT SHOW - END
 //-----------------------------------------------------
+//-----------------------------------------------------
+// MESSAGE - AVATAR - BADGE - START
+//-----------------------------------------------------
+.msg-list{
+    &>h5{
+        padding-bottom: 0px;
+    }
+    &>p{
+        padding-top: 0px;
+    }
+}
+.avatar-bg{
+    @include w_h(40px, 40px);
+    border-radius: 50%;
+    background-color: $bg-color;
+    @include bg();
+}
+.badge{
+    color: $text-color;
+    font-weight: bold;
+    border-radius: 50%;
+    @include w_h(22px, 22px);
+}
+.bg-red{
+    background-color: rgb(148, 17, 17);
+}
+// <div className='avatar-bg'
+//     style={{ backgroundImage:`url(https://www.rri.res.in/sites/default/files/2022-09/Abhisek%20Tamang.jpg)`}}
+// ></div>
+// <div className='msg-list'>
+//     <h5>James Bond <button className='badge bg-red'>5+</button></h5>
+//     <p><small>Hi this is the last message...</small></p>
+// </div>
+//-----------------------------------------------------
+// MESSAGE - AVATAR - BADGE - END
+//-----------------------------------------------------
+.btn_back{
+    @include roundBtn(30px, 30px);
+}
+.chat-sec{
+    @include div_bg();
+    @include pad_mar(6px, 6px);
+    &>.chat-content-sec{
+        height: 60vh;
+    }
+}
+.chat-content {
+    @include w_h(80%, auto);
+    border-radius: 10px;
+    @include pad_mar(6px, 6px);
+}
+.chat-right{
+    overflow: auto;
+    &>div{
+        float: right;
+    }
+}
+.chat-input-sec{
+    display: flex;
+    &>div{
+        @include flex(center, center);
+    }
+    &>div:nth-child(1),
+    &>div:nth-child(3){
+        width: 50px;
+        &>div>button{
+            @include roundBtn(40px, 40px);
+            @include green_btn();
+        }
+    }
+    &>div:nth-child(2){
+        flex: 8;
+        &>div{
+            width: 98%
+        }
+        &>div>input{
+            @include input_class(none, 6px, 30px);
+            width: 100%
+        }
+    }
+    &>div:nth-child(3) {
+        padding-left: 10px;
+    }
+}

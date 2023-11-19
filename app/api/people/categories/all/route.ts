@@ -1,6 +1,7 @@
 import connectDB from "@/app/db/config";
 import getTokenData from "@/app/lib/getTokenData";
 import User from "@/app/models/userModels";
+import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -12,6 +13,7 @@ export async function POST(req: NextRequest) {
 
         const token = new getTokenData(req)
         const uId = token.userID()
+        const uID = new mongoose.Types.ObjectId(uId);
 
         try {
             const data = await User.aggregate([
@@ -20,7 +22,7 @@ export async function POST(req: NextRequest) {
                         $and: [
                             { pinCode: parseInt(pin_code, 10) },
                             { isActive: 1 },
-                            { _id: { $ne: uId } }
+                            { _id: { $ne: uID } }
                         ]
                     }
                 }, {

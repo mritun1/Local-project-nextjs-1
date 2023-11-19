@@ -66,10 +66,10 @@ const SecondHandPublicPostBtn = (props:propsType) => {
                 
                 <div className='div-box'>
                     <SecondHandSingleEle 
-                        content={props.contact1.toString()}
+                        content={props.contact1?.toString()}
                     ></SecondHandSingleEle>
                     <SecondHandSingleEle
-                        content={props.contact2.toString()}
+                        content={props.contact2?.toString()}
                     ></SecondHandSingleEle>
                 </div>
 

@@ -178,6 +178,12 @@ p {
     }
 }
 .p-10px{padding: 10px;}
+.small{
+    font-size: 12px;
+}
+.text-center{
+    text-align: center;
+}
 //---------------------------------------------
 // CLASSES - @END
 //---------------------------------------------
@@ -2071,14 +2077,21 @@ body {
     &>div:nth-child(1),
     &>div:nth-child(3){
         @include flex(center, center);
-        &>div>button>i{
+        &>.forward>button>i{
             font-size: 16px;
         }
-        &>div>button{
+        &>.forward>button{
             @include green_btn();
             color: $text-color2;
             border-radius: 50%;
             @include w_h(35px, 35px);
+            @include pad_mar(5px 8px, 5px);
+        }
+        &>.join>button{
+            @include green_btn();
+            color: $text-color2;
+            border-radius: 10px;
+            font-weight: bold;
             @include pad_mar(5px 8px, 5px);
         }
     }
@@ -2360,4 +2373,32 @@ body {
     &>div:nth-child(3) {
         padding-left: 10px;
     }
+}
+//-----------------------------------------------------
+// TAB MENU - START
+//-----------------------------------------------------
+.tab-menu{
+    display: flex;
+    @include div_bg();
+    margin: 6px;
+    &>div{
+        text-align: center;
+        @include green_btn();
+        cursor: pointer;
+        color: $text-color2;
+    }
+    &>.active{
+        background-color: $btn-hov-color;
+    }
+}
+.groups{
+    &>div{
+        flex:3;
+    }
+}
+//-----------------------------------------------------
+// TAB MENU - END
+//-----------------------------------------------------
+.groups-content{
+    margin-top: 6px;
 }

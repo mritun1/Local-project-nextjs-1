@@ -34,64 +34,107 @@ const Page = () => {
                             </div>
                         </div>
 
-                        <div className="service-not-available">
-                            <div>
-                                <h2><i className="fa-regular fa-hourglass-half"></i></h2>
-                                <h3>Coming Soon! Please wait for some more days.</h3>
-                                <h1>Thank You.</h1>
+                        <div className="tab-menu groups">
+                            <div className='active'>
+                                <h3>Home</h3>
                             </div>
+                            <div>
+                                <h3>Search</h3>
+                            </div>
+                            <div>
+                                <h3>+Add</h3>
+                            </div>
+                        </div>
+
+                        <div className="groups-content">
+
+                            <div className="bar_btn_box">
+                                <div>
+                                    <div>
+                                        <div
+                                            className='avatar-bg'
+                                            style={{
+                                                backgroundImage: `url(/icons/others/profile.webp)`
+                                            }}
+                                        ></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className='msg-list'>
+                                        <h5>James Bond <button className='badge bg-red'>3</button></h5>
+                                        <p><b>Mritun:</b> sdf sdf sdf ...</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className='join'>
+                                        <button >
+                                            <i className="fa-solid fa-plus"></i> Join
+                                        </button>
+                                        <p className='small text-center'>345+</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bar_btn_box">
+                                <div>
+                                    <div>
+                                        <div
+                                            className='avatar-bg'
+                                            style={{
+                                                backgroundImage: `url(/icons/others/profile.webp)`
+                                            }}
+                                        ></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className='msg-list'>
+                                        <h5>James Bond <button className='badge bg-red'>3</button></h5>
+                                        <p><b>Mritun:</b> sdf sdf sdf ...</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className='join'>
+                                        <button >
+                                            <i className="fa-solid fa-plus"></i> Join
+                                        </button>
+                                        <p className='small text-center'>345+</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bar_btn_box">
+                                <div>
+                                    <div>
+                                        <div
+                                            className='avatar-bg'
+                                            style={{
+                                                backgroundImage: `url(/icons/others/profile.webp)`
+                                            }}
+                                        ></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className='msg-list'>
+                                        <h5>James Bond <button className='badge bg-red'>3</button></h5>
+                                        <p><b>Mritun:</b> sdf sdf sdf ...</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className='join'>
+                                        <button >
+                                            <i className="fa-solid fa-plus"></i> Join
+                                        </button>
+                                        <p className='small text-center'>345+</p>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
 
                     </div>
                 }
-                rightBar={
-                    <div className="cat_right">
-
-                        <div className="cat_title">
-                            <div>
-                                <a href="/local-market">
-                                    <div><div><i className="fa-solid fa-left-long"></i></div></div>
-                                </a>
-                            </div>
-                            <div>
-                                <div><h5>Other Categories</h5></div>
-                            </div>
-                        </div>
-
-                        <div className="cat_list">
-
-                            <div className="cat">
-                                <a href="/local-market-cat">
-                                    <h5>Bycycle <button>23</button></h5>
-                                </a>
-                            </div>
-
-                            <div className="cat">
-                                <a href="/local-market-cat">
-                                    <h5>Cars <button>23</button></h5>
-                                </a>
-                            </div>
-                            <div className="cat">
-                                <a href="/local-market-cat">
-                                    <h5>Mobile phone <button>23</button></h5>
-                                </a>
-                            </div>
-                            <div className="cat">
-                                <a href="/local-market-cat">
-                                    <h5>Laptops <button>23</button></h5>
-                                </a>
-                            </div>
-                            <div className="cat">
-                                <a href="/local-market-cat">
-                                    <h5>Banglow <button>23</button></h5>
-                                </a>
-                            </div>
-
-                        </div>
-
-                    </div>
-                }
+                rightBar={``}
             ></AppContent>
 
 

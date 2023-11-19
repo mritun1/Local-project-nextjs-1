@@ -99,7 +99,7 @@ const Page = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        <div><button onClick={() => redirect("/app/message/"+ele.item._id)} ><i className="fa-solid fa-right-long"></i></button></div>
+                                        <div className='forward'><button onClick={() => redirect("/app/message/"+ele.item._id)} ><i className="fa-solid fa-right-long"></i></button></div>
                                     </div>
                                 </div>
                             ))

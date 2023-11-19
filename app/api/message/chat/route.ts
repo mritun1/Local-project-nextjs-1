@@ -1,5 +1,6 @@
 import connectDB from "@/app/db/config";
 import getTokenData from "@/app/lib/getTokenData";
+import messageLists from "@/app/models/message/message";
 import messageChat from "@/app/models/message/messageChat";
 import messageChatDraft from "@/app/models/message/messageChatDraft";
 import { NextRequest, NextResponse } from "next/server";
@@ -39,6 +40,21 @@ export async function POST(req:NextRequest){
                 files: draft.files,
                 createdDate: Date.now()
             });
+            //Update to message lists
+            //If the last user Id = current user id, then count
+            let newCount: number = 1
+            const lastData = await messageLists.findOne({_id:draft.messageId})
+            if(lastData){
+                if (String(lastData.lastUserId) === String(uId)){
+                    newCount = lastData.count + 1
+                }
+            }
+            await messageLists.findByIdAndUpdate({_id:draft.messageId},{
+                lastUserId:uId,
+                lastMessage:content,
+                count: newCount,
+                updatedDate:Date.now()
+            })
             //After success delete, delete the draft
             await messageChatDraft.findOneAndDelete({userId:uId})
         } else {

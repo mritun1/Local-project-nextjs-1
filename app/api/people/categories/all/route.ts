@@ -1,4 +1,5 @@
 import connectDB from "@/app/db/config";
+import getTokenData from "@/app/lib/getTokenData";
 import User from "@/app/models/userModels";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,10 +10,19 @@ export async function POST(req: NextRequest) {
         const pinCookie:any = process.env.PIN_CODE
         const pin_code = req.cookies.get(pinCookie)?.value || '';
 
+        const token = new getTokenData(req)
+        const uId = token.userID()
+
         try {
             const data = await User.aggregate([
                 {
-                    $match: { pinCode: parseInt(pin_code,10) }
+                    $match: {  
+                        $and: [
+                            { pinCode: parseInt(pin_code, 10) },
+                            { isActive: 1 },
+                            { _id: { $ne: uId } }
+                        ]
+                    }
                 }, {
                     $group: {
                         _id: "$professionSlug",
@@ -22,7 +32,13 @@ export async function POST(req: NextRequest) {
                 }
             ])
 
-            const all = await User.find({ pinCode: parseInt(pin_code, 10) })
+            const all = await User.find({  
+                $and: [
+                    { pinCode: parseInt(pin_code, 10) },
+                    { isActive: 1 },
+                    { _id: { $ne: uId } }
+                ]
+            })
 
             return NextResponse.json({
                 data: data,

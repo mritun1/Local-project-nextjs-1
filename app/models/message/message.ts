@@ -2,10 +2,12 @@ import mongoose from "mongoose";
 
 const msg = new mongoose.Schema({
     bulkChat:{
-        type:Number //0 = false, 1= true
+        type:Number, //0 = false, 1= true
+        default:0
     },
     bulkApproved: {
-        type: Number //0 = false, 1= true
+        type: Number, //0 = false, 1= true
+        default:0
     },
     firstUser:{
         type:mongoose.Types.ObjectId,
@@ -19,6 +21,10 @@ const msg = new mongoose.Schema({
     lastMessage:{
         type:String,
     },
+    count: {
+        type: Number,
+        default:0
+    },
     updatedDate:{
         type:Number,
     },
@@ -26,5 +32,5 @@ const msg = new mongoose.Schema({
         type:Number
     }
 })
-const messageLists = mongoose.models.messageLists || mongoose.model("messageLists",msg)
+const messageLists = mongoose.models.messageLists1 || mongoose.model("messageLists1",msg)
 export default messageLists

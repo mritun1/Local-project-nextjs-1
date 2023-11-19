@@ -8,10 +8,13 @@ interface msgLists {
         bulkChat: number;
         bulkApproved: number;
         lastMessage: number;
+        count:number;
     };
     user: {
         firstName: string;
         profilePic: string;
+        otherName: string;
+        lastUser:string;
     };
 }
 const Page = () => {
@@ -42,6 +45,21 @@ const Page = () => {
             fetchList();
         }
     },[])
+
+    //SHOW UNSEEN MESSAGE COUNT
+    const showMgs = (e:string,f:number) =>{
+        if(e != 'me' && f>0){
+            return true;
+        }
+        return false
+    }
+    //Count Number dynamic
+    const ShowNum = (e:number) =>{
+        if(e>9){
+            return `9+`
+        }
+        return e
+    }
     return (
         <>
             <AppContent
@@ -76,8 +94,8 @@ const Page = () => {
                                     </div>
                                     <div>
                                         <div className='msg-list'>
-                                            <h5>{ele.user.firstName} <button className='badge bg-red'>5+</button></h5>
-                                            <p>{ele.item.lastMessage}</p>
+                                            <h5>{ele.user.firstName} {showMgs(ele.user.lastUser, ele.item.count) ? (<button className='badge bg-red'>{ShowNum(ele.item.count)}</button>):``} </h5>
+                                            <p>{ele.user.otherName && ele.item.lastMessage != undefined ? (<><b>{ele.user.otherName}:</b> {String(ele.item.lastMessage).substring(0, 40)}...</>):``}</p>
                                         </div>
                                     </div>
                                     <div>
@@ -86,67 +104,6 @@ const Page = () => {
                                 </div>
                             ))
                         ):null}
-
-                        {/* <div className="bar_btn_box">
-                            <div>
-                                <div>
-                                    <div 
-                                    className='avatar-bg'
-                                        style={{ backgroundImage:`url(https://www.rri.res.in/sites/default/files/2022-09/Abhisek%20Tamang.jpg)`}}
-                                    ></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div className='msg-list'>
-                                    <h5>James Bond <button className='badge bg-red'>5+</button></h5>
-                                    <p><small>Hi this is the last message...</small></p>
-                                </div>
-                            </div>
-                            <div>
-                                <div><button onClick={() => redirect("/app/message/chat/")} ><i className="fa-solid fa-right-long"></i></button></div>
-                            </div>
-                        </div>
-
-                        <div className="bar_btn_box">
-                            <div>
-                                <div>
-                                    <div
-                                        className='avatar-bg'
-                                        style={{ backgroundImage: `url(https://www.rri.res.in/sites/default/files/2022-09/Abhisek%20Tamang.jpg)` }}
-                                    ></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div className='msg-list'>
-                                    <h5>James Bond <button className='badge bg-red'>5+</button></h5>
-                                    <p><small>Hi this is the last message...</small></p>
-                                </div>
-                            </div>
-                            <div>
-                                <div><button ><i className="fa-solid fa-right-long"></i></button></div>
-                            </div>
-                        </div>
-
-                        <div className="bar_btn_box">
-                            <div>
-                                <div>
-                                    <div
-                                        className='avatar-bg'
-                                        style={{ backgroundImage: `url(https://www.rri.res.in/sites/default/files/2022-09/Abhisek%20Tamang.jpg)` }}
-                                    ></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div className='msg-list'>
-                                    <h5>James Bond <button className='badge bg-red'>5+</button></h5>
-                                    <p><small>Hi this is the last message...</small></p>
-                                </div>
-                            </div>
-                            <div>
-                                <div><button ><i className="fa-solid fa-right-long"></i></button></div>
-                            </div>
-                        </div> */}
-
 
                     </div>
                 }

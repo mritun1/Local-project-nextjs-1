@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
         //Firstly, Check if there is message with this user ID
         const cursor = await messageLists.find({
             $or: [{ firstUser: Object(uId) }, { secondUser: Object(uId) }]
-        })
+        }).sort({ updatedDate: -1 });
 
         //ADDING THE ADDITIONAL USERS DATA
         const ArrayItems: any[] = [];
@@ -27,15 +27,27 @@ export async function POST(req: NextRequest) {
             }else{
                 secondId = item.secondUser
             }
-            
+            let lastUser:string = "other"
+            if (String(item.lastUserId) === String(uId)){
+                lastUser = "me"
+            }
             const user = await User.findById(Object(secondId), {
                 firstName: 1,
                 profilePic: 1
             }); // Specify the fields you want to include
+            let otherUser:string = '';
+            if (item.lastUserId){
+                const ou = await User.findById(Object(item.lastUserId),{
+                    firstName:1
+                })
+                otherUser = ou.firstName
+            }
             ArrayItems.push({
                 item, user: {
                     firstName: user.firstName,
-                    profilePic: user.profilePic
+                    profilePic: user.profilePic,
+                    otherName: otherUser,
+                    lastUser: lastUser
                 }
             }); // Include only the desired fields
         });

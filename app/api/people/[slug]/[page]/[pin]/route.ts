@@ -1,4 +1,5 @@
 import connectDB from "@/app/db/config";
+import getTokenData from "@/app/lib/getTokenData";
 import User from "@/app/models/userModels";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -28,15 +29,31 @@ export async function GET(
             pin = req.cookies.get(pinCookie)?.value || "";
         }
 
+        const token = new getTokenData(req);
+        const uId = token.userID()
+
         let cursor = null;
         if(cat === 'all'){
-            cursor = await User.find({ pinCode: pin, isActive: 1 })
+            cursor = await User.find({
+                $and: [
+                    { pinCode: pin },
+                    { isActive: 1 },
+                    { _id: { $ne: uId } }
+                ]
+             })
                 .select('-password -otp -isActive -__v') // Exclude password and otp
                 .sort({ createdDate: -1 })
                 .skip(offset)
                 .limit(limit);
         }else{
-            cursor = await User.find({ pinCode: pin, professionSlug: cat, isActive: 1 })
+            cursor = await User.find({
+                $and: [
+                    { pinCode: pin },
+                    { professionSlug: cat },
+                    { isActive: 1 },
+                    { _id: { $ne: uId } }
+                ]
+            })
                 .select('-password -otp -isActive -__v') // Exclude password and otp
                 .sort({ createdDate: -1 })
                 .skip(offset)

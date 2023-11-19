@@ -38,10 +38,8 @@ export async function GET(
             ArrData.push(ar);
         });
         
-        const data = JSON.stringify(cursor);
         const ArrDataString = JSON.stringify(ArrData)
 
-        // writer.write(encoder.encode(`data: ${data}\n\n`));
         writer.write(encoder.encode(`data: ${ArrDataString}\n\n`));
 
     } catch (error) {

@@ -2311,6 +2311,14 @@ body {
     @include pad_mar(6px, 6px);
     &>.chat-content-sec{
         height: 60vh;
+        overflow: auto;
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 5px;
+        }
     }
 }
 .chat-content {

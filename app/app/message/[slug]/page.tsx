@@ -1,21 +1,42 @@
 "use client"
+import ChatContent from '@/app/components/pages/message/ChatContent';
 import AppContent from '@/app/components/templates/AppContent'
 import goBack from '@/app/lib/goBack';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import { useParams } from 'next/navigation';
+import React, {  useEffect, useRef, useState } from 'react'
+
+interface messageArr {
+    ele:{
+        content: string;
+        createdDate: number;
+        files: [];
+        images: [];
+        messageId: string;
+        userId: string;
+        videos: [];
+    },
+    uType:string
+}
 
 const Page = () => {
-    // const router = useRouter();
-    // //OnClick Redirect
-    // const redirect = (e: string) => {
-    //     router.push(e)
-    // }
 
     const {slug} = useParams();
 
     const getBackFunc = new goBack();
     const [backUrl, setBackUrl] = useState<string>("/");
+    const [senderName,setSenderName] = useState<string>("")
+    const [senderPic,setSenderPic] = useState<string>("/icons/others/profile.webp")
+    const [messageText, setMessageText] = useState<string>("")
+    //ALWAYS SCROLL DOWN
+    const chatContentRef = useRef<HTMLDivElement>(null);
+    // Function to scroll to the bottom of the chat content
+    const scrollToBottom = () => {
+        if (chatContentRef.current) {
+            chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight;
+        }
+    };
+
     useEffect(() => {
         const getCont = async () =>{
             const res = await fetch("/api/message/draft/get/", {
@@ -29,9 +50,15 @@ const Page = () => {
             })
             if(res.ok){
                 const data = await res.json()
-                console.log(data)
                 if(data.code===1){
-                    setMessageText(data.data[0].content)
+                    if (data.data && data.data[0] && data.data[0].content){
+                        setMessageText(data.data[0].content)
+                    }
+                    setSenderName(data.user.firstName + " " + data.user.lastName)
+                    if (data.user.profilePic){
+                        setSenderPic(data.user.profilePic)
+                    }
+                    scrollToBottom();
                 }
             }
         }
@@ -41,7 +68,6 @@ const Page = () => {
         };
     }, []);
 
-    const [messageText, setMessageText] = useState<string>("")
     const draftChat = async (e: string) =>{
         setMessageText(e)
         const res = await fetch("/api/message/draft/",{
@@ -55,6 +81,56 @@ const Page = () => {
             })
         })
     }
+
+    //SUBMIT CHAT MESSAGE
+    const submitChat = async () =>{
+        const res = await fetch("/api/message/chat/",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                content: messageText,
+            })
+        })
+        if(res.ok){
+            const data = await res.json();
+            if(data.code === 1){
+                setMessageText("")
+            }
+        }
+    }
+
+    ///////////////////////
+    //SSE
+    const [lists, setLists] = useState<messageArr[]>([])
+    useEffect(() => {
+        const eventSource = new EventSource('http://127.0.0.1:3000/api/message/sse/' + slug);
+        eventSource.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                console.log('Received message:', data);
+                setLists(data)
+                scrollToBottom()
+                // Handle the received data as needed
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+            }
+        };
+        // Clean up the EventSource connection when the component is unmounted
+        return () => {
+            eventSource.close();
+        };
+    }, []); 
+
+    const handleKeyPress = (e:any) => {
+        if (e.key === 'Enter') {
+            // Call your submit function here
+            submitChat();
+        }
+    };
+
+    
     return (
         <>
             <AppContent
@@ -66,12 +142,12 @@ const Page = () => {
                                 <div className='display-flex'>
                                     <div
                                         className='avatar-bg'
-                                        style={{ backgroundImage: `url(https://www.rri.res.in/sites/default/files/2022-09/Abhisek%20Tamang.jpg)` }}
+                                        style={{ backgroundImage: `url(` + senderPic +`)` }}
                                     ></div>
                                     <div>
                                         <h4 >
                                             <Link href="" className='text-color2'>
-                                                James Bond
+                                                {senderName}
                                             </Link>
                                         </h4>
                                     </div>
@@ -89,25 +165,15 @@ const Page = () => {
 
                         <div className="chat-sec">
 
-                            <div className='chat-content-sec'>
+                            <div className='chat-content-sec' ref={chatContentRef}>
 
-                                <div className='chat-left'>
-                                    <div className="chat-content bg-dark-green">
-                                        <p className='text-color2'>His this is the sender message</p>
-                                    </div>
-                                </div>
-
-                                <div className='chat-right'>
-                                    <div className="chat-content bg-light-green">
-                                        <p className='text-color2'>Hi this is my message</p>
-                                    </div>
-                                </div>
-
-                                <div className='chat-left'>
-                                    <div className="chat-content bg-dark-green">
-                                        <p className='text-color2'>His this is the sender message</p>
-                                    </div>
-                                </div>
+                                {lists?.map((ele,index)=>(
+                                    <ChatContent 
+                                    key={index}
+                                    content={ele.ele.content}
+                                    me={ele.uType}
+                                    ></ChatContent>
+                                ))}
 
                             </div>
 
@@ -119,6 +185,7 @@ const Page = () => {
                                     <div>
                                         <input 
                                         onChange={(e)=>draftChat(e.target.value)} 
+                                        onKeyDown={handleKeyPress}
                                         value={messageText}
                                         type="text" 
                                         placeholder='Some text' 
@@ -126,7 +193,7 @@ const Page = () => {
                                     </div>
                                 </div>
                                 <div>
-                                    <div><button><i className="fa-solid fa-paper-plane"></i></button></div>
+                                    <div><button onClick={submitChat} ><i className="fa-solid fa-paper-plane"></i></button></div>
                                 </div>
                             </div>
 

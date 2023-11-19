@@ -11,8 +11,8 @@ export async function POST(req:NextRequest){
         const token = new getTokenData(req)
         const uId = token.userID()
         //Check If Draft Already exists
-        const check = await messageChatDraft.find({ messageId: Object(mgsId), userId : Object(uId)}).limit(1)
-        if(check.length>0){
+        const check = await messageChatDraft.findOne({ messageId: Object(mgsId), userId: Object(uId)})
+        if(check){
             //Chat Already exists
             //Now Update to Database
             await messageChatDraft.findOneAndUpdate(
@@ -24,8 +24,8 @@ export async function POST(req:NextRequest){
         }else{
             //Create Chat
             await messageChatDraft.create({
-                messageId: Object(mgsId), 
-                userId: Object(uId),
+                messageId: mgsId, 
+                userId: uId,
                 content: content
             })
         }

@@ -23,7 +23,7 @@ export async function GET(
         const token = new getTokenData(req);
         const uId = token.userID()
 
-        const cursor = await groupsSaved.find({ groupPin: pin, userId: uId }).skip(offset).limit(limit);
+        const cursor = await groupsSaved.find({ userId: uId }).skip(offset).limit(limit);
 
         if (cursor.length == 0) {
             return NextResponse.json({
@@ -40,9 +40,8 @@ export async function GET(
             const GroupData = await groupsModels.findById(item.savedId); // Specify the fields you want to include
             if (GroupData) {
                 ArrayItems.push({
-                    item: {
-                        GroupData
-                    }
+                    item: GroupData,
+                    btn: 'joined'
                 }); // Include only the desired fields
             }
         });

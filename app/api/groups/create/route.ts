@@ -2,6 +2,7 @@ import connectDB from "@/app/db/config";
 import getTokenData from "@/app/lib/getTokenData";
 import groupsModels from "@/app/models/groups/groupsModels";
 import groupsModelsDraft from "@/app/models/groups/groupsModelsDraft";
+import groupsSaved from "@/app/models/groups/groupsSaved";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -34,6 +35,11 @@ export async function POST(req: NextRequest) {
             //DELETE FROM DRAFT
             await groupsModelsDraft.deleteOne({ groupCreatorId: userID })
         }
+        //Update to my saved
+        await groupsSaved.create({
+            userId: userID,
+            savedId: createDraft._id
+        })
         return NextResponse.json({
             msg: "News created success",
             code: 1,

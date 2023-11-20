@@ -1,4 +1,5 @@
 import connectDB from "@/app/db/config";
+import getTokenData from "@/app/lib/getTokenData";
 import groupsModels from "@/app/models/groups/groupsModels";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -23,6 +24,28 @@ export async function GET(
 
         const cursor = await groupsModels.find({ groupPin: pin }).sort({ createdDate: -1 }).skip(offset).limit(limit);
 
+        const token = new getTokenData(req);
+        const uId = token.userID()
+
+        //ADDING THE ADDITIONAL USERS DATA
+        const ArrayItems: any[] = [];
+        // Assuming cursor is an array of items
+        const promises = cursor.map(async (item) => {
+            if (item.groupMembers.includes(uId)) {
+                ArrayItems.push({
+                    item, btn: 'joined'
+                }); // Include only the desired fields
+            } else {
+                ArrayItems.push({
+                    item, btn: 'notJoined'
+                }); // Include only the desired fields
+            }
+            
+        });
+
+        // Wait for all promises to resolve
+        await Promise.all(promises);
+
         if (cursor.length == 0) {
             return NextResponse.json({
                 pin: pin,
@@ -34,7 +57,7 @@ export async function GET(
         return NextResponse.json({
             pin: pin,
             msg: "Data found",
-            data: cursor,
+            data: ArrayItems,
             code: 1,
         })
 

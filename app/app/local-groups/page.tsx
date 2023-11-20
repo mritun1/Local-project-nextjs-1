@@ -8,10 +8,14 @@ import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 type groupsItems={
-    groupName:String,
-    groupPic:String,
-    groupPin:Number,
-    groupMembers:[],
+    btn:string,
+    item:{
+        groupName: String,
+        groupPic: String,
+        groupPin: Number,
+        groupMembers: [],
+        _id: String,
+    }
 }
 
 const Page = () => {
@@ -36,11 +40,6 @@ const Page = () => {
     //LOAD CONTENT - SEARCH - START
     //--------------------------------------------------------
     const [groups, setGroups] = useState<groupsItems[]>([]);
-    // const newDate = new customDate();
-    // const [pin, setPin] = useState<number>(0);
-    const [total, setTotal] = useState<number>(0);
-    // const [notFound, setNotFound] = useState<boolean>(true);
-    // const [doublyLinkedLists, setDoublyLinkedLists] = useState<DoublyCircularLinkedList[]>([]);
     const [infinityLod, setInfinityLoad] = useState<boolean>(true)
     const [pNum, setPnum] = useState<number>(1);
 
@@ -57,10 +56,9 @@ const Page = () => {
                 setPin(data.pin)
                 if (data.code === 1) {
 
-                    console.log(data.data)
+                    // console.log(data.data)
 
                     setGroups((prevData) => [...prevData, ...data.data]);
-                    setTotal((prevData) => prevData + data.data.length);
                     setPnum((prev) => prev + 1)
 
                     setInfinityLoad(true)
@@ -70,35 +68,6 @@ const Page = () => {
             })
     }
 
-    // useEffect(() => {
-    //     const handleScroll = () => {
-    //         if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-    //             loadGroups(pNum);
-    //         }
-    //     };
-
-    //     // Add the event listener
-    //     if (typeof window !== 'undefined') {
-    //         window.addEventListener('scroll', handleScroll);
-    //     }
-
-    //     // Remove the event listener when the component unmounts
-    //     return () => {
-    //         if (typeof window !== 'undefined') {
-    //             window.removeEventListener('scroll', handleScroll);
-    //         }
-    //     };
-    // }, [pNum]);
-
-    // const seenUpdater = new seenUpdate();
-    // const pathname = usePathname();
-
-    useEffect(() => {
-        return () => {
-            loadGroups(1);
-            // seenUpdater.update(pathname);
-        };
-    }, []);
     //--------------------------------------------------------
     //LOAD CONTENT - SEARCH - END
     //--------------------------------------------------------
@@ -106,11 +75,6 @@ const Page = () => {
     //LOAD CONTENT - HOME - START
     //--------------------------------------------------------
     const [groupsHome, setGroupsHome] = useState<groupsItems[]>([]);
-    // const newDate = new customDate();
-    // const [pin, setPin] = useState<number>(0);
-    const [totalHome, setTotalHome] = useState<number>(0);
-    // const [notFound, setNotFound] = useState<boolean>(true);
-    // const [doublyLinkedLists, setDoublyLinkedLists] = useState<DoublyCircularLinkedList[]>([]);
     const [infinityLodHome, setInfinityLoadHome] = useState<boolean>(true)
     const [pNumHome, setPnumHome] = useState<number>(1);
 
@@ -127,10 +91,9 @@ const Page = () => {
                 setPin(data.pin)
                 if (data.code === 1) {
 
-                    console.log(data.data)
+                    // console.log(data.data)
 
                     setGroupsHome((prevData) => [...prevData, ...data.data]);
-                    setTotalHome((prevData) => prevData + data.data.length);
                     setPnumHome((prev) => prev + 1)
 
                     setInfinityLoadHome(true)
@@ -140,38 +103,41 @@ const Page = () => {
             })
     }
 
-    // useEffect(() => {
-    //     const handleScroll = () => {
-    //         if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-    //             loadGroups(pNum);
-    //         }
-    //     };
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+                loadGroups(pNum);
+                loadGroupsHome(pNumHome);
+            }
+        };
 
-    //     // Add the event listener
-    //     if (typeof window !== 'undefined') {
-    //         window.addEventListener('scroll', handleScroll);
-    //     }
+        // Add the event listener
+        if (typeof window !== 'undefined') {
+            window.addEventListener('scroll', handleScroll);
+        }
 
-    //     // Remove the event listener when the component unmounts
-    //     return () => {
-    //         if (typeof window !== 'undefined') {
-    //             window.removeEventListener('scroll', handleScroll);
-    //         }
-    //     };
-    // }, [pNum]);
+        // Remove the event listener when the component unmounts
+        return () => {
+            if (typeof window !== 'undefined') {
+                window.removeEventListener('scroll', handleScroll);
+            }
+        };
+    }, [pNumHome, pNum]);
 
     // const seenUpdater = new seenUpdate();
     // const pathname = usePathname();
 
-    useEffect(() => {
-        return () => {
-            loadGroupsHome(1);
-            // seenUpdater.update(pathname);
-        };
-    }, []);
     //--------------------------------------------------------
     //LOAD CONTENT - HOME - END
     //--------------------------------------------------------
+    useEffect(() => {
+        return () => {
+            loadGroups(1);
+            loadGroupsHome(1);
+            // seenUpdater.update(pathname);
+            console.log(groupsHome)
+        };
+    }, []);
 
     return (
         <>
@@ -202,10 +168,23 @@ const Page = () => {
                         {isHome?(
                             <>
                                 <div className="groups-content">
-
-                                    <h2>Hello</h2>
+                                    {groupsHome ? groupsHome.map((ele, index) => (
+                                        <>
+                                            <GroupsItem
+                                                key={index}
+                                                name={ele.item.groupName}
+                                                pic={ele.item.groupPic}
+                                                members={ele.item.groupMembers}
+                                                id={ele.item._id}
+                                                btn={ele.btn}
+                                            ></GroupsItem>
+                                        </>
+                                    )) : null}
 
                                 </div>
+                                <ButtonLoading
+                                    submitLoad={infinityLodHome}
+                                >.</ButtonLoading>
                                 
                             </>
                         ):null}
@@ -217,9 +196,11 @@ const Page = () => {
                                     {groups ? groups.map((ele, index) => (
                                         <GroupsItem
                                             key={index}
-                                            name={ele.groupName}
-                                            pic={ele.groupPic}
-                                            members={ele.groupMembers}
+                                            name={ele.item.groupName}
+                                            pic={ele.item.groupPic}
+                                            members={ele.item.groupMembers}
+                                            id={ele.item._id}
+                                            btn={ele.btn}
                                         ></GroupsItem>
                                     )) : null}
 

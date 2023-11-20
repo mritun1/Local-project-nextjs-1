@@ -10,6 +10,7 @@ type propsType = {
     postType: String,
     postId: String,
     loadCont: () => void,
+    pin:number
 }
 
 const EditPost = (props: propsType) => {
@@ -271,7 +272,7 @@ const EditPost = (props: propsType) => {
                         ></ImageInput>
 
 
-                        <p className='text-color2'>Pin: 783360</p>
+                        <p className='text-color2'>Pin: {props.pin}</p>
 
                         <ButtonLoading
                             submitLoad={newsLoad}
@@ -357,7 +358,7 @@ const EditPost = (props: propsType) => {
                             uploadImg={newsImgUpload1}
                         ></ImageInput>
 
-                        <p className='text-color2'>Pin: 783360</p>
+                        <p className='text-color2'>Pin: {props.pin}</p>
 
                         <ButtonLoading
                             submitLoad={eventLoad}

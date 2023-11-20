@@ -40,10 +40,25 @@ export async function GET(
                 firstName: 1,
                 lastName: 1
             }); // Specify the fields you want to include
-            ArrayItems.push({ item, user: {
-                firstName: user.firstName,
-                lastName: user.lastName
-            } }); // Include only the desired fields
+            // ArrayItems.push({ item, user: {
+            //     firstName: user.firstName,
+            //     lastName: user.lastName
+            // } }); // Include only the desired fields
+            if (user) {
+                ArrayItems.push({
+                    item, user: {
+                        firstName: user.firstName,
+                        lastName: user.lastName
+                    }
+                }); // Include only the desired fields
+            } else {
+                ArrayItems.push({
+                    item, user: {
+                        firstName: "--",
+                        lastName: "--"
+                    }
+                }); // Include only the desired fields
+            }
         });
 
         // Wait for all promises to resolve

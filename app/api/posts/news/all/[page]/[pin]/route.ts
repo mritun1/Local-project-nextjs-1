@@ -31,31 +31,48 @@ export async function GET(
             })
         }
 
-        //ADDING THE ADDITIONAL USERS DATA
-        const ArrayItems: any[] = [];
-        // Assuming cursor is an array of items
-        const promises = cursor.map(async (item) => {
-            const user = await User.findById(item.userId, {
-                firstName: 1,
-                lastName: 1
-            }); // Specify the fields you want to include
-            ArrayItems.push({
-                item, user: {
-                    firstName: user.firstName,
-                    lastName: user.lastName
+        try{
+            //ADDING THE ADDITIONAL USERS DATA
+            const ArrayItems: any[] = [];
+            // Assuming cursor is an array of items
+            const promises = cursor.map(async (item) => {
+                const user = await User.findById(item.userId, {
+                    firstName: 1,
+                    lastName: 1
+                }); // Specify the fields you want to include
+                if (user){
+                    ArrayItems.push({
+                        item, user: {
+                            firstName: user.firstName,
+                            lastName: user.lastName
+                        }
+                    }); // Include only the desired fields
+                }else{
+                    ArrayItems.push({
+                        item, user: {
+                            firstName: "--",
+                            lastName: "--"
+                        }
+                    }); // Include only the desired fields
                 }
-            }); // Include only the desired fields
-        });
+                
+            });
 
-        // Wait for all promises to resolve
-        await Promise.all(promises);
+            // Wait for all promises to resolve
+            await Promise.all(promises);
 
-        return NextResponse.json({
-            pin: pin,
-            msg: "Data found",
-            data: ArrayItems,
-            code: 1,
-        })
+            return NextResponse.json({
+                pin: pin,
+                msg: "Data found",
+                data: ArrayItems,
+                code: 1,
+            })
+        }catch(error){
+            return NextResponse.json({
+                msg: error,
+                code: 0
+            })
+        }
 
     } catch (err) {
         return NextResponse.json({

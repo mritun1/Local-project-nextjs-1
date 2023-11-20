@@ -131,6 +131,15 @@ p {
     padding: 6px;
     margin: 0px;
 }
+.position-relative{
+    position: relative;
+}
+.text-center {
+    text-align: center;
+}
+.text-right{
+    text-align: right;
+}
 //---------------------------------------------
 // TAG CLASSES - @END
 //---------------------------------------------
@@ -181,9 +190,7 @@ p {
 .small{
     font-size: 12px;
 }
-.text-center{
-    text-align: center;
-}
+
 //---------------------------------------------
 // CLASSES - @END
 //---------------------------------------------

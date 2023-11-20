@@ -50,9 +50,9 @@ const Page = () => {
         loadMe()
     }, [])
 
-    const showModal = () => {
-        setIsSingleInputHidden(!isSingleInputHidden)
-    }
+    // const showModal = () => {
+    //     setIsSingleInputHidden(!isSingleInputHidden)
+    // }
 
     const pinCodeModal = () => {
         setIsPinCodeHidden(!isPinCodeHidden)

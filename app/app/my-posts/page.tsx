@@ -83,6 +83,7 @@ const Page = () => {
 
                         <CreatePost
                         loadCont={loadContents}
+                        pin={pin}
                         ></CreatePost>
 
 
@@ -128,6 +129,7 @@ const Page = () => {
                                                 postType={ele.postType}
                                                 postId={ele._doc._id}
                                                 loadCont={loadContents}
+                                                pin={pin}
                                             ></EditPost>
                                         </div>
                                     </div>

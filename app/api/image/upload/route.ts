@@ -13,6 +13,7 @@ import customMath from "@/app/lib/customMath";
 import User from "@/app/models/userModels";
 import productSecondHandDraft from "@/app/models/products/secondHandDraft";
 import productSecondHand from "@/app/models/products/secondHand";
+import groupsModelsDraft from "@/app/models/groups/groupsModelsDraft";
 
 export async function POST(req:NextRequest){
     try{
@@ -138,6 +139,22 @@ export async function POST(req:NextRequest){
                     }
                     //UPDATE NEW IMAGE TO DATABASE
                     await User.findByIdAndUpdate({ _id: Object(userID) }, { profilePic:publicURL})
+                }
+            }
+            //GROUPS IMAGES
+            if (serviceType === 'groups') {
+                if (service === 'group_img_draft') {
+                    //FIND PREVIOUS IMAGE
+                    const group = await groupsModelsDraft.findOne({ groupCreatorId: userID })
+                    //DELETE PREVIOUS IMAGE
+                    const rm = `https://storage.googleapis.com/localnii-testing/`
+                    if (group && group.groupPic) {
+                        const oldImg = group.groupPic;
+                        const delImg = oldImg.replace(rm, "");
+                        await imgUpload.file(delImg).delete()
+                    }
+                    //UPDATE NEW IMAGE TO DATABASE
+                    await groupsModelsDraft.findOneAndUpdate({ groupCreatorId: userID }, { groupPic: publicURL })
                 }
             }
 

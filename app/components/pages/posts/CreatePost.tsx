@@ -7,6 +7,7 @@ import axios from 'axios'
 
 type propsType = {
     loadCont: () => void,
+    pin:number
 }
 
 const CreatePost = (props: propsType) => {
@@ -333,7 +334,7 @@ const CreatePost = (props: propsType) => {
                             uploadImg={newsImgUpload1}
                         ></ImageInput>
 
-                        <p className='text-color2'>Pin: 783360</p>
+                        <p className='text-color2'>Pin: {props.pin}</p>
 
                         <ButtonLoading
                             submitLoad={submitBtn}
@@ -391,7 +392,7 @@ const CreatePost = (props: propsType) => {
                         ></ImageInput>
 
 
-                        <p className='text-color2'>Pin: 783360</p>
+                        <p className='text-color2'>Pin: {props.pin}</p>
 
                         <ButtonLoading
                             submitLoad={submitBtn}

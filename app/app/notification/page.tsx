@@ -4,7 +4,7 @@ import seenUpdate from '@/app/customlib/seenUpdate';
 import { usePathname } from 'next/navigation';
 import React, { useEffect } from 'react'
 
-const Page = () => {
+const Notifications = () => {
 
     return (
         <>
@@ -44,4 +44,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default Notifications

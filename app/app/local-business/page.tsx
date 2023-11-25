@@ -5,16 +5,16 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import React, { useEffect } from 'react'
 
-const Page = () => {
+const LocalBusiness = () => {
 
-    const seenUpdater = new seenUpdate();
-    const pathname = usePathname();
+    // const seenUpdater = new seenUpdate();
+    // const pathname = usePathname();
 
-    useEffect(() => {
-        return () => {
-            seenUpdater.update(pathname);
-        };
-    }, []);
+    // useEffect(() => {
+    //     return () => {
+    //         seenUpdater.update(pathname);
+    //     };
+    // }, []);
 
   return (
     <>
@@ -90,4 +90,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default LocalBusiness

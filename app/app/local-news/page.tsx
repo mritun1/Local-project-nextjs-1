@@ -5,6 +5,7 @@ import AppContent from '@/app/components/templates/AppContent'
 import seenUpdate from '@/app/customlib/seenUpdate';
 import customDate from '@/app/lib/customDate';
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
+import { error } from 'console';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
@@ -26,7 +27,7 @@ interface NewsItems {
     };
 }
 
-const Page = () => {
+const LocalNews = () => {
     const [newsList, setNewsList] = useState<NewsItems[]>([]);
     const newDate = new customDate();
     const [pin, setPin] = useState<number>(0);
@@ -47,6 +48,8 @@ const Page = () => {
             .then(response => response.json())
             .then(data => {
                 setPin(data.pin)
+
+
                 if (data.code === 1) {
 
                     console.log(data.data)
@@ -56,7 +59,7 @@ const Page = () => {
                     setPnum((prev) => prev + 1)
 
                     if (data.data.length > 0) {
-                        
+
                         //Create Image Circular linked list array
                         const arr = data.data;
 
@@ -70,18 +73,24 @@ const Page = () => {
                         });
                         setDoublyLinkedLists(prevData => [...prevData, ...doublyLinkedLists])
 
-                    }else{
+                    } else {
                         setNotFound(false)
                     }
                     setInfinityLoad(true)
                 } else {
                     setInfinityLoad(true)
-                    if (num === 1){
+                    if (num === 1) {
                         setNotFound(false)
                     }
                 }
             })
+            .catch(error => {
+                console.error('Fetch error', error);
+            })
     }
+
+    
+    const pathname = usePathname();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -95,21 +104,22 @@ const Page = () => {
             window.addEventListener('scroll', handleScroll);
         }
 
+        const seenUpdater = new seenUpdate();
+        seenUpdater.update(pathname);
+
         // Remove the event listener when the component unmounts
         return () => {
             if (typeof window !== 'undefined') {
                 window.removeEventListener('scroll', handleScroll);
             }
         };
-    }, [pNum]);
+    }, [pNum, pathname]);
 
-    const seenUpdater = new seenUpdate();
-    const pathname = usePathname();
+    
 
     useEffect(() => {
+        loadNews(1);
         return () => {
-            loadNews(1);
-            seenUpdater.update(pathname);
         };
     }, []);
 
@@ -237,4 +247,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default LocalNews

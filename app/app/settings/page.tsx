@@ -2,7 +2,7 @@ import ChangePassword from '@/app/components/pages/settings/ChangePassword'
 import AppContent from '@/app/components/templates/AppContent'
 import React from 'react'
 
-const Page = () => {
+const Settings = () => {
     return (
         <>
             <AppContent
@@ -32,4 +32,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default Settings

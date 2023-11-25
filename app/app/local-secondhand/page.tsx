@@ -8,9 +8,8 @@ interface catAr {
     _id: string;
     count: number;
 }
-const Page = () => {
+const LocalSecondHand = () => {
 
-    const seenUpdater = new seenUpdate();
     const pathname = usePathname();
     const [categories, setCategories] = useState<catAr[]>([])
     const [total, setTotal] = useState<number>(0)
@@ -35,10 +34,14 @@ const Page = () => {
     }
 
     useEffect(() => {
-        return () => {
-            seenUpdater.update(pathname);
-            getData();
-        };
+        const seenUpdater = new seenUpdate();
+        seenUpdater.update(pathname);
+        return () => {};
+    }, [pathname]);
+
+    useEffect(() => {
+        getData();
+        return () => {};
     }, []);
 
     return (
@@ -95,4 +98,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default LocalSecondHand

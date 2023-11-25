@@ -3,7 +3,7 @@ import AppContent from '@/app/components/templates/AppContent'
 import Script from 'next/script'
 import React, { useEffect } from 'react'
 
-const Page = () => {
+const MyEarnings = () => {
 
     return (
         <>
@@ -23,15 +23,15 @@ const Page = () => {
                             </div>
                         </div>
 
-                        <div className="service-not-available">
+                        {/* <div className="service-not-available">
                             <div>
                                 <h2><i className="fa-regular fa-hourglass-half"></i></h2>
                                 <h3>Coming Soon! Please wait for some more days.</h3>
                                 <h1>Thank You.</h1>
                             </div>
-                        </div>
+                        </div> */}
 
-                        {/* <div className="post_create_btns">
+                        <div className="post_create_btns">
                             <div>
                                 <div>
                                     <h5>Total Balance</h5>
@@ -168,7 +168,7 @@ const Page = () => {
                                     <button>Withdraw</button>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
 
 
                     </div>
@@ -193,5 +193,5 @@ const Page = () => {
     )
 }
 
-export default Page
+export default MyEarnings
 

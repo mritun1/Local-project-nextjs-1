@@ -1,7 +1,6 @@
 "use client"
 import ChatContentGroup from '@/app/components/pages/message/ChatContentGroup';
 import AppContent from '@/app/components/templates/AppContent'
-import goBack from '@/app/lib/goBack';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react'
@@ -18,10 +17,9 @@ interface messageArr {
     sender: string
 }
 
-const Page = () => {
+const LocalGroupChat = () => {
     const {slug} = useParams();
     // const getBackFunc = new goBack();
-    const [backUrl, setBackUrl] = useState<string>("/");
 
     const [groupPic, setGroupPic] = useState<string>("")
     const [groupName, setGroupName] = useState<string>("")
@@ -89,10 +87,9 @@ const Page = () => {
                 }
             }
         }
-        return () =>{
-            getTemp()
-        }
-    },[])
+        getTemp()
+        return () =>{}
+    }, [slug])
 
     //ALWAYS SCROLL DOWN
     const chatContentRef = useRef<HTMLDivElement>(null);
@@ -123,7 +120,7 @@ const Page = () => {
         return () => {
             eventSource.close();
         };
-    }, []);
+    }, [slug]);
 
     return (
         <>
@@ -149,7 +146,7 @@ const Page = () => {
                             </div>
                             <div>
                                 <div>
-                                    <Link href={backUrl} as={backUrl} >
+                                    <Link href={'/app/local-groups/'} >
                                         <button className='btn_back green-btn' ><i className="fa-solid fa-left-long"></i></button>
                                     </Link>
 
@@ -205,4 +202,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default LocalGroupChat

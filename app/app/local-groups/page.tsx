@@ -18,9 +18,9 @@ type groupsItems={
     }
 }
 
-const Page = () => {
+const LocalGroups = () => {
 
-    const seenUpdater = new seenUpdate();
+    
     const pathname = usePathname();
     const [isHome, setIsHome] = useState<boolean>(true)
     const [isSearch, setIsSearch] = useState<boolean>(false)
@@ -32,10 +32,11 @@ const Page = () => {
     }
 
     useEffect(() => {
+        const seenUpdater = new seenUpdate();
+        seenUpdater.update(pathname);
         return () => {
-            seenUpdater.update(pathname);
         };
-    }, []);
+    }, [pathname]);
     //--------------------------------------------------------
     //LOAD CONTENT - SEARCH - START
     //--------------------------------------------------------
@@ -131,12 +132,9 @@ const Page = () => {
     //LOAD CONTENT - HOME - END
     //--------------------------------------------------------
     useEffect(() => {
-        return () => {
-            loadGroups(1);
-            loadGroupsHome(1);
-            // seenUpdater.update(pathname);
-            console.log(groupsHome)
-        };
+        loadGroups(1);
+        loadGroupsHome(1);
+        return () => {};
     }, []);
 
     return (
@@ -222,4 +220,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default LocalGroups

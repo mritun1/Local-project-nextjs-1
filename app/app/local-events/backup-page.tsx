@@ -5,7 +5,7 @@ import seenUpdate from '@/app/customlib/seenUpdate';
 import customDate from '@/app/lib/customDate';
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
 import { usePathname } from 'next/navigation';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface EventItems {
     item: {
@@ -27,7 +27,7 @@ interface EventItems {
     };
 }
 
-const LocalEvents = () => {
+const Page = () => {
 
     const [eventList, setEventLists] = useState<EventItems[]>([]);
     const newDate = new customDate();
@@ -36,7 +36,7 @@ const LocalEvents = () => {
     const [notFound, setNotFound] = useState<boolean>(true);
     const [doublyLinkedLists, setDoublyLinkedLists] = useState<DoublyCircularLinkedList[]>([]);
     const [infinityLod, setInfinityLoad] = useState<boolean>(true)
-    const [pNum, setPnum] = useState<number>(1);
+    const [pNum,setPnum] = useState<number>(1);
 
     const loadEvents2 = (num: number) => {
         setInfinityLoad(false)
@@ -49,17 +49,14 @@ const LocalEvents = () => {
             .then(response => response.json())
             .then(data => {
                 setPin(data.pin)
-
-                console.log(data)
-
                 if (data.code === 1) {
-
+                
                     setEventLists((prevData) => [...prevData, ...data.data]);
                     setTotal((prevData) => prevData + data.data.length);
-                    setPnum((prev) => prev + 1)
+                    setPnum((prev)=>prev + 1)
 
                     if (data.data.length > 0) {
-
+                        
                         //Create Image Circular linked list array
                         const arr = data.data;
 
@@ -73,7 +70,7 @@ const LocalEvents = () => {
                         });
                         setDoublyLinkedLists(prevData => [...prevData, ...doublyLinkedLists])
 
-                    } else {
+                    }else{
                         setNotFound(false)
                     }
                     setInfinityLoad(true)
@@ -84,12 +81,7 @@ const LocalEvents = () => {
                     }
                 }
             })
-            .catch(error=>{
-                console.error('Fetch error:',error);
-            })
     }
-
-    const pathname = usePathname();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -103,22 +95,24 @@ const LocalEvents = () => {
             window.addEventListener('scroll', handleScroll);
         }
 
-        const seenUpdater = new seenUpdate();
-        seenUpdater.update(pathname);
-
         // Remove the event listener when the component unmounts
         return () => {
             if (typeof window !== 'undefined') {
                 window.removeEventListener('scroll', handleScroll);
             }
         };
-    }, [pNum, pathname]);
+    }, [pNum]);
+
     
+    const pathname = usePathname();
     useEffect(() => {
-        loadEvents2(1);   
+        const seenUpdater = new seenUpdate();
+        
         return () => {
+            loadEvents2(1);
+            seenUpdater.update(pathname);
         };
-    }, []);
+    }, [pathname]);
 
     const [imgState, setImgState] = useState<number | null>(null)
     const [imgUrl, setImgUrl] = useState<string | null>(null)
@@ -166,7 +160,7 @@ const LocalEvents = () => {
                                                     <div className="news_img_sec"
                                                         style={{
                                                             backgroundImage: `url(${imgState === index ? imgUrl :
-                                                                ele.item.images[0]
+                                                                    ele.item.images[0]
                                                                 })`
                                                         }}>
                                                         <div className="news_img_btn_left">
@@ -209,7 +203,7 @@ const LocalEvents = () => {
                                     </div>
                                 </div>
                             )}
-
+                            
                             <ButtonLoading
                                 submitLoad={infinityLod}
                             >.</ButtonLoading>
@@ -227,4 +221,6 @@ const LocalEvents = () => {
     )
 }
 
-export default LocalEvents
+export default Page
+
+

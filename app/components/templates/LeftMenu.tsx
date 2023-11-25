@@ -15,10 +15,14 @@ const LeftMenu = (props: propsTypes) => {
       useEffect(() => {
             const fetchData = async () => {
                   const res = await fetch("/api/onload/leftmenu/", {
-                        method: 'GET',
+                        method: 'POST',
                         headers: {
+                              'Content-Type':'application/json',
                               'Cache-Control': 'no-cache, no-store',
                         },
+                        body:JSON.stringify({
+                              code:1
+                        })
                   });
                   if (res.ok) {
                         const data = await res.json();
@@ -32,10 +36,8 @@ const LeftMenu = (props: propsTypes) => {
                         console.log("Error: fetching layout")
                   }
             }
-            return () => {
-                  fetchData();
-
-            }
+            fetchData();
+            return () => {}
       }, [])
 
       const [eventsCount, setEventsCount] = useState<number>(0);
@@ -73,9 +75,8 @@ const LeftMenu = (props: propsTypes) => {
                         console.log("Error: fetching left menu count")
                   }
             };
-            return () => {
-                  handleUrlChange()
-            };
+            handleUrlChange();
+            return () => {};
       }, [pathname]);
 
       return (

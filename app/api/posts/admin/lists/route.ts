@@ -5,7 +5,7 @@ import eventsPost from "@/app/models/posts/eventsPost";
 import connectDB from "@/app/db/config";
 import getTokenData from "@/app/lib/getTokenData";
 
-export async function GET(req:NextRequest) {
+export async function POST(req:NextRequest) {
     try {
         const linkedList = new LinkedList();
 

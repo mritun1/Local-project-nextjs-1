@@ -1,7 +1,6 @@
 "use client"
 import ChatContent from '@/app/components/pages/message/ChatContent';
 import AppContent from '@/app/components/templates/AppContent'
-import goBack from '@/app/lib/goBack';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React, {  useEffect, useRef, useState } from 'react'
@@ -19,12 +18,9 @@ interface messageArr {
     uType:string
 }
 
-const Page = () => {
+const LocalMessageChat = () => {
 
     const {slug} = useParams();
-
-    const getBackFunc = new goBack();
-    const [backUrl, setBackUrl] = useState<string>("/");
     const [senderName,setSenderName] = useState<string>("")
     const [senderPic,setSenderPic] = useState<string>("/icons/others/profile.webp")
     const [messageText, setMessageText] = useState<string>("")
@@ -62,11 +58,10 @@ const Page = () => {
                 }
             }
         }
-        return () => {
-            getCont();
-            setBackUrl(getBackFunc.getUrl())
-        };
-    }, []);
+        getCont();
+
+        return () => {};
+    }, [slug]);
 
     const draftChat = async (e: string) =>{
         setMessageText(e)
@@ -105,7 +100,7 @@ const Page = () => {
     //SSE
     const [lists, setLists] = useState<messageArr[]>([])
     useEffect(() => {
-        const eventSource = new EventSource('http://127.0.0.1:3000/api/message/sse/' + slug);
+        const eventSource = new EventSource('/api/message/sse/' + slug);
         eventSource.onmessage = (event) => {
             try {
                 const data = JSON.parse(event.data);
@@ -121,7 +116,7 @@ const Page = () => {
         return () => {
             eventSource.close();
         };
-    }, []); 
+    }, [slug]); 
 
     const handleKeyPress = (e:any) => {
         if (e.key === 'Enter') {
@@ -129,7 +124,6 @@ const Page = () => {
             submitChat();
         }
     };
-
     
     return (
         <>
@@ -155,7 +149,7 @@ const Page = () => {
                             </div>
                             <div>
                                 <div>
-                                    <Link href={backUrl} as={backUrl} >
+                                    <Link href={'/app/message'} >
                                         <button className='btn_back green-btn' ><i className="fa-solid fa-left-long"></i></button>
                                     </Link>
                                     
@@ -210,4 +204,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default LocalMessageChat

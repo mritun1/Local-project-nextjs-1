@@ -12,13 +12,11 @@ type templateType = {
 const AppContent = (props: templateType) => {
     const pathname = usePathname();
 
-    const goBackFunc = new goBack();
-
     useEffect(()=>{
-        return ()=>{
-            goBackFunc.setHistory(pathname);
-        }
-    },[])
+        const goBackFunc = new goBack();
+        goBackFunc.setHistory(pathname);
+        return ()=>{}
+    }, [pathname])
 
     return (
         <>

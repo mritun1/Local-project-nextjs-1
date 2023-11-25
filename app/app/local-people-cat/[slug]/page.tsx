@@ -20,7 +20,7 @@ interface UserItems {
     profilePic: string;
 }
 
-const Page = () => {
+const LocalPeopleView = () => {
     const router = useParams()
     const {slug} = router
     
@@ -31,29 +31,32 @@ const Page = () => {
     const [infinityLod, setInfinityLoad] = useState<boolean>(true)
     const [pNum, setPnum] = useState<number>(1);
     
-    const loadPeople = (num: number) => {
-        setInfinityLoad(false)
-        const res = fetch(`/api/people/${slug}/${num}/0/`, {
-            method: 'GET',
-        })
-            .then(response => response.json())
-            .then(data => {
-                setPin(data.pin)
-                if (data.code === 1) {
-                    console.log(data.data)
-                    setPeopleLists((prevData) => [...prevData, ...data.data]);
-                    setTotal((prevData) => prevData + data.data.length);
-                    setPnum((prev) => prev + 1)
-                    setNotFound(true)
-                    setInfinityLoad(true)
-                } else {
-                    setInfinityLoad(true)
-                    //setNotFound(false)
-                }
-            })
-    }
+    
 
     useEffect(() => {
+
+        const loadPeople = (num: number) => {
+            setInfinityLoad(false)
+            const res = fetch(`/api/people/${slug}/${num}/0/`, {
+                method: 'GET',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setPin(data.pin)
+                    if (data.code === 1) {
+                        console.log(data.data)
+                        setPeopleLists((prevData) => [...prevData, ...data.data]);
+                        setTotal((prevData) => prevData + data.data.length);
+                        setPnum((prev) => prev + 1)
+                        setNotFound(true)
+                        setInfinityLoad(true)
+                    } else {
+                        setInfinityLoad(true)
+                        //setNotFound(false)
+                    }
+                })
+        }
+
         const handleScroll = () => {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
                 loadPeople(pNum);
@@ -71,17 +74,41 @@ const Page = () => {
                 window.removeEventListener('scroll', handleScroll);
             }
         };
-    }, [pNum]);
+    }, [pNum,slug]);
 
-    const getBackFunc = new goBack();
-    
-    const [backUrl,setBackUrl] = useState<string>("/");
+    const [backUrl, setBackUrl] = useState<string>("/");
     useEffect(() => {
-        return () => {
-            loadPeople(1);
-            setBackUrl(getBackFunc.getUrl())
-        };
+        const getBackFunc = new goBack();
+        setBackUrl(getBackFunc.getUrl())
+        return () => { };
     }, []);
+
+    useEffect(() => {
+        const loadPeople = (num: number) => {
+            setInfinityLoad(false)
+            const res = fetch(`/api/people/${slug}/${num}/0/`, {
+                method: 'GET',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setPin(data.pin)
+                    if (data.code === 1) {
+                        console.log(data.data)
+                        setPeopleLists((prevData) => [...prevData, ...data.data]);
+                        setTotal((prevData) => prevData + data.data.length);
+                        setPnum((prev) => prev + 1)
+                        setNotFound(true)
+                        setInfinityLoad(true)
+                    } else {
+                        setInfinityLoad(true)
+                        //setNotFound(false)
+                    }
+                })
+        }
+
+        loadPeople(1);
+        return () => {};
+    }, [slug]);
 
     return (
         <>
@@ -188,4 +215,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default LocalPeopleView

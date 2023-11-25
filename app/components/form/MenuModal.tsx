@@ -24,6 +24,7 @@ const MenuModal = () => {
                     code:1
                 })
             });
+
             if (res.ok) {
                 const data = await res.json();
                 setFullName(data.firstName + " " + data.lastName);
@@ -33,10 +34,8 @@ const MenuModal = () => {
                 
             }
         };
-
-        return () => {
-            fetchData();
-        };
+        fetchData();
+        return () => {};
         
     },[])
 

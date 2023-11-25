@@ -20,7 +20,7 @@ interface Posts {
     postType: string;
 }
 
-const Page = () => {
+const MyPosts = () => {
 
     const [postLists, setPostLists] = useState<Posts[]>([]);
     const [notFound,setNotFound] = useState<boolean>(false);
@@ -34,7 +34,15 @@ const Page = () => {
     
     const loadContents = async () => {
         setLoad(true);
-        const res = await fetch("/api/posts/admin/lists/");
+        const res = await fetch("/api/posts/admin/lists/",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                code:1
+            })
+        });
         if (res.ok) {
             const data = await res.json();
             console.log(data)
@@ -54,6 +62,7 @@ const Page = () => {
     //EXECUTE WHILE PAGE LOAD
     useEffect(()=>{
         loadContents();
+        return () =>{}
     }, [])
 
     return (
@@ -155,4 +164,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default MyPosts

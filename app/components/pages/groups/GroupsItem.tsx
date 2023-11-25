@@ -36,12 +36,11 @@ const GroupsItem = (props: propsType) => {
         }
     }
     useEffect(()=>{
-        return ()=>{
-            if(props.btn==="joined"){
-                setChangeBtn(true)
-            }
+        if (props.btn === "joined") {
+            setChangeBtn(true)
         }
-    },[])
+        return ()=>{}
+    }, [props.btn])
     return (
         <>
             <div className="bar_btn_box">

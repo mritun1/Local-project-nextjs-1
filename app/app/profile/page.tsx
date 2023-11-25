@@ -7,7 +7,7 @@ import AppContent from '@/app/components/templates/AppContent'
 import axios from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
 
-const Page = () => {
+const Profile = () => {
     const [isSingleInputHidden, setIsSingleInputHidden] = useState<boolean>(false)
     const [isPinCodeHidden, setIsPinCodeHidden] = useState<boolean>(false)
     const [isNameHidden, setIsNameHidden] = useState<boolean>(false)
@@ -293,4 +293,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default Profile

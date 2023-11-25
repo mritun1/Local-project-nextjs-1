@@ -20,7 +20,7 @@ interface products {
     _id:String;
 }
 
-const Page = () => {
+const MySecondHand = () => {
 
     const [notFound, setNotFound] = useState<boolean>(false);
     const [products, setProducts] = useState<Array<products>>([]);
@@ -117,4 +117,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default MySecondHand

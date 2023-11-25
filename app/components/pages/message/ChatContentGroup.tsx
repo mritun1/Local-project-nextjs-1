@@ -7,12 +7,11 @@ interface ProTye {
 const ChatContent = (props: ProTye) => {
     const [me, setMe] = useState<boolean>(false);
     useEffect(() => {
-        return () => {
-            if (props.me === 'me') {
-                setMe(true)
-            }
+        if (props.me === 'me') {
+            setMe(true)
         }
-    }, [])
+        return () => {}
+    }, [props.me])
     return (
         <>
             <div className={me ? 'chat-right' : 'chat-left'}>

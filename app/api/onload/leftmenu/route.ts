@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req:NextRequest){
+export async function POST(req:NextRequest){
     try{
         const pinCookie: any = process.env.PIN_CODE;
         const pin = req.cookies.get(pinCookie)?.value || "";

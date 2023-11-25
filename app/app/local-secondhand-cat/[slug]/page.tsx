@@ -28,7 +28,7 @@ interface Contents {
         profilePic: string;
     };
 }
-const Page = () => {
+const LocalSecondHandCat = () => {
 
     const router = useParams()
     const { slug } = router
@@ -41,7 +41,7 @@ const Page = () => {
     const [pNum, setPnum] = useState<number>(1);
     const [doublyLinkedLists, setDoublyLinkedLists] = useState<DoublyCircularLinkedList[]>([]);
 
-    const loadNews = (num: number) => {
+    const loadNews = (num: number, slug:any) => {
         setInfinityLoad(false)
         fetch(`/api/products/second-hand/public/${slug}/${num}/0/`, {
             method: 'GET',
@@ -91,7 +91,7 @@ const Page = () => {
     useEffect(() => {
         const handleScroll = () => {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-                loadNews(pNum);
+                loadNews(pNum, slug);
             }
         };
 
@@ -106,17 +106,16 @@ const Page = () => {
                 window.removeEventListener('scroll', handleScroll);
             }
         };
-    }, [pNum]);
+    }, [pNum, slug]);
 
-    const seenUpdater = new seenUpdate();
+    
     const pathname = usePathname();
 
     useEffect(() => {
-        return () => {
-            //loadNews(1);
-            seenUpdater.update(pathname);
-        };
-    }, []);
+        const seenUpdater = new seenUpdate();
+        seenUpdater.update(pathname);
+        return () => {};
+    }, [pathname]);
 
     const [imgState, setImgState] = useState<number | null>(null)
     const [imgUrl, setImgUrl] = useState<string | null>(null)
@@ -129,15 +128,15 @@ const Page = () => {
         setImgUrl(doublyLinkedLists[index].getPrevData());
     };
 
-    const getBackFunc = new goBack();
+    
 
     const [backUrl, setBackUrl] = useState<string>("/");
     useEffect(() => {
-        return () => {
-            loadNews(1);
-            setBackUrl(getBackFunc.getUrl())
-        };
-    }, []);
+        const getBackFunc = new goBack();
+        loadNews(1,slug);
+        setBackUrl(getBackFunc.getUrl())
+        return () => {};
+    }, [slug]);
 
     return (
         <>
@@ -297,4 +296,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default LocalSecondHandCat

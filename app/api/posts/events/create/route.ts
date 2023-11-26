@@ -3,7 +3,6 @@ import getTokenData from "@/app/lib/getTokenData";
 import draftEventsPost from "@/app/models/posts/draftEventsPost";
 import eventsPost from "@/app/models/posts/eventsPost";
 import { NextRequest, NextResponse } from "next/server";
-import { ObjectId } from "mongodb";
 
 export async function POST(req: NextRequest) {
     try {
@@ -63,8 +62,7 @@ export async function PUT(req: NextRequest) {
             })
         }
         //Update the events
-        const objId = new ObjectId(id);
-        await eventsPost.findOneAndUpdate({ _id: objId },{
+        await eventsPost.findByIdAndUpdate(id,{
             des, title, startDate, endDate,
             updatedDate: Date.now()
         });

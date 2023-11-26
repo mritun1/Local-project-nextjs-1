@@ -22,7 +22,8 @@ export async function GET(
             pin = req.cookies.get(pinCookie)?.value || "";
         }
 
-        const cursor = await groupsModels.find({ groupPin: pin }).sort({ createdDate: -1 }).skip(offset).limit(limit);
+        //0000000 means GLOBAL VISIBLE
+        const cursor = await groupsModels.find({ groupPin: { $in: [pin, '0000000'] } }).sort({ createdDate: -1 }).skip(offset).limit(limit);
 
         const token = new getTokenData(req);
         const uId = token.userID()

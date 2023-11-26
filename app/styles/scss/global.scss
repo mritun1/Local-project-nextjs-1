@@ -567,7 +567,8 @@ body {
 .offer_post {
     position: relative;
     margin: 6px;
-    height: 530px;
+    padding: 2px;
+    //height: 530px;   
 
     &>.store {
         @include position(absolute, 0px, 0px);
@@ -576,8 +577,8 @@ body {
     }
 
     &>.product {
-        @include w_h(100%, auto);
-        @include position(absolute, 20px, 0px);
+        //@include w_h(100%, auto);
+        //@include position(absolute, 20px, 0px);
         background-color: $bg-box;
         border-radius: 6px;
     }
@@ -842,11 +843,12 @@ body {
 
     .news_des {
         position: relative;
-        height: 120px;
+        //height: 120px;
+        overflow: hidden;
 
         &>div:nth-child(1) {
-            @include position(absolute, 0px, 0px);
-            @include w_h(100%, 120px);
+            //@include position(absolute, 0px, 0px);
+            //@include w_h(100%, 120px);
 
             &>p {
                 @include pad_mar(6px, 6px);
@@ -860,7 +862,8 @@ body {
         }
 
         &>div:nth-child(2) {
-            @include position(absolute, 80px, 0px);
+            // @include position(absolute, 80px, 0px);
+            @include position_full(absolute, auto,0px, 10px, 0px);
             @include w_h(100%, auto);
             text-align: center;
 
@@ -2410,4 +2413,20 @@ body {
 //-----------------------------------------------------
 .groups-content{
     margin-top: 6px;
+}
+
+.mob_logo_div{
+    display: none;
+    @media screen and (max-width:651px) {
+        display: block;
+    }
+    &>div{
+        padding: 6px;
+        @include flex(center, center);
+        &>div {
+            @include w_h(60px, 80px);
+            background-image: url('/icons/logo/logo1.png');
+            @include bg();
+        }
+    }
 }

@@ -21,7 +21,9 @@ export async function GET(
             const pinCookie: any = process.env.PIN_CODE;
             pin = req.cookies.get(pinCookie)?.value || "";
         }
-        const cursor = await NewsPost.find({ pin: pin }).sort({ createdDate: -1 }).skip(offset).limit(limit);
+
+        //IF THE PIN IS - 0000000 - IT IS A GLOBAL
+        const cursor = await NewsPost.find({ pin: { $in: [pin, '0000000'] } }).sort({ createdDate: -1 }).skip(offset).limit(limit);
 
         if (cursor.length == 0) {
             return NextResponse.json({
@@ -38,20 +40,23 @@ export async function GET(
             const promises = cursor.map(async (item) => {
                 const user = await User.findById(item.userId, {
                     firstName: 1,
-                    lastName: 1
+                    lastName: 1,
+                    profilePic:1
                 }); // Specify the fields you want to include
                 if (user){
                     ArrayItems.push({
                         item, user: {
                             firstName: user.firstName,
-                            lastName: user.lastName
+                            lastName: user.lastName,
+                            profilePic: user.profilePic
                         }
                     }); // Include only the desired fields
                 }else{
                     ArrayItems.push({
                         item, user: {
                             firstName: "--",
-                            lastName: "--"
+                            lastName: "--",
+                            profilePic: "/icons/others/profile.webp"
                         }
                     }); // Include only the desired fields
                 }

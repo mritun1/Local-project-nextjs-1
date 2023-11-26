@@ -11,7 +11,7 @@ export async function middleware(req:NextRequest){
     const isUserActiveCookie = req.cookies.get(isUserActive)?.value || "";
 
     if (isPublicPath && token && !isUserActiveCookie){
-        return NextResponse.redirect(new URL('/app/local-offers/', req.nextUrl));
+        return NextResponse.redirect(new URL('/app/local-news/', req.nextUrl));
     }
     if (!isPublicPath && !token){
         return NextResponse.redirect(new URL('/', req.nextUrl));

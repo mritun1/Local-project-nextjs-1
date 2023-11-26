@@ -1,7 +1,6 @@
 import connectDB from "@/app/db/config";
 import eventsPost from "@/app/models/posts/eventsPost";
 import { NextResponse } from "next/server";
-import { ObjectId } from 'mongodb';
 
 export async function GET(
     req: Request,
@@ -11,8 +10,7 @@ export async function GET(
         await connectDB();
 
         const slug = params.id;
-        const objectId = new ObjectId(slug);
-        const cursor = await eventsPost.find({ _id: objectId });
+        const cursor = await eventsPost.findById(slug);
         
         return NextResponse.json({
             msg: "Data found",

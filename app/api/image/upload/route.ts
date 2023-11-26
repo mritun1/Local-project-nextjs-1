@@ -66,7 +66,8 @@ export async function POST(req:NextRequest){
 
             const math = new customMath();
             const ran: number = math.randomNum(1000);
-            const imgName: string = ran + `_` + img.name;
+            const addRanNum: string = ran + `_` + img.name;
+            const imgName: string = addRanNum.replace(/[^a-zA-Z0-9_.]/g, '');
 
             const options = {
                 destination: imgName,

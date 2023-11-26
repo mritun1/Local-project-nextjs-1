@@ -1,11 +1,11 @@
 "use client"
 import MoreBtn from '@/app/components/buttons/MoreBtn'
+import NewsDesMore from '@/app/components/pages/posts/news/NewsDesMore';
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
 import seenUpdate from '@/app/customlib/seenUpdate';
 import customDate from '@/app/lib/customDate';
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
-import { error } from 'console';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
@@ -24,6 +24,7 @@ interface NewsItems {
     user: {
         firstName: string;
         lastName: string;
+        profilePic: string;
     };
 }
 
@@ -89,7 +90,7 @@ const LocalNews = () => {
             })
     }
 
-    
+
     const pathname = usePathname();
 
     useEffect(() => {
@@ -115,7 +116,7 @@ const LocalNews = () => {
         };
     }, [pNum, pathname]);
 
-    
+
 
     useEffect(() => {
         loadNews(1);
@@ -133,6 +134,8 @@ const LocalNews = () => {
         setImgState(index);
         setImgUrl(doublyLinkedLists[index].getPrevData());
     };
+
+    
     return (
         <>
             <AppContent
@@ -154,7 +157,8 @@ const LocalNews = () => {
 
                         {notFound ? (
                             newsList.map((ele, index) => (
-                                <div key={index} className="offer_post" style={{ height: `580px` }}>
+                                <div key={index} className="offer_post"  >
+                                    {/* style={{ height: `580px` }} */}
 
                                     <div className="product">
 
@@ -194,14 +198,19 @@ const LocalNews = () => {
                                             <div className="product_title">
                                                 <h2>{ele.item.title}</h2>
                                             </div>
-                                            <div className="news_des">
+
+                                            {/* <div className="news_des" style={{ height: desH }}>
                                                 <div>
                                                     <p>{ele.item.des}</p>
                                                 </div>
                                                 <div>
-                                                    <button>read more...</button>
+                                                    <button onClick={showDes}>read more...</button>
                                                 </div>
-                                            </div>
+                                            </div> */}
+                                            <NewsDesMore 
+                                            des={ele.item.des}
+                                            />
+
                                         </div>
 
                                     </div>
@@ -209,7 +218,7 @@ const LocalNews = () => {
                                     <div className="store">
                                         <div className="store_profile">
                                             <div>
-                                                <div style={{ backgroundImage: `url(https://img.etimg.com/thumb/width-1200,height-900,imgsize-552986,resizemode-75,msid-98507873/small-biz/sme-sector/from-ambani-to-adani-why-billionaires-have-not-been-able-to-break-the-stronghold-of-kirana-stores-in-india.jpg)` }} className="img"></div>
+                                                <div style={{ backgroundImage: `url(${ele.user.profilePic ? ele.user.profilePic : '/icons/others/profile.webp'})` }} className="img"></div>
                                             </div>
                                             <div>
                                                 <div>

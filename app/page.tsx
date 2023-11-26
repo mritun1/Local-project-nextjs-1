@@ -30,6 +30,10 @@ export default function Home() {
 
                 <div>
 
+                  <div className="mob_logo_div" >
+                    <div><div></div></div>
+                  </div>
+
                   <Login></Login>
 
                   <div className="hr_or">

@@ -73,8 +73,7 @@ export async function PUT(req: NextRequest) {
             })
         }
         //Update the events
-        const objId = new ObjectId(id);
-        await productSecondHand.findOneAndUpdate({ _id: objId }, {
+        await productSecondHand.findByIdAndUpdate(id, {
             productName,
             productDes,
             productPrice,

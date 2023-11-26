@@ -91,16 +91,14 @@ const AddSecondHand = () => {
             const res = await fetch("/api/products/categories")
             if (res.ok) {
                 const data = await res.json();
-                console.log(data)
+                // console.log(data)
                 setProductCat(data.data)
                 setContact1(data.mobile)
                 setPin(data.pin)
             }
         }
-
-        return () => {
-            productCatFetch()
-        }
+        productCatFetch();
+        return () => {}
 
     }, [])
 
@@ -171,7 +169,7 @@ const AddSecondHand = () => {
 
     const [submitBtn, setSubmitBtn] = useState<boolean>(true)
     //SUBMIT CREATE
-    const submitPost = async (e:React.FormEvent<HTMLFormElement>) => {
+    const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
         setSubmitBtn(false)
         const res = await fetch("/api/products/second-hand/create/", {
             method: "POST",
@@ -179,13 +177,13 @@ const AddSecondHand = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                code:"create"
+                code: "create"
             })
         })
         if (res.ok) {
             setSubmitBtn(true)
             const data = await res.json()
-            console.log(data)
+            // console.log(data)
             setProductName("")
             setProductDes("")
             setProductPrice(null)
@@ -233,25 +231,31 @@ const AddSecondHand = () => {
                         <p className='text-color2'>Your Product Info</p>
 
                         <div className="sign_up_one_col">
-                            <div><input type={'text'} name={'productName'} placeholder={'Product Name'}
+                            <div>
+                                <input type={'text'} name={'productName'} placeholder={'Product Name'}
                                 onChange={(e) => eventUpdate(e, "productName")}
                                 value={productName}
-                                required /></div>
+                                required />
+                            </div>
                         </div>
 
                         <div className="sign_up_one_col" >
-                            <div style={{ height: `100px` }}><textarea name={'productDes'} placeholder={'Tell me why you want to sell and how is the condition of product?'}
+                            <div style={{ height: `100px` }}>
+                                <textarea name={'productDes'} placeholder={'Tell me why you want to sell and how is the condition of product?'}
                                 onChange={(e) => { eventUpdate(e, "productDes") }}
                                 value={productDes}
-                                required ></textarea></div>
+                                required ></textarea>
+                            </div>
                         </div>
 
                         <div className="sign_up_two_col">
                             <div>
-                                <div><input type="number" name="productPrice" placeholder="Price in Rupees" required
+                                <div>
+                                    <input type="number" name="productPrice" placeholder="Price in Rupees" required
                                     value={productPrice?.toString()}
                                     onChange={(e) => { eventUpdate(e, "productPrice") }}
-                                /></div>
+                                />
+                                </div>
                             </div>
                             <div>
                                 <div><input type="text" name="productOld" placeholder="How old is product?"
@@ -281,7 +285,7 @@ const AddSecondHand = () => {
                         <div className="sign_up_one_col">
                             <div><input type={'number'} name={'mobileNum1'} placeholder={'Mobile Number 1'}
                                 onChange={(e) => { eventUpdate(e, "contact1") }}
-                                value={contact1?.toString()}
+                                value={contact1 ? contact1.toString() : 0 }
                                 required /></div>
                         </div>
 
@@ -289,7 +293,7 @@ const AddSecondHand = () => {
                             <div><input type={'number'} name={'mobileNum2'} placeholder={'Mobile Number 2'}
                                 onChange={(e) => { eventUpdate(e, "contact2") }}
                                 value={contact2?.toString()}
-                                 /></div>
+                            /></div>
                         </div>
 
                         <p className='text-color2'>Your Product Images</p>

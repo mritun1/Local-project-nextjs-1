@@ -36,32 +36,33 @@ const SecondHandPosts = (props:typePros) => {
 
             if (res.ok) {
                 const data = await res.json();
-                if (data && data.data[0] && data.data[0].productName) {
-                    setProductName(data.data[0].productName);
+                console.log(data)
+                if (data && data.data && data.data.productName) {
+                    setProductName(data.data.productName);
                 }
-                if (data && data.data[0] && data.data[0].productDes) {
-                    setProductDes(data.data[0].productDes);
+                if (data && data.data && data.data.productDes) {
+                    setProductDes(data.data.productDes);
                 }
-                if (data && data.data[0] && data.data[0].productPrice) {
-                    setProductPrice(data.data[0].productPrice);
+                if (data && data.data && data.data.productPrice) {
+                    setProductPrice(data.data.productPrice);
                 }
-                if (data && data.data[0] && data.data[0].productOld) {
-                    setProductOld(data.data[0].productOld);
+                if (data && data.data && data.data.productOld) {
+                    setProductOld(data.data.productOld);
                 }
-                if (data && data.data[0] && data.data[0].contact1) {
-                    setContact1(data.data[0].contact1);
+                if (data && data.data && data.data.contact1) {
+                    setContact1(data.data.contact1);
                 }
-                if (data && data.data[0] && data.data[0].contact2) {
-                    setContact2(data.data[0].contact2);
+                if (data && data.data && data.data.contact2) {
+                    setContact2(data.data.contact2);
                 }
-                if (data && data.data[0] && data.data[0].productCategory) {
-                    setProductCategory(data.data[0].productCategory);
+                if (data && data.data && data.data.productCategory) {
+                    setProductCategory(data.data.productCategory);
                 }
-                if (data && data.data[0] && data.data[0].images) {
-                    setImgLists(data.data[0].images);
+                if (data && data.data && data.data.images) {
+                    setImgLists(data.data.images);
                 }
-                if (data && data.data[0] && data.data[0].productPin) {
-                    setProductPin(data.data[0].productPin);
+                if (data && data.data && data.data.productPin) {
+                    setProductPin(data.data.productPin);
                 }
 
             } else {
@@ -82,10 +83,8 @@ const SecondHandPosts = (props:typePros) => {
                 setProductCat(data.data)
             }
         }
-
-        return () => {
-            productCatFetch()
-        }
+        productCatFetch()
+        return () => {}
 
     }, [])
 
@@ -253,8 +252,8 @@ const SecondHandPosts = (props:typePros) => {
 
                       <div className="sign_up_two_col">
                           <div>
-                              <div><input type="number" name="productPrice" placeholder="Price in Rupees" required
-                                  value={productPrice?.toString()}
+                              <div><input type="text" name="productPrice" placeholder="Price in Rupees" required
+                                  value={productPrice ? productPrice.toString(): ''}
                                   onChange={(e) => { setProductPrice(parseInt(e.target.value)) }}
                               /></div>
                           </div>
@@ -284,16 +283,16 @@ const SecondHandPosts = (props:typePros) => {
                       <p className='text-color2'>Your Contact Info</p>
 
                       <div className="sign_up_one_col">
-                          <div><input type={'number'} name={'mobileNum1'} placeholder={'Mobile Number 1'}
+                          <div><input type={'text'} name={'mobileNum1'} placeholder={'Mobile Number 1'}
                               onChange={(e) => { setContact1(parseInt(e.target.value)) }}
-                              value={contact1?.toString()}
+                              value={contact1 ? contact1.toString():''}
                               required /></div>
                       </div>
 
                       <div className="sign_up_one_col">
-                          <div><input type={'number'} name={'mobileNum2'} placeholder={'Mobile Number 2'}
+                          <div><input type={'text'} name={'mobileNum2'} placeholder={'Mobile Number 2'}
                               onChange={(e) => { setContact2(parseInt(e.target.value)) }}
-                              value={contact2?.toString()}
+                              value={contact2 ? contact2.toString():''}
                                /></div>
                       </div>
 

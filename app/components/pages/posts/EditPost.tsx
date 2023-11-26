@@ -55,10 +55,14 @@ const EditPost = (props: propsType) => {
             const res = await getPostById("/api/posts/news/" + props.postId);
             if (res.ok) {
                 const data = await res.json();
-                setNewsTitle(data.data[0].title)
-                setNewsDes(data.data[0].des)
-                setImgLists(data.data[0].images)
-                setNewsId(data.data[0]._id)
+                // console.log(data)
+                if (data.data){
+                    setNewsTitle(data.data.title)
+                    setNewsDes(data.data.des)
+                    setImgLists(data.data.images)
+                    setNewsId(data.data._id)
+                }
+                
             } else {
                 console.log("Error while fetching");
             }
@@ -69,21 +73,21 @@ const EditPost = (props: propsType) => {
             const res = await getPostById("/api/posts/events/" + props.postId);
             if (res.ok) {
                 const data = await res.json();
-                setEventTitle(data.data[0].title)
-                setEventDes(data.data[0].des)
-                setEventId(data.data[0]._id)
+                setEventTitle(data.data.title)
+                setEventDes(data.data.des)
+                setEventId(data.data._id)
 
                 const date_obj = new customDate();
 
-                const start_date = data.data[0].startDate;
+                const start_date = data.data.startDate;
                 const newStartDate = date_obj.isoToInput(start_date);
 
-                const end_date = data.data[0].endDate;
+                const end_date = data.data.endDate;
                 const newEndDate = date_obj.isoToInput(end_date);
 
                 setEventStartDate(newStartDate)
                 setEventEndDate(newEndDate)
-                setImgEventLists(data.data[0].images)
+                setImgEventLists(data.data.images)
             } else {
                 console.log("Error while fetching");
             }

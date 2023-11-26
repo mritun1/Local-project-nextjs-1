@@ -24,6 +24,7 @@ interface EventItems {
     user: {
         firstName: string;
         lastName: string;
+        profilePic: string;
     };
 }
 
@@ -194,7 +195,7 @@ const LocalEvents = () => {
                                                 <a href=""><h5>{ele.user.firstName} {ele.user.lastName}</h5></a>
                                             </div>
                                             <div className="profile_img">
-                                                <div style={{ backgroundImage: `url(https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg)` }}></div>
+                                                <div style={{ backgroundImage: `url(${ele.user.profilePic ? ele.user.profilePic : '/icons/others/profile.webp'})` }}></div>
                                             </div>
 
                                         </div>

@@ -1,6 +1,5 @@
 export default class customMath{
 
-
     public randomNum(num:number){
         // Generate a random number between 0 (inclusive) and 1 (exclusive)
         const randomNumber = Math.random();

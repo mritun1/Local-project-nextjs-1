@@ -6,6 +6,8 @@ import jwt from 'jsonwebtoken'
 import validate from "@/app/lib/validate";
 import customSearch from "@/app/lib/customSearch";
 import peoplesCatModels from "@/app/models/peoples/peoplesCatModels";
+import sms from "@/app/customlib/sms";
+import customMath from "@/app/lib/customMath";
 
 export async function POST(req: Request) {
     try {
@@ -59,7 +61,18 @@ export async function POST(req: Request) {
         let newPassword = password.toString();
         const hashPassword = await bcrypt.hash(newPassword, 10)
 
-        let otp:string = "234";
+        const ran = new customMath();
+        const ranNum:number = ran.randomNum(10000);
+
+        let otp: string = ranNum.toString();
+
+        //SEND OTP TO MOBILE
+        const OTP = new sms();
+        const sendOtp = OTP.singleOTP(mobile.toString(),otp);
+        if (sendOtp === null){
+            return NextResponse.json({ msg: "Sms not sent, something wrong.", code: 0 });
+        }
+
         const hashOtp = await bcrypt.hash(otp, 10)
 
         //SEARCH PROFESSION SLUG

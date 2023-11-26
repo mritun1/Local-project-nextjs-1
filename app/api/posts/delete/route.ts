@@ -34,7 +34,7 @@ export async function DELETE(req: NextRequest) {
             const imgs = imgAll.images;
             if (imgs.length > 0){
                 imgs.forEach(async (ele: string) => {
-                    const imgName = ele.replace("https://storage.googleapis.com/localnii-testing/", "");
+                    const imgName = ele.replace("https://storage.googleapis.com/" + bucketName +"/", "");
                     await imgUpload.file(imgName).delete();
                 });
             }
@@ -47,7 +47,7 @@ export async function DELETE(req: NextRequest) {
             const imgs = imgAll.images;
             if (imgs.length > 0) {
                 imgs.forEach(async (ele: string) => {
-                    const imgName = ele.replace("https://storage.googleapis.com/localnii-testing/", "");
+                    const imgName = ele.replace("https://storage.googleapis.com/" + bucketName +"/", "");
                     await imgUpload.file(imgName).delete();
                 });
             }
@@ -60,7 +60,7 @@ export async function DELETE(req: NextRequest) {
             const imgs = imgAll.images;
             if (imgs.length > 0) {
                 imgs.forEach(async (ele: string) => {
-                    const imgName = ele.replace("https://storage.googleapis.com/localnii-testing/", "");
+                    const imgName = ele.replace("https://storage.googleapis.com/" + bucketName +"/", "");
                     await imgUpload.file(imgName).delete();
                 });
             }

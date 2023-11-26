@@ -131,7 +131,7 @@ export async function POST(req:NextRequest){
                     //FIND PREVIOUS IMAGE
                     const usr = await User.findById({ _id: Object(userID) })
                     //DELETE PREVIOUS IMAGE
-                    const rm = `https://storage.googleapis.com/localnii-testing/`
+                    const rm = `https://storage.googleapis.com/${bucketName}/`
                     if (usr && usr.profilePic) {
                         const oldImg = usr.profilePic;
                         const delImg = oldImg.replace(rm, "");
@@ -147,7 +147,7 @@ export async function POST(req:NextRequest){
                     //FIND PREVIOUS IMAGE
                     const group = await groupsModelsDraft.findOne({ groupCreatorId: userID })
                     //DELETE PREVIOUS IMAGE
-                    const rm = `https://storage.googleapis.com/localnii-testing/`
+                    const rm = `https://storage.googleapis.com/${bucketName}/`
                     if (group && group.groupPic) {
                         const oldImg = group.groupPic;
                         const delImg = oldImg.replace(rm, "");

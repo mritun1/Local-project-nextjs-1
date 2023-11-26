@@ -50,7 +50,7 @@ const ActivateForm = (props: propType) => {
                 setActivateModal(false)
                 setOtoFromHidden(!otpFormHidden)
                 //REDIRECT AFTER 2 secs
-                router.push("/app/local-offers")
+                router.push("/app/local-news")
             }
             setMsg(data.msg)
             setSubmitLoad(true)

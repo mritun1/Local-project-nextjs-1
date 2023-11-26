@@ -2414,7 +2414,9 @@ body {
 .groups-content{
     margin-top: 6px;
 }
-
+//-----------------------------------------------------
+// MOBILE LOGO SHOW ON LOGIN - START
+//-----------------------------------------------------
 .mob_logo_div{
     display: none;
     @media screen and (max-width:651px) {
@@ -2427,6 +2429,52 @@ body {
             @include w_h(60px, 80px);
             background-image: url('/icons/logo/logo1.png');
             @include bg();
+        }
+    }
+}
+//-----------------------------------------------------
+// MOBILE LOGO SHOW ON LOGIN - END
+//-----------------------------------------------------
+//-----------------------------------------------------
+// MOBILE FOOT MENU - START
+//-----------------------------------------------------
+.mob-foot-menu{
+    background-color: $bg-box;
+    @include w_h(100%, auto);
+    @include position_full(fixed, auto, 0px, 0px, 0px);
+    display: none;
+    @media screen and (max-width:765px) {
+        display: block;
+    }
+}
+//-----------------------------------------------------
+// MOBILE FOOT MENU - END
+//-----------------------------------------------------
+.menu-row > div{flex: 2;}
+
+.divList{
+    @include pad_mar(6px, 6px);
+    background-color: $bg-box;
+    cursor: pointer;
+    &:hover{
+        background-color: $btn-color;
+    }
+    border-radius: 10px;
+    display: flex;
+    &>div:nth-child(1),
+    &>div:nth-child(3){
+        width: 30px;
+        @include flex(center, center);
+        &>div>i{
+            font-size: 20px;
+            color: $text-color2;
+        }
+    }
+    &>div:nth-child(2){
+        flex: 8;
+        &>p{
+            font-weight: bold;
+            color: $text-color2;
         }
     }
 }

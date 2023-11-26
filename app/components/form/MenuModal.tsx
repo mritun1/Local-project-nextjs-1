@@ -152,7 +152,7 @@ const MenuModal = () => {
                             </div>
 
                             {/* ROW 1 START */}
-                            <div className='display-flex light-bottom-border'>
+                            <div className='display-flex light-bottom-border menu-row' >
 
                                 <div className='circle-gal-btn'>
                                     <div className="img">
@@ -215,7 +215,7 @@ const MenuModal = () => {
                             {/* ROW 1 END */}
 
                             {/* ROW 2 START */}
-                            {/* <div className='display-flex'>
+                            {/* <div className='display-flex menu-row'>
 
                                 <div className='circle-gal-btn'>
                                     <div className="img">

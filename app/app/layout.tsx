@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import '../styles/scss/global.scss'
 import MenuModal from '../components/form/MenuModal'
 import MainContent from '../components/templates/MainContent'
+import MobFootMenu from '../components/pages/mob/MobFootMenu'
 
 export const metadata: Metadata = {
     title: 'Localnii - PIN code wise community.',
@@ -24,7 +25,7 @@ export default function RootLayout({
 
                 <div className="container_full">
                     <div className="container content_col">
-                
+
                         <MainContent></MainContent>
 
                         {children}
@@ -32,9 +33,11 @@ export default function RootLayout({
                     </div>
                 </div>
 
-                
+
 
             </div>
+
+            <MobFootMenu></MobFootMenu>
 
         </main>
     )

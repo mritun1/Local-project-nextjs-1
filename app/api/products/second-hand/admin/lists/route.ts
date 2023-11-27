@@ -3,7 +3,7 @@ import connectDB from "@/app/db/config";
 import getTokenData from "@/app/lib/getTokenData";
 import productSecondHand from "@/app/models/products/secondHand";
 
-export async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
     try {
 
         await connectDB();

@@ -29,7 +29,15 @@ const MySecondHand = () => {
     const [total, setTotal] = useState<number>(0)
 
     const loadCont = async () =>{
-        const res = await fetch("/api/products/second-hand/admin/lists/")
+        const res = await fetch("/api/products/second-hand/admin/lists/",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                code:1
+            })
+        })
         if(res.ok){
             const data = await res.json();
             setPin(data.pin)
@@ -42,8 +50,9 @@ const MySecondHand = () => {
     }
 
     useEffect(()=>{
+        loadCont()
         return () => {
-            loadCont()
+            
         }
     },[])
 

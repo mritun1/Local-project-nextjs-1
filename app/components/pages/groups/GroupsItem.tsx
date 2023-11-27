@@ -56,7 +56,9 @@ const GroupsItem = (props: propsType) => {
                 </div>
                 <div>
                     <div className='msg-list'>
-                        <h5>{props.name} <button className='badge bg-red'>3</button></h5>
+                        <h5>{props.name} 
+                            {/* <button className='badge bg-red'>3</button> */}
+                        </h5>
                         <p><b>Mritun:</b> sdf sdf sdf ...</p>
                         <p className='small'>{props.members.length}+</p>
                     </div>

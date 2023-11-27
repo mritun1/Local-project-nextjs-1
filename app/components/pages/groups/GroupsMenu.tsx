@@ -7,6 +7,8 @@ interface propsType{
     isHome:boolean;
     isSearch:boolean;
     pin:number | null;
+    loadGroupsHome:(e:number)=>void;
+    loadGroups:(e:number)=>void;
 }
 const GroupsMenu = (props:propsType) => {
     const [isCreate,setIsCreate] = useState<boolean>(false)
@@ -78,6 +80,8 @@ const GroupsMenu = (props:propsType) => {
             setName("")
             setPic("/icons/others/profile.webp")
             setIsCreate(!isCreate)
+            props.loadGroupsHome(1)
+            props.loadGroups(1)
         } else {
             console.log("something went wrong")
         }

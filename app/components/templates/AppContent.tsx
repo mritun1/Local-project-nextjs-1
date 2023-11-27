@@ -56,9 +56,7 @@ const AppContent = (props: templateType) => {
                             <a href="/app/my-saved" className="link_color2">
                                 <li><i className="fa-solid fa-floppy-disk icon-list"></i> My Saved <span className="level">0</span></li>
                             </a>
-                            <a href="/app/my-groups" className="link_color2">
-                                <li><i className="fa-solid fa-users-rectangle icon-list"></i> My Groups <span className="level">0</span></li>
-                            </a>
+                            
                             
                         </ul>
                     </div>

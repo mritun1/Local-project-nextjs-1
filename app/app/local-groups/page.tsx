@@ -4,6 +4,7 @@ import GroupsMenu from '@/app/components/pages/groups/GroupsMenu';
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
 import seenUpdate from '@/app/customlib/seenUpdate';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
@@ -40,6 +41,7 @@ const LocalGroups = () => {
     //--------------------------------------------------------
     //LOAD CONTENT - SEARCH - START
     //--------------------------------------------------------
+    const [groupsNum, setGroupsNum] = useState<boolean>(true);
     const [groups, setGroups] = useState<groupsItems[]>([]);
     const [infinityLod, setInfinityLoad] = useState<boolean>(true)
     const [pNum, setPnum] = useState<number>(1);
@@ -58,6 +60,9 @@ const LocalGroups = () => {
                 if (data.code === 1) {
 
                     // console.log(data.data)
+                    if (data.data.length>0){
+                        setGroupsNum(false)
+                    }
 
                     setGroups((prevData) => [...prevData, ...data.data]);
                     setPnum((prev) => prev + 1)
@@ -75,6 +80,7 @@ const LocalGroups = () => {
     //--------------------------------------------------------
     //LOAD CONTENT - HOME - START
     //--------------------------------------------------------
+    const [homeNum, setHomeNum] = useState<boolean>(true);
     const [groupsHome, setGroupsHome] = useState<groupsItems[]>([]);
     const [infinityLodHome, setInfinityLoadHome] = useState<boolean>(true)
     const [pNumHome, setPnumHome] = useState<number>(1);
@@ -92,7 +98,10 @@ const LocalGroups = () => {
                 setPin(data.pin)
                 if (data.code === 1) {
 
-                    // console.log(data.data)
+                    console.log(data.data)
+                    if(data.data.length > 0){
+                        setHomeNum(false)
+                    }
 
                     setGroupsHome((prevData) => [...prevData, ...data.data]);
                     setPnumHome((prev) => prev + 1)
@@ -161,13 +170,15 @@ const LocalGroups = () => {
                             isHome={isHome}
                             isSearch={isSearch}
                             pin={pin}
+                            loadGroupsHome={loadGroupsHome}
+                            loadGroups={loadGroups}
                         ></GroupsMenu>
 
                         {isHome?(
                             <>
                                 <div className="groups-content">
                                     {groupsHome ? groupsHome.map((ele, index) => (
-                                        <>
+                                        
                                             <GroupsItem
                                                 key={index}
                                                 name={ele.item.groupName}
@@ -176,13 +187,25 @@ const LocalGroups = () => {
                                                 id={ele.item._id}
                                                 btn={ele.btn}
                                             ></GroupsItem>
-                                        </>
+                                        
                                     )) : null}
 
                                 </div>
                                 <ButtonLoading
                                     submitLoad={infinityLodHome}
                                 >.</ButtonLoading>
+
+                                {infinityLodHome ? homeNum ?(
+                                    <div className="service-not-available">
+                                        <div>
+                                            <p>You don`t have any groups.</p>
+                                            <h2>
+                                                <button onClick={menuClickHandle} className='linkBtn'><i className="fa-solid fa-magnifying-glass"></i> Search Groups</button>
+                                            </h2>
+                                            <h3>Search Local Groups.</h3>
+                                        </div>
+                                    </div>
+                                ):null:null}
                                 
                             </>
                         ):null}
@@ -206,6 +229,15 @@ const LocalGroups = () => {
                                 <ButtonLoading
                                     submitLoad={infinityLod}
                                 >.</ButtonLoading>
+
+                                {infinityLod ? groupsNum ? (
+                                    <div className="service-not-available">
+                                        <div>
+                                            <p>No Group Found, please create one.</p>
+                                            <h3>Search Local Groups.</h3>
+                                        </div>
+                                    </div>
+                                ) : null : null}
                             </>
                         ):null}
 

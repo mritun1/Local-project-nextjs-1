@@ -2451,7 +2451,9 @@ body {
 // MOBILE FOOT MENU - END
 //-----------------------------------------------------
 .menu-row > div{flex: 2;}
-
+//-----------------------------------------------------
+// VERTICAL MENU - START
+//-----------------------------------------------------
 .divList{
     @include pad_mar(6px, 6px);
     background-color: $bg-box;
@@ -2477,4 +2479,10 @@ body {
             color: $text-color2;
         }
     }
+}
+//-----------------------------------------------------
+// VERTICAL MENU - END
+//-----------------------------------------------------
+.linkBtn{
+    @include btn($btn-color, $btn-hov-color, $text-color2, 18px, 6px, 6px);
 }

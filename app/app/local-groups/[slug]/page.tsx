@@ -21,7 +21,7 @@ const LocalGroupChat = () => {
     const {slug} = useParams();
     // const getBackFunc = new goBack();
 
-    const [groupPic, setGroupPic] = useState<string>("")
+    const [groupPic, setGroupPic] = useState<string>("/icons/others/profile.webp")
     const [groupName, setGroupName] = useState<string>("")
     const [messageText, setMessageText] = useState<string>("")
 
@@ -53,7 +53,8 @@ const LocalGroupChat = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                gId: slug
+                gId: slug,
+                content: messageText
             })
         })
         if (res.ok) {
@@ -78,7 +79,9 @@ const LocalGroupChat = () => {
             if(res.ok){
                 const data = await res.json()
                 if(data.code===1){
-                    setGroupPic(data.groupPic)
+                    if (data.groupPic){
+                        setGroupPic(data.groupPic)
+                    }
                     setGroupName(data.groupName)
                     if (data.content){
                         setMessageText(data.content)
@@ -133,7 +136,7 @@ const LocalGroupChat = () => {
                                 <div className='display-flex'>
                                     <div
                                         className='avatar-bg'
-                                        style={{ backgroundImage: `url(` + groupPic + `)` }}
+                                        style={{ backgroundImage: `url(` +  groupPic + `)` }}
                                     ></div>
                                     <div>
                                         <h4 >
@@ -177,7 +180,7 @@ const LocalGroupChat = () => {
                                     <div>
                                         <input
                                             onChange={(e) => draftChat(e)}
-                                            onKeyDown={handleKeyPress}
+                                            onKeyUp={handleKeyPress}
                                             value={messageText}
                                             type="text"
                                             placeholder='Some text'

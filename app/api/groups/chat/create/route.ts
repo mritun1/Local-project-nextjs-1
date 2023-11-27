@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     try {
         await connectDB()
         const body = await req.json()
-        const { gId } = body
+        const { gId, content } = body
         //Check if the token exists
         const getToken = new getTokenData(req)
         const userID = getToken.userID()
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
                 const createPost = await groupsChat.create({
                     groupId: draft.groupId,
                     senderId: draft.senderId,
-                    chatContent: draft.chatContent,
+                    chatContent: content,
                     createdDate: Date.now()
                     // Add other properties like images, videos, files if needed
                 });

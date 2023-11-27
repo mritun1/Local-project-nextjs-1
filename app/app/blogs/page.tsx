@@ -1,26 +1,23 @@
-"use client"
 import AppContent from '@/app/components/templates/AppContent'
-import seenUpdate from '@/app/customlib/seenUpdate';
-import { usePathname } from 'next/navigation';
-import React, { useEffect } from 'react'
+import React from 'react'
 
-const MyGroups = () => {
-
+const page = () => {
     return (
         <>
+
             <AppContent
                 mainContent={
-                    <div className="main_content" >
+                    <div className="main_content">
 
                         <div className="title_bar">
                             <div>
                                 <div>
-                                    <h3><i className="fa-solid fa-tag"></i> My Groups (0)</h3>
+                                    <h3><i className="fa-solid fa-store icon-list"></i> Blogs</h3>
                                 </div>
                             </div>
                             <div>
                                 <div>
-                                    <h4>0 <button><i className="fa-solid fa-location-dot"></i></button></h4>
+                                    <h4>00000 <button><i className="fa-solid fa-location-dot"></i></button></h4>
                                 </div>
                             </div>
                         </div>
@@ -33,15 +30,13 @@ const MyGroups = () => {
                             </div>
                         </div>
 
-
                     </div>
                 }
                 rightBar={``}
             ></AppContent>
 
-
         </>
     )
 }
 
-export default MyGroups
+export default page

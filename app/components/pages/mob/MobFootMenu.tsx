@@ -29,7 +29,7 @@ const MobFootMenu = () => {
 
                     <div onClick={homeClick} className='circle-gal-btn'>
                         <div className="img">
-                            <div ><i className="fa-solid fa-house"></i></div>
+                            <div><i className="fa-solid fa-house"></i></div>
                         </div>
                     </div>
 

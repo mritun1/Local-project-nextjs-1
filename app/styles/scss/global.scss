@@ -1969,11 +1969,13 @@ body {
         &>div{
             @include green_btn();
             cursor: pointer;
-            @include w_h(60px, 60px);
+            // @include w_h(60px, 60px);
+            @include w_h(40px, 40px);
             border-radius: 50%;
             @include flex(center, center);
             &>i{
-                font-size: 30px;
+                font-size: 18px;
+                // font-size: 30px;
             }
         }
     }

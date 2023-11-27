@@ -1,9 +1,10 @@
 "use client"
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 import Modal from '../../temp/Modal';
 
 const MobFootMenu = () => {
+    const pathname = usePathname();
     //FOR HOME
     const [homeShow, isHomeShow] = useState<boolean>(false);
     const homeClick = () => {
@@ -24,41 +25,44 @@ const MobFootMenu = () => {
     
     return (
         <>
-            <div className="mob-foot-menu">
-                <div className='display-flex light-bottom-border menu-row' >
+            {pathname.startsWith('/app/local-groups/') || pathname.startsWith('/app/message/') ?null:(
+                <div className="mob-foot-menu">
+                    <div className='display-flex light-bottom-border menu-row' >
 
-                    <div onClick={homeClick} className='circle-gal-btn'>
-                        <div className="img">
-                            <div><i className="fa-solid fa-house"></i></div>
+                        <div onClick={homeClick} className='circle-gal-btn'>
+                            <div className="img">
+                                <div><i className="fa-solid fa-house"></i></div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className='circle-gal-btn'>
-                        <div className="img">
-                            <div ><i className="fa-solid fa-street-view"></i></div>
+                        <div className='circle-gal-btn'>
+                            <div className="img">
+                                <div ><i className="fa-solid fa-street-view"></i></div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div onClick={addClick} className='circle-gal-btn'>
-                        <div className="img">
-                            <div ><i className="fa-solid fa-plus"></i></div>
+                        <div onClick={addClick} className='circle-gal-btn'>
+                            <div className="img">
+                                <div ><i className="fa-solid fa-plus"></i></div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className='circle-gal-btn'>
-                        <div className="img">
-                            <div onClick={() => goHref('/app/local-people')} ><i className="fa-solid fa-users"></i></div>
+                        <div className='circle-gal-btn'>
+                            <div className="img">
+                                <div onClick={() => goHref('/app/local-people')} ><i className="fa-solid fa-users"></i></div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className='circle-gal-btn'>
-                        <div className="img">
-                            <div ><i className="fa-solid fa-magnifying-glass"></i></div>
+                        <div className='circle-gal-btn'>
+                            <div className="img">
+                                <div ><i className="fa-solid fa-magnifying-glass"></i></div>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
-            </div>
+            )}
+            
 
             <Modal
                 id="add"

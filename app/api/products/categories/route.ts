@@ -3,7 +3,7 @@ import getTokenData from "@/app/lib/getTokenData";
 import { NextRequest, NextResponse } from "next/server";
 import productCats from '../../../json/productCats.json'
 
-export async function GET(req:NextRequest){
+export async function POST(req:NextRequest){
     try{
         await connectDB();
 

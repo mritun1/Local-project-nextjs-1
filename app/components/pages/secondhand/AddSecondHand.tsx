@@ -88,7 +88,15 @@ const AddSecondHand = () => {
 
         //FETCH Product Categories
         const productCatFetch = async () => {
-            const res = await fetch("/api/products/categories")
+            const res = await fetch("/api/products/categories",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    code:1
+                })
+            })
             if (res.ok) {
                 const data = await res.json();
                 setProductCat(data.json)

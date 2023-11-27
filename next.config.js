@@ -1,8 +1,16 @@
 /** @type {import('next').NextConfig} */
 
-const nextConfig = {
-    //RUN BUILD
-    //output:'export',
-}
+const withPWA = require('next-pwa')({
+    dest: 'public'
+})
 
-module.exports = nextConfig
+module.exports = withPWA({
+    // next.js config
+})
+
+// const nextConfig = {
+//     //RUN BUILD
+//     //output:'export',
+// }
+
+// module.exports = nextConfig

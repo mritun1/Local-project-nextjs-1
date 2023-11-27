@@ -1,11 +1,12 @@
 import SignUpModal from './components/buttons/SignUpModal'
 import Login from './components/form/Login'
 import { Metadata } from 'next'
+import AppInstallBtns from './components/pages/home/AppInstallBtns'
 
 export const metadata: Metadata = {
   title: 'Localnii - PIN code wise community.',
   description: 'To stay connected locally. Local Social network for business only. Hyper local content sharing platform. PIN code wise community.',
-  icons:'/icons/logo/logo1.png'
+  icons: '/icons/logo/logo1.png'
 }
 
 export default function Home() {
@@ -47,20 +48,12 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="apps">
-                    <div>
-                      <div >
-                        <div style={{ backgroundImage: `url(https://www.computerhope.com/jargon/a/android.png)` }}></div>
-                        <div><h3>Android</h3></div>
-                      </div>
-                    </div>
-                    <div>
-                      <div >
-                        <div style={{ backgroundImage: `url(https://static.vecteezy.com/system/resources/previews/020/489/291/original/3d-logo-of-apple-iphone-free-png.png)` }}></div>
-                        <div><h3>iPhone</h3></div>
-                      </div>
-                    </div>
+                  <div className="hr_or">
+                    <hr />
+                    <button>Install App</button>
                   </div>
+
+                  <AppInstallBtns></AppInstallBtns>
 
                 </div>
 

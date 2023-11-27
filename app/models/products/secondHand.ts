@@ -19,6 +19,9 @@ const secondHand = new mongoose.Schema({
         type: Number,
         require: true
     },
+    productCatName: {
+        type: String,
+    },
     productCategory: {
         type: String,
         require: true
@@ -43,5 +46,5 @@ const secondHand = new mongoose.Schema({
         default: Date.now()
     }
 })
-const productSecondHand = mongoose.models.productSecondHand || mongoose.model("productSecondHand", secondHand)
+const productSecondHand = mongoose.models.productSecondHand2 || mongoose.model("productSecondHand2", secondHand)
 export default productSecondHand

@@ -1,0 +1,26 @@
+[
+    {
+        "categoryName":"Bikes & Cycles",
+        "categorySlug": "bikes-cycles"
+    },
+    {
+        "categoryName": "Cars & Vehicles",
+        "categorySlug": "cars-vehicles"
+    },
+    {
+        "categoryName": "Camera",
+        "categorySlug": "camera"
+    },
+    {
+        "categoryName": "Computer, Laptop & Desktop",
+        "categorySlug": "computer-laptop-desktop"
+    },
+    {
+        "categoryName": "Electronics",
+        "categorySlug": "electronics"
+    },
+    {
+        "categoryName": "Others",
+        "categorySlug": "others"
+    }
+]

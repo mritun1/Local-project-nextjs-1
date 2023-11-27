@@ -24,13 +24,14 @@ export async function POST(req: NextRequest) {
                 code: 0
             })
         }
-        let cat: string = 'bikes'
+        let cat: string = 'bikes-cycles'
         //Check and create the draft post
         const draftPost = await productSecondHandDraft.findOne({ userId: userID })
         if (!draftPost) {
             //Draft not found create it
             const createDraft = await productSecondHandDraft.create({
                 productCategory: cat,
+                productCatName: "Bikes & Cycles",
                 productPin: getToken.pinCode(),
                 contact1: getToken.mobile(),
                 userId: getToken.userID()

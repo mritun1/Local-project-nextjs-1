@@ -1,7 +1,6 @@
 import connectDB from "@/app/db/config";
 import getTokenData from "@/app/lib/getTokenData";
 import { NextRequest, NextResponse } from "next/server";
-import { ObjectId } from "mongodb";
 import productSecondHandDraft from "@/app/models/products/secondHandDraft";
 import productSecondHand from "@/app/models/products/secondHand";
 
@@ -27,6 +26,7 @@ export async function POST(req: NextRequest) {
             productOld: getDraft.productOld,
             productPin: getDraft.productPin,
             productCategory: getDraft.productCategory,
+            productCatName: getDraft.productCatName,
             contact1: getDraft.contact1,
             contact2: getDraft.contact2,
             images: getDraft.images,

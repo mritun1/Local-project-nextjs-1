@@ -15,7 +15,11 @@ export async function POST(req: NextRequest) {
                     $match: { productPin: parseInt(pin_code, 10) }
                 }, {
                     $group: {
-                        _id: "$productCategory",
+                        // _id: "$productCategory",
+                        _id: {
+                            productCategory: "$productCategory",
+                            productCatName: "$productCatName"
+                        },
                         count: { $sum: 1 }
                     }
 

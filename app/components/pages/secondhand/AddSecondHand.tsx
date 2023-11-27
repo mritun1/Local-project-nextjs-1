@@ -91,12 +91,12 @@ const AddSecondHand = () => {
             const res = await fetch("/api/products/categories")
             if (res.ok) {
                 const data = await res.json();
-                // console.log(data)
-                setProductCat(data.data)
+                setProductCat(data.json)
                 setContact1(data.mobile)
                 setPin(data.pin)
             }
         }
+
         productCatFetch();
         return () => {}
 

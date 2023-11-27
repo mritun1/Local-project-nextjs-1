@@ -19,6 +19,9 @@ const secondHandDraft = new mongoose.Schema({
         type:Number,
         require:true
     },
+    productCatName: {
+        type: String,
+    },
     productCategory:{
         type: String,
         require:true
@@ -43,5 +46,5 @@ const secondHandDraft = new mongoose.Schema({
         default:Date.now()
     }
 })
-const productSecondHandDraft = mongoose.models.productSecondHandDraft1 || mongoose.model("productSecondHandDraft1", secondHandDraft)
+const productSecondHandDraft = mongoose.models.productSecondHandDraft3 || mongoose.model("productSecondHandDraft3", secondHandDraft)
 export default productSecondHandDraft

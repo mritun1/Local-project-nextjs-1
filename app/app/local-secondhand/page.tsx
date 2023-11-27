@@ -5,7 +5,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 interface catAr {
-    _id: string;
+    _id: {
+        productCategory:string;
+        productCatName:string;
+    };
     count: number;
 }
 const LocalSecondHand = () => {
@@ -27,6 +30,7 @@ const LocalSecondHand = () => {
         })
         if (res.ok) {
             const data = await res.json();
+            console.log(data)
             setCategories(data.data)
             setTotal(data.allTotal)
             setPin(data.pin)
@@ -76,9 +80,9 @@ const LocalSecondHand = () => {
 
                             {categories.map((ele, index) => (
                                 <div key={index}>
-                                    <Link href={"/app/local-secondhand-cat/" + ele._id}>
+                                    <Link href={"/app/local-secondhand-cat/" + ele._id.productCategory}>
                                         <div>
-                                            <h3>{ele._id}</h3>
+                                            <h3>{ele._id.productCatName}</h3>
                                             <button>{ele.count}</button>
                                         </div>
                                     </Link>

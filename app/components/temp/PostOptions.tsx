@@ -1,9 +1,21 @@
-import React, { useState } from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import Modal from './Modal'
 
 interface propsType {
     itemId:string;
     itemType:string;
+}
+interface contArr {
+    item:{
+        amount:number;
+        comments:string;
+    }
+    user:{
+        firstName:string;
+        lastName:string;
+        profilePic:string;
+    }
 }
 
 const PostOptions = (props:propsType) => {
@@ -15,19 +27,71 @@ const PostOptions = (props:propsType) => {
     const [contributeAmount, setContributeAmount] = useState<string | null>(null)
     const [contributeComment, setContributeComment] = useState<string | null>(null)
     const clickContributeFetch = async () =>{
-        // const res = await fetch("",{
-        //     method:"POST",
-        //     headers:{
-        //         "Content-Type":"application/json"
-        //     },
-        //     body:JSON.stringify({
-        //         itemId: props.itemId,
-        //         itemType: props.itemType,
-        //         amount:contributeAmount,
-        //         comment:contributeComment
-        //     })
-        // })
+        const res = await fetch("/api/contributions/",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                itemId: props.itemId,
+                itemType: props.itemType,
+                amount:contributeAmount,
+                comment:contributeComment
+            })
+        })
+        if(res.ok){
+            const data = await res.json();
+            if(data.code === 1){
+                loadCOnt();
+                setContributeAmount('')
+                setContributeComment('')
+            }
+        }
     }
+    //Load Contribute Content
+    const [contList,setContList] = useState<contArr[]>([])
+    const loadCOnt = async () => {
+        const res = await fetch("/api/contributions/comments/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                itemId: props.itemId,
+                itemType: props.itemType,
+            })
+        })
+        if (res.ok) {
+            const data = await res.json();
+            
+            if (data.code === 1) {
+                setContList(data.data)
+            }
+        }
+    }
+    useEffect(()=>{
+        const loadCOnt = async () => {
+            const res = await fetch("/api/contributions/comments/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    itemId: props.itemId,
+                    itemType: props.itemType,
+                })
+            })
+            if (res.ok) {
+                const data = await res.json();
+
+                if (data.code === 1) {
+                    setContList(data.data)
+                }
+            }
+        }
+        loadCOnt();
+        return () => {}
+    },[props.itemId, props.itemType])
     return (
         <>
             <div className="post_options">
@@ -86,68 +150,33 @@ const PostOptions = (props:propsType) => {
                     </div>
 
                     <div className="contribution-msg">
-                        <div className="contribute-cont">
-                            <div>
-                                <div>
-                                    <div>
-                                        <div>
-                                            <div style={{ backgroundImage: `url('/icons/others/profile.webp')` }} ></div>
-                                        </div>
-                                        <div>
-                                            <p>User Name</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3><i className="fa-solid fa-indian-rupee-sign"></i> 50</h3>
-                                </div>
-                            </div>
-                            <div>
-                                <p>This is the text of workd</p>
-                            </div>
-                        </div>
 
-                        <div className="contribute-cont">
-                            <div>
-                                <div>
+                        {contList?(
+                            contList.map((ele,index)=>(
+                                <div key={index} className="contribute-cont">
                                     <div>
                                         <div>
-                                            <div style={{ backgroundImage: `url('/icons/others/profile.webp')` }} ></div>
+                                            <div>
+                                                <div>
+                                                    <div style={{ backgroundImage: `url(${ele.user.profilePic ? ele.user.profilePic : '/icons/others/profile.webp'})` }} ></div>
+                                                </div>
+                                                <div>
+                                                    <p>{ele.user.firstName + ' ' + ele.user.lastName}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div>
-                                            <p>User Name</p>
+                                            <h3><i className="fa-solid fa-indian-rupee-sign"></i> {ele.item.amount}</h3>
                                         </div>
                                     </div>
+                                    <div>
+                                        <p>{ele.item.comments}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3><i className="fa-solid fa-indian-rupee-sign"></i> 50</h3>
-                                </div>
-                            </div>
-                            <div>
-                                <p>This is the text of workd</p>
-                            </div>
-                        </div>
+                            ))
+                        ):null}
 
-                        <div className="contribute-cont">
-                            <div>
-                                <div>
-                                    <div>
-                                        <div>
-                                            <div style={{ backgroundImage: `url('/icons/others/profile.webp')` }} ></div>
-                                        </div>
-                                        <div>
-                                            <p>User Name</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3><i className="fa-solid fa-indian-rupee-sign"></i> 50</h3>
-                                </div>
-                            </div>
-                            <div>
-                                <p>This is the text of workd</p>
-                            </div>
-                        </div>
+                        
                     </div>
 
                 </div>

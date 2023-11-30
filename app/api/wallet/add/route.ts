@@ -2,6 +2,7 @@ import connectDB from "@/app/db/config";
 import getTokenData from "@/app/lib/getTokenData";
 import walletTransactions from "@/app/models/wallet/walletTransactions";
 import { NextRequest, NextResponse } from "next/server";
+import { parentPort } from "worker_threads";
 
 export async function POST(req:NextRequest){
     try{
@@ -38,9 +39,9 @@ export async function POST(req:NextRequest){
                 transactionType: "Add",
                 prevAmount: lastData.currentBal,
                 myPrevSlId: lastData.slId,
-                Amount: parseInt(amount),
+                Amount: parseFloat(amount),
                 journal: journal,
-                currentBal: parseInt(lastData.currentBal) + parseInt(amount),
+                currentBal: parseFloat(lastData.currentBal) + parseFloat(amount),
                 status: 'Success',
                 createdDate: Date.now()
             })
@@ -52,9 +53,9 @@ export async function POST(req:NextRequest){
                 transactionType: "Add",
                 prevAmount: 0,
                 myPrevSlId: 0,
-                Amount: parseInt(amount),
+                Amount: parseFloat(amount),
                 journal: journal,
-                currentBal: parseInt(amount),
+                currentBal: parseFloat(amount),
                 status: 'Success',
                 createdDate: Date.now()
             })

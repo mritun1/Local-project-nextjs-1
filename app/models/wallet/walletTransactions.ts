@@ -12,7 +12,7 @@ const WalTransactionSchema = new mongoose.Schema({
         immutable: true,
     },
     transactionType: {
-        type: String, //Add/Received/Withdrawn
+        type: String, //Add/Received/Withdrawn/Sent
         require: true,
         immutable: true,
     },

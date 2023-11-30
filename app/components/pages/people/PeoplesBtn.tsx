@@ -19,8 +19,10 @@ const PeoplesBtn = (props:propsType) => {
             const data = await res.json();
             console.log(data)
             if(data.code === 1){
-                const msgIdString = data.msgId._id.toString();
-                router.push("/app/message/" + msgIdString);
+                if (data.msgId._id){
+                    const msgIdString = data.msgId._id.toString();
+                    router.push("/app/message/" + msgIdString);
+                }
             }
         }
     }

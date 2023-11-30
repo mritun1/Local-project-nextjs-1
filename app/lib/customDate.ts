@@ -1,5 +1,22 @@
 export default class customDate{
 
+    currentDate(formatType:string){
+        const currentDate = new Date();
+
+        if (formatType == 'MonthName'){
+            const currentMonth = currentDate.getMonth();
+            // Array of month names
+            const monthNames = [
+                'January', 'February', 'March', 'April',
+                'May', 'June', 'July', 'August',
+                'September', 'October', 'November', 'December'
+            ];
+
+            // Get the month name based on the current month
+            return monthNames[currentMonth];
+        }
+    }
+
     millisecondToString(formatType: string, timestamp:number){
 
         // Create a Date object from the timestamp

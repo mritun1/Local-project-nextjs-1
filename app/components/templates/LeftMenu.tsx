@@ -139,8 +139,8 @@ const LeftMenu = (props: propsTypes) => {
                               {/* <Link href="/app/delivery-boy" className="link_color">
                                     <li className={pathname === '/app/delivery-boy' ? 'active' : ''}><i className="fa-solid fa-truck icon-list"></i> Delivery Boy</li>
                               </Link> */}
-                              <Link href="/app/my-earnings" className="link_color">
-                                    <li className={pathname === '/app/my-earnings' ? 'active' : ''}><i className="fa-solid fa-sack-dollar icon-list"></i> My Earnings <span className="level"><i className="fa-solid fa-indian-rupee-sign"></i>0</span></li>
+                              <Link href="/app/my-wallet" className="link_color">
+                                    <li className={pathname === '/app/my-wallet' ? 'active' : ''}><i className="fa-solid fa-sack-dollar icon-list"></i> My Wallet <span className="level"><i className="fa-solid fa-indian-rupee-sign"></i>0</span></li>
                               </Link>
                               {/* <Link href="/app/my-advertisement" className="link_color">
                                     <li className={pathname === '/app/my-advertisement' ? 'active' : ''}><i className="fa-solid fa-bullhorn icon-list"></i> My Advertisement</li>

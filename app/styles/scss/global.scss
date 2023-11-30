@@ -522,6 +522,9 @@ body {
 
 .main_content {
     @include pad_mar(auto, 0px 10px);
+    @media screen and (max-width:761px) {
+        @include pad_mar(auto, 0px);
+    }
 }
 
 .title_bar {
@@ -1176,6 +1179,9 @@ body {
             font-size: 13px;
         }
     }
+    &>div.active{
+        background-color: $btn-hov-color;
+    }
 }
 
 .post_box {
@@ -1228,12 +1234,6 @@ body {
             border: 1px solid $bg-color;
         }
     }
-}
-
-.chart {
-    @include pad_mar(6px, 6px);
-    border: 1px solid $bg-box;
-    background-color: $bg-box;
 }
 
 .bank {
@@ -1325,17 +1325,16 @@ body {
         }
     }
 }
-
+//-----------------------------------------------------------------------------
 .alert {
     display: flex;
-    @include div_bg();
     @include pad_mar(6px, 6px);
 
     &>div:nth-child(1) {
         flex: 8;
         color: $text-color2;
 
-        &>h5>button {
+        &>h5>button.num-red {
             @include btn($btn-red, $btn-red-hov, $text-color2, 13px, 6px, 0px);
         }
     }
@@ -1345,13 +1344,47 @@ body {
         @include flex(center, center);
 
         &>div>button {
-            @include green_btn();
             color: $text-color2;
             border-radius: 50%;
             @include w_h(30px, 30px);
         }
+        &>div>button.forward {
+            @include green_btn();
+        }
+        &>div>button.close{
+            @include red_btn();
+        }
     }
 }
+.alert.alert-success{
+    @include div_bg();
+}
+.alert.alert-danger {
+    background-color: $btn-orange;
+}
+// //ALERT WITH NUMBER AND FORWARD BUTTON
+// <div className="alert alert-success">
+//     <div>
+//         <h5><button className='num-red'>1</button> Delivery Boy request pending...</h5>
+//     </div>
+//     <div>
+//         <div>
+//             <button className='forward'><i className="fa-solid fa-right-long"></i></button>
+//         </div>
+//     </div>
+// </div>
+// //SUCCESS ALERT
+// <div className="alert alert-success">
+//     <div>
+//         <h5>Delivery Boy request pending...</h5>
+//     </div>
+//     <div>
+//         <div>
+//             <button className='close'><i className="fa-solid fa-xmark"></i></button>
+//         </div>
+//     </div>
+// </div>
+//--------------------------------------------------------------------------------------------
 
 .profile_sec {
     @include div_bg();
@@ -1802,9 +1835,9 @@ body {
                     &>.close>button{
                         @include red_btn();
                     }
-                    &>.others{
+                    // &>.others{
 
-                    }
+                    // }
                     &>.green_btn>a>button {
                         @include green_btn();
                     }
@@ -2346,11 +2379,34 @@ body {
 .btn_back{
     @include roundBtn(30px, 30px);
 }
+.more-options-chat{
+    @include w_h(40px, auto);
+    @include position_full(absolute, auto, auto, 50px, 10px);
+    &>div{
+        text-align: center;
+        margin: 10px 0px;
+        &>button{
+            border-radius: 50%;
+            @include w_h(35px, 35px);
+            @include orange_btn();
+            color: $text-color;
+        }
+    }
+}
 .chat-sec{
     @include div_bg();
     @include pad_mar(6px, 6px);
+    position: relative;
+    @media screen and (max-width:768px) {
+        @include position_full(absolute, auto, 0px, 0px, 0px);
+    }
+
     &>.chat-content-sec{
-        height: 60vh;
+        
+        height: 73vh;
+        @media screen and (max-width:768px) {
+            height: 72vh;
+        }
         overflow: auto;
         &::-webkit-scrollbar {
             width: 5px;
@@ -2498,4 +2554,128 @@ body {
 //-----------------------------------------------------
 .linkBtn{
     @include btn($btn-color, $btn-hov-color, $text-color2, 18px, 6px, 6px);
+}
+//-----------------------------------------------------
+// POST OPTIONS - START
+//-----------------------------------------------------
+.post_options{
+    margin-bottom: 6px;
+    &>div{
+        border-bottom: 1px solid $btn-color;
+    }
+    &>.details{
+        &>p{
+            font-size: 13px;
+            color: $text-color2;
+        }
+    }
+    &>.col-3{
+        @include pad_mar(8px 0px, 2px);
+        @include flex(center, center);
+        &>div{
+            flex:3;
+            text-align: center;
+            &>button{
+                @include green_btn();
+                color:$text-color;
+                @include pad_mar(3px 6px, 2px);
+                border-radius: 6px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+//-----------------------------------------------------
+// POST OPTIONS - END
+//-----------------------------------------------------
+.contribution{
+    background-color: $bg-box;
+    height: 90vh;
+    position: relative;
+    &>.contribution-inputs{
+        @include w_h(100%, 100px);
+        @include position_full(absolute, auto, 0px, 0px, 0px);
+        background-color: #1c702e;
+        &>.contribution-bal-rupee{
+            display: flex;
+            &>div:nth-child(1){
+                @include flex(center, left);
+                &>div>input{
+                    width: 70px;
+                }
+            }
+            &>div:nth-child(2){
+                @include flex(center, right);
+            }
+            &>div{
+                flex:5;
+                padding: 6px;
+                color:$text-color;
+            }
+        }
+        &>.contribution-text{
+            display: flex;
+            &>div{
+                padding: 6px;
+            }
+            &>div:nth-child(1){
+                flex:8;
+                @include flex(center, right);
+                &>div{
+                    width: 100%;
+                    &>textarea {
+                            width: 96%;
+                        }
+                }
+            }
+            &>div:nth-child(2){
+                width: 50px;
+                @include flex(center, center);
+                &>div{
+                    &>button{
+                        @include w_h(40px, 40px);
+                        border-radius: 50%;
+                        @include red_btn();
+                        color:$text-color;
+                    }
+
+                }
+            }
+        }
+    }
+    &>.contribution-msg{
+        @include position_full(absolute, 0px, 0px, 100px, 0px);
+        &>.contribute-cont{
+            background-color: $btn-color;
+            @include pad_mar(6px, 6px);
+            border-radius: 6px;
+            &>div:nth-child(1){
+                display: flex;
+                &>div:nth-child(1){
+                    flex:8;
+                    @include flex(center, left);
+                    &>div{
+                        display: flex;
+                        &>div:nth-child(1)>div{
+                            @include w_h(30px, 30px);
+                            @include bg();
+                            border-radius: 50%;
+                        }
+                        &>div:nth-child(2){
+                            color: $text-color;
+                        }
+                    }
+                }
+                &>div:nth-child(2){
+                    flex: 2;
+                    background-color: $bg-box;
+                    border-radius: 6px;
+                    color: $text-color;
+                }
+            }
+            &>div:nth-child(2){
+                color: $text-color;
+            }
+        }
+    }
 }

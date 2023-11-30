@@ -2,6 +2,7 @@
 import MoreBtn from '@/app/components/buttons/MoreBtn'
 import NewsDesMore from '@/app/components/pages/posts/news/NewsDesMore';
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
+import PostOptions from '@/app/components/temp/PostOptions';
 import AppContent from '@/app/components/templates/AppContent'
 import seenUpdate from '@/app/customlib/seenUpdate';
 import customDate from '@/app/lib/customDate';
@@ -171,10 +172,8 @@ const LocalNews = () => {
                                                 <div className="more_btn" >
 
                                                     <MoreBtn>
-                                                        <li><i className="fa-solid fa-floppy-disk"></i> Save</li>
                                                         <li><i className="fa-regular fa-flag"></i> Report</li>
                                                         <li><i className="fa-solid fa-rectangle-ad"></i> Promote</li>
-                                                        <li><i className="fa-solid fa-share"></i> Share</li>
                                                     </MoreBtn>
                                                 </div>
 
@@ -195,18 +194,16 @@ const LocalNews = () => {
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <PostOptions 
+                                            itemId={ele.item._id}
+                                            itemType='News'
+                                            />
+
                                             <div className="product_title">
                                                 <h2>{ele.item.title}</h2>
                                             </div>
-
-                                            {/* <div className="news_des" style={{ height: desH }}>
-                                                <div>
-                                                    <p>{ele.item.des}</p>
-                                                </div>
-                                                <div>
-                                                    <button onClick={showDes}>read more...</button>
-                                                </div>
-                                            </div> */}
+                                            
                                             <NewsDesMore 
                                             des={ele.item.des}
                                             />

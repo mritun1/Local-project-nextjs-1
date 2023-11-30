@@ -1,5 +1,6 @@
 "use client"
 import ChatContentGroup from '@/app/components/pages/message/ChatContentGroup';
+import ChatOptionBtn from '@/app/components/pages/message/ChatOptionBtn';
 import AppContent from '@/app/components/templates/AppContent'
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -171,10 +172,11 @@ const LocalGroupChat = () => {
                                 ))}
 
                             </div>
+                            
 
                             <div className="chat-input-sec">
                                 <div>
-                                    <div><button><i className="fa-solid fa-plus"></i></button></div>
+                                    <ChatOptionBtn />
                                 </div>
                                 <div>
                                     <div>

@@ -8,9 +8,13 @@ module.exports = withPWA({
     // next.js config
 })
 
+//-----------------------------------------------
+
 // const nextConfig = {
 //     //RUN BUILD
 //     //output:'export',
 // }
 
 // module.exports = nextConfig
+
+

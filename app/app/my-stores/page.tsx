@@ -23,13 +23,13 @@ const page = () => {
                             </div>
                         </div>
 
-                        <div className="alert">
+                        <div className="alert alert-success">
                             <div>
-                                <h5><button>1</button> Delivery Boy request pending...</h5>
+                                <h5><button className='num-red'>1</button> Delivery Boy request pending...</h5>
                             </div>
                             <div>
                                 <div>
-                                    <button><i className="fa-solid fa-right-long"></i></button>
+                                    <button className='forward'><i className="fa-solid fa-right-long"></i></button>
                                 </div>
                             </div>
                         </div>

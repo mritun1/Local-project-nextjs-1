@@ -1,5 +1,6 @@
 "use client"
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
+import PostOptions from '@/app/components/temp/PostOptions';
 import AppContent from '@/app/components/templates/AppContent'
 import seenUpdate from '@/app/customlib/seenUpdate';
 import customDate from '@/app/lib/customDate';
@@ -178,6 +179,11 @@ const LocalEvents = () => {
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <PostOptions
+                                                    itemId={ele.item._id}
+                                                    itemType='Events'
+                                                />
 
                                                 <div className="product_title">
                                                     <h2>{ele.item.title}</h2>

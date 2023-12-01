@@ -228,7 +228,7 @@ const CreatePost = (props: propsType) => {
             formData.set("serviceType", 'draft')
             formData.set("postId", '')
 
-            axios.post("/api/image/upload", formData, {
+            axios.post("/api/image/upload/", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

@@ -65,15 +65,15 @@ export async function POST(req: Request) {
         const ran = new customMath();
         const ranNum:number = ran.randomNum(10000);
 
-        // let otp: string = ranNum.toString();
-        let otp:string = "234";
+        let otp: string = ranNum.toString();
+        // let otp:string = "234";
 
-        //SEND OTP TO MOBILE
-        // const OTP = new sms();
-        // const sendOtp = OTP.singleOTP(mobile.toString(),otp);
-        // if (sendOtp === null){
-        //     return NextResponse.json({ msg: "Sms not sent, something wrong.", code: 0 });
-        // }
+        // SEND OTP TO MOBILE
+        const OTP = new sms();
+        const sendOtp = OTP.singleOTP(mobile.toString(),otp);
+        if (sendOtp === null){
+            return NextResponse.json({ msg: "Sms not sent, something wrong.", code: 0 });
+        }
 
         const hashOtp = await bcrypt.hash(otp, 10)
 
@@ -93,7 +93,7 @@ export async function POST(req: Request) {
             if (refID){
                 //REFERRAL IS SET
                 //ADD MONEY TO THE REFERRER ACCOUNT
-                const referAmount: number = 30;
+                const referAmount: number = 50;
                 const lastData2 = await walletTransactions.findOne({ userId: refID }).sort({ slId: -1 });
                 if (lastData2) {
                     //INSERT TO TRANSACTION

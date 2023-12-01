@@ -1,47 +1,48 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Modal from './Modal'
+import ShareModel from './ShareModel';
 
 interface propsType {
-    itemId:string;
-    itemType:string;
+    itemId: string;
+    itemType: string;
 }
 interface contArr {
-    item:{
-        amount:number;
-        comments:string;
+    item: {
+        amount: number;
+        comments: string;
     }
-    user:{
-        firstName:string;
-        lastName:string;
-        profilePic:string;
+    user: {
+        firstName: string;
+        lastName: string;
+        profilePic: string;
     }
 }
 
-const PostOptions = (props:propsType) => {
-    const [isContribute,setIsContribute] = useState<boolean>(false);
-    const clickContribute = () =>{
+const PostOptions = (props: propsType) => {
+    const [isContribute, setIsContribute] = useState<boolean>(false);
+    const clickContribute = () => {
         setIsContribute(!isContribute);
     }
     //Click Contribute
     const [contributeAmount, setContributeAmount] = useState<string | null>(null)
     const [contributeComment, setContributeComment] = useState<string | null>(null)
-    const clickContributeFetch = async () =>{
-        const res = await fetch("/api/contributions/",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
+    const clickContributeFetch = async () => {
+        const res = await fetch("/api/contributions/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            body:JSON.stringify({
+            body: JSON.stringify({
                 itemId: props.itemId,
                 itemType: props.itemType,
-                amount:contributeAmount,
-                comment:contributeComment
+                amount: contributeAmount,
+                comment: contributeComment
             })
         })
-        if(res.ok){
+        if (res.ok) {
             const data = await res.json();
-            if(data.code === 1){
+            if (data.code === 1) {
                 loadCOnt();
                 setContributeAmount('')
                 setContributeComment('')
@@ -49,7 +50,7 @@ const PostOptions = (props:propsType) => {
         }
     }
     //Load Contribute Content
-    const [contList,setContList] = useState<contArr[]>([])
+    const [contList, setContList] = useState<contArr[]>([])
     const loadCOnt = async () => {
         const res = await fetch("/api/contributions/comments/", {
             method: "POST",
@@ -63,13 +64,13 @@ const PostOptions = (props:propsType) => {
         })
         if (res.ok) {
             const data = await res.json();
-            
+
             if (data.code === 1) {
                 setContList(data.data)
             }
         }
     }
-    useEffect(()=>{
+    useEffect(() => {
         const loadCOnt = async () => {
             const res = await fetch("/api/contributions/comments/", {
                 method: "POST",
@@ -90,13 +91,54 @@ const PostOptions = (props:propsType) => {
             }
         }
         loadCOnt();
-        return () => {}
-    },[props.itemId, props.itemType])
+        return () => { }
+    }, [props.itemId, props.itemType])
+
+    //SHARE BUTTON
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        // Check if the user is on a mobile device
+        const checkIsMobile = () => {
+            setIsMobile(/Mobi|Android/i.test(navigator.userAgent));
+        };
+        // Initial check
+        checkIsMobile();
+        // Update on resize
+        window.addEventListener('resize', checkIsMobile);
+        // Clean up the event listener on component unmount
+        return () => {
+            window.removeEventListener('resize', checkIsMobile);
+        };
+    }, []);
+
+    const [isShare, setIsShare] = useState<boolean>(false);
+    const clickShare = () => {
+        setIsShare(!isShare)
+    }
+
+    const shareBtn = async () => {
+        if (isMobile) {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Localnii.com',
+                        text: 'Check out this cool content!',
+                        url: 'https://localnii.com',
+                    });
+                    console.log('Content shared successfully');
+                } catch (error) {
+                    console.log('Error sharing content:', error);
+                }
+            }
+        } else {
+            setIsShare(true)
+        }
+    };
     return (
         <>
             <div className="post_options">
                 <div className='details'>
-                    <p>784 contributed</p>
+                    <p>0 contributed</p>
                 </div>
                 <div className='col-3'>
                     <div>
@@ -110,12 +152,18 @@ const PostOptions = (props:propsType) => {
                         </button>
                     </div>
                     <div>
-                        <button>
+                        <button onClick={shareBtn} >
                             <i className="fa-solid fa-share"></i> Share
                         </button>
                     </div>
                 </div>
             </div>
+
+            <ShareModel
+                url='https://localnii.com'
+                state={isShare}
+                click={clickShare}
+            ></ShareModel>
 
             <Modal
                 id="contribution"
@@ -139,7 +187,7 @@ const PostOptions = (props:propsType) => {
                         </div>
                         <div className="contribution-text">
                             <div>
-                                <div><textarea onChange={(e)=>setContributeComment(e.target.value)} value={contributeComment || ''} name="comment" id="contribute-comment" rows={1} placeholder='Say something'></textarea></div>
+                                <div><textarea onChange={(e) => setContributeComment(e.target.value)} value={contributeComment || ''} name="comment" id="contribute-comment" rows={1} placeholder='Say something'></textarea></div>
                             </div>
                             <div>
                                 <div>
@@ -151,8 +199,8 @@ const PostOptions = (props:propsType) => {
 
                     <div className="contribution-msg">
 
-                        {contList?(
-                            contList.map((ele,index)=>(
+                        {contList ? (
+                            contList.map((ele, index) => (
                                 <div key={index} className="contribute-cont">
                                     <div>
                                         <div>
@@ -174,9 +222,9 @@ const PostOptions = (props:propsType) => {
                                     </div>
                                 </div>
                             ))
-                        ):null}
+                        ) : null}
 
-                        
+
                     </div>
 
                 </div>

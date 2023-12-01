@@ -2,6 +2,7 @@
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import Modal from '../../temp/Modal';
+import PinModel from '../../templates/PinModel';
 
 const MobFootMenu = () => {
     const pathname = usePathname();
@@ -22,6 +23,11 @@ const MobFootMenu = () => {
         isHomeShow(false)
         isAddShow(false)
     }
+    //PIN CODE
+    const [isHidden, setIsHidden] = useState<boolean>(false);
+    const toggleModal = () => {
+        setIsHidden(!isHidden)
+    }
     
     return (
         <>
@@ -35,7 +41,7 @@ const MobFootMenu = () => {
                             </div>
                         </div>
 
-                        <div className='circle-gal-btn'>
+                        <div onClick={toggleModal} className='circle-gal-btn'>
                             <div className="img">
                                 <div ><i className="fa-solid fa-street-view"></i></div>
                             </div>
@@ -62,6 +68,11 @@ const MobFootMenu = () => {
                     </div>
                 </div>
             )}
+
+            <PinModel
+                toggleModal={toggleModal}
+                isHidden={isHidden}
+            ></PinModel>
             
 
             <Modal

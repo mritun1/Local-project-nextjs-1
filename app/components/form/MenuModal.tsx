@@ -156,19 +156,10 @@ const MenuModal = () => {
 
                                 <div className='circle-gal-btn'>
                                     <div className="img">
-                                        <div onClick={()=>goHref('/app/my-earnings')}><i className="fa-solid fa-sack-dollar"></i></div>
+                                        <div onClick={() => goHref('/app/my-wallet')}><i className="fa-solid fa-sack-dollar"></i></div>
                                     </div>
                                     <div className="btn">
-                                        <p>Earnings</p>
-                                    </div>
-                                </div>
-
-                                <div className='circle-gal-btn'>
-                                    <div className="img">
-                                        <div onClick={() => goHref('/app/my-groups')}><i className="fa-solid fa-users-rectangle"></i></div>
-                                    </div>
-                                    <div className="btn">
-                                        <p>Groups</p>
+                                        <p>My Wallet</p>
                                     </div>
                                 </div>
 
@@ -187,6 +178,15 @@ const MenuModal = () => {
                                     </div>
                                     <div className="btn">
                                         <p>Saved</p>
+                                    </div>
+                                </div>
+
+                                <div className='circle-gal-btn'>
+                                    <div className="img">
+                                        <div onClick={() => goHref('/app/pin-code-map')}><i className="fa-solid fa-map"></i></div>
+                                    </div>
+                                    <div className="btn">
+                                        <p>Map</p>
                                     </div>
                                 </div>
 

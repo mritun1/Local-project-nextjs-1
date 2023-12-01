@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ProgressBar from './ProgressBar'
+import { basename } from 'path';
 
 type propsType = {
     service: string,
@@ -20,9 +21,11 @@ const ImageInputEvents = (props: propsType) => {
     const delImg = async (url: string, index: number, service: string) => {
         const confrimState = window.confirm("Are you sure to Delete")
         if (confrimState) {
-            const imgName = url.replace("https://storage.googleapis.com/localnii-testing/", "")
+            const bucket: any = process.env.GCP_BUCKET_NAME;
+            const str: string = "https://storage.googleapis.com/" + bucket + "/";
+            const imgName = basename(url.replace(str, ""));
             const res = await fetch("/api/image/delete/", {
-                method: "DELETE",
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },

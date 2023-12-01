@@ -86,7 +86,7 @@ const Page = () => {
                                 <input 
                                     type="text" 
                                     placeholder="Referral Link" 
-                                    value={"http://127.0.0.1:3000/page/register/" +refID}
+                                    value={"https://localnii.com/page/register/" +refID}
                                     onChange={()=>{}}
                                 />
                             </div>
@@ -94,7 +94,7 @@ const Page = () => {
                                 {isCopyLink?(
                                     <button><i className="fa-solid fa-copy"></i> Copied</button>
                                 ):(
-                                    <button onClick={() => copyLinkHandle("http://127.0.0.1:3000/page/register/" + refID)}><i className="fa-solid fa-copy"></i> Copy</button>
+                                    <button onClick={() => copyLinkHandle("https://localnii.com/page/register/" + refID)}><i className="fa-solid fa-copy"></i> Copy</button>
                                 )}
                                 
                                 <button><i className="fa-solid fa-share"></i> Share</button>
@@ -121,7 +121,7 @@ const Page = () => {
                         ></AlertNotice>
 
                         <div className="bank transaction">
-                            <h4 className='text-color'>Earn Rs.30/- per refer.</h4>
+                            <h4 className='text-color'>Earn Rs.50/- per refer.</h4>
                             <div className="table-bar">
                                 <div>
                                     <div>

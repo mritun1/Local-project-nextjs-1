@@ -6,7 +6,7 @@ import draftEventsPost from "@/app/models/posts/draftEventsPost";
 import NewsPost from "@/app/models/posts/newsPost";
 import eventsPost from "@/app/models/posts/eventsPost";
 
-export async function DELETE(req:NextRequest){
+export async function POST(req:NextRequest){
     try {
         const { id, service, serviceType, postId } = await req.json();
 

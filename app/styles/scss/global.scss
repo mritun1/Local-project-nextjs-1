@@ -2713,3 +2713,18 @@ body {
 //-----------------------------------------------------
 // CONTRIBUTION ON MESSAGE - END
 //-----------------------------------------------------
+.shareButtons{
+    display: flex;
+    justify-content: space-evenly;
+    &>div>button{
+        @include green_btn();
+        color: $text-color;
+        @include pad_mar(6px, 6px);
+        @include w_h(30px, 30px);
+        border-radius: 50%;
+        font-size: 20px;
+    }
+    &>div{
+        @include pad_mar(6px 0px, 6px 0px);
+    }
+}

@@ -1,7 +1,55 @@
+"use client"
 import AppContent from '@/app/components/templates/AppContent'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import copy from 'clipboard-copy'
+import AlertNotice from '@/app/components/temp/AlertNotice';
 
-const page = () => {
+interface items {
+    firstName:string;
+    lastName:string;
+    refPaid:number;
+}
+
+const Page = () => {
+    const [refID,setRefID] = useState<string>("")
+    const [items, setItems] = useState <items[]>([])
+    const [length, setLength] = useState<number>(0)
+    const [totalPaid,setTotalPaid] = useState<number>(0)
+    const [totalUnPaid, setTotalUnPaid] = useState<number>(0)
+    const [isCopyLink,setIsCopyLink] = useState<boolean>(false)
+
+    const copyLinkHandle = async (e:string) =>{
+        await copy(e);
+        setIsCopyLink(true);
+        setTimeout(()=>setIsCopyLink(false),1500);
+    }
+
+    useEffect(() => {
+        const loadCont = async () => {
+            const res = await fetch("/api/referral/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    code: 1
+                })
+            })
+            if (res.ok) {
+                const data = await res.json();
+                console.log(data)
+                if(data.code===1){
+                    setRefID(data.uId)
+                    setItems(data.data)
+                    setLength(data.length)
+                    setTotalPaid(data.totalPaid)
+                    setTotalUnPaid(data.totalUnPaid)
+                }
+            }
+        }
+        loadCont();
+        return () => { }
+    }, [])
     return (
         <>
 
@@ -22,40 +70,58 @@ const page = () => {
                             </div>
                         </div>
 
-                        <div className="service-not-available">
+                        {/* <div className="service-not-available">
                             <div>
                                 <h2><i className="fa-regular fa-hourglass-half"></i></h2>
                                 <h3>Coming Soon! Please wait for some more days.</h3>
                                 <h1>Thank You.</h1>
                             </div>
-                        </div>
+                        </div> */}
 
-                        {/* <div className="referral_box">
+                        <div className="referral_box">
                             <div>
                                 <h3>Referral Link</h3>
                             </div>
                             <div>
-                                <input type="text" placeholder="Referral Link" />
+                                <input 
+                                    type="text" 
+                                    placeholder="Referral Link" 
+                                    value={"http://127.0.0.1:3000/page/register/" +refID}
+                                    onChange={()=>{}}
+                                />
                             </div>
                             <div>
-                                <button><i className="fa-solid fa-copy"></i> Copy</button>
+                                {isCopyLink?(
+                                    <button><i className="fa-solid fa-copy"></i> Copied</button>
+                                ):(
+                                    <button onClick={() => copyLinkHandle("http://127.0.0.1:3000/page/register/" + refID)}><i className="fa-solid fa-copy"></i> Copy</button>
+                                )}
+                                
                                 <button><i className="fa-solid fa-share"></i> Share</button>
                             </div>
                         </div>
 
                         <div className="details_list">
                             <div>
-                                <p>Total: <b>23</b></p>
+                                <p>Total: <b>{length}</b></p>
                             </div>
                             <div>
-                                <p>Active: <b>23</b></p>
+                                <p>Paid: <b>{totalPaid}</b></p>
                             </div>
                             <div>
-                                <p>Others: <b>23</b></p>
+                                <p>unPaid: <b>{totalUnPaid}</b></p>
                             </div>
                         </div>
 
+                        <AlertNotice
+                            alertClass={"alert-danger"}
+                            text={"Unpaid means that your downline account is not activated. Please tell him to activate it."}
+                            state={true}
+                            clickClose={()=>{}}
+                        ></AlertNotice>
+
                         <div className="bank transaction">
+                            <h4 className='text-color'>Earn Rs.30/- per refer.</h4>
                             <div className="table-bar">
                                 <div>
                                     <div>
@@ -64,7 +130,7 @@ const page = () => {
                                 </div>
                                 <div>
                                     <p>
-                                        2/234
+                                        1/1
                                         <button><i className="fa-solid fa-caret-left"></i></button>
                                         <button><i className="fa-solid fa-caret-right"></i></button>
                                     </p>
@@ -75,33 +141,27 @@ const page = () => {
                                     <tr>
                                         <th>Sl</th>
                                         <th>Full Name</th>
-                                        <th>Status</th>
+                                        <th>Paid</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Jame Neutron</td>
-                                        <td>activated</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Jame Neutron</td>
-                                        <td>activated</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Jame Neutron</td>
-                                        <td>activated</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Jame Neutron</td>
-                                        <td>activated</td>
-                                    </tr>
+                                    {length>0?(
+                                        items.map((ele,index)=>(
+                                            <tr key={index}>
+                                                <td>1</td>
+                                                <td>{ele.firstName + ' '+ele.lastName}</td>
+                                                {ele.refPaid>0?(
+                                                    <td><i className="fa-solid fa-indian-rupee"></i> {ele.refPaid}</td>
+                                                ):(
+                                                    <td>unPaid</td>
+                                                )}
+                                                
+                                            </tr>
+                                        ))
+                                    ):null}
                                 </tbody>
                             </table>
-                        </div> */}
+                        </div>
 
                     </div>
                 }
@@ -112,4 +172,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

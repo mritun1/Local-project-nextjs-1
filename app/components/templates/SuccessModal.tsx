@@ -9,7 +9,7 @@ type propsType = {
 const SuccessModal = (props: propsType) => {
     return (
         <>
-            <div id="activate_success" className="modal" style={{ display: props.isHidden? 'none':'block'}} >
+            <div id="activate_success" className="modal" style={{ display: props.isHidden ? 'none' : 'block', zIndex: 999 }} >
                 <div className="modal_bg"></div>
                 <div className="modal_body">
                     <div className="sign_up">

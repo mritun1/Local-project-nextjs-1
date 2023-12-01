@@ -33,32 +33,72 @@ export async function GET(
         const uId = token.userID()
 
         let cursor = null;
-        if(cat === 'all'){
-            cursor = await User.find({
-                $and: [
-                    { pinCode: pin },
-                    { isActive: 1 },
-                    { _id: { $ne: uId } }
-                ]
-             })
-                .select('-password -otp -isActive -__v') // Exclude password and otp
-                .sort({ createdDate: -1 })
-                .skip(offset)
-                .limit(limit);
+        if(pin === '0000000'){
+            //-----------------------------------------------
+            // FOR GLOBAL - START
+            //-----------------------------------------------
+            if (cat === 'all') {
+                cursor = await User.find({
+                    $and: [
+                        { isActive: 1 },
+                        { _id: { $ne: uId } }
+                    ]
+                })
+                    .select('-password -otp -isActive -__v') // Exclude password and otp
+                    .sort({ createdDate: -1 })
+                    .skip(offset)
+                    .limit(limit);
+            } else {
+                cursor = await User.find({
+                    $and: [
+                        { professionSlug: cat },
+                        { isActive: 1 },
+                        { _id: { $ne: uId } }
+                    ]
+                })
+                    .select('-password -otp -isActive -__v') // Exclude password and otp
+                    .sort({ createdDate: -1 })
+                    .skip(offset)
+                    .limit(limit);
+            }
+            //-----------------------------------------------
+            // FOR GLOBAL - END
+            //-----------------------------------------------
         }else{
-            cursor = await User.find({
-                $and: [
-                    { pinCode: pin },
-                    { professionSlug: cat },
-                    { isActive: 1 },
-                    { _id: { $ne: uId } }
-                ]
-            })
-                .select('-password -otp -isActive -__v') // Exclude password and otp
-                .sort({ createdDate: -1 })
-                .skip(offset)
-                .limit(limit);
+            //-----------------------------------------------
+            // FOR LOCAL - START
+            //-----------------------------------------------
+            if (cat === 'all') {
+                cursor = await User.find({
+                    $and: [
+                        { pinCode: pin },
+                        { isActive: 1 },
+                        { _id: { $ne: uId } }
+                    ]
+                })
+                    .select('-password -otp -isActive -__v') // Exclude password and otp
+                    .sort({ createdDate: -1 })
+                    .skip(offset)
+                    .limit(limit);
+            } else {
+                cursor = await User.find({
+                    $and: [
+                        { pinCode: pin },
+                        { professionSlug: cat },
+                        { isActive: 1 },
+                        { _id: { $ne: uId } }
+                    ]
+                })
+                    .select('-password -otp -isActive -__v') // Exclude password and otp
+                    .sort({ createdDate: -1 })
+                    .skip(offset)
+                    .limit(limit);
+            }
+            //-----------------------------------------------
+            // FOR LOCAL - END
+            //-----------------------------------------------
         }
+        
 
         if (cursor.length == 0) {
             return NextResponse.json({

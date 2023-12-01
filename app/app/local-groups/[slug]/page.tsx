@@ -176,7 +176,10 @@ const LocalGroupChat = () => {
 
                             <div className="chat-input-sec">
                                 <div>
-                                    <ChatOptionBtn />
+                                    <ChatOptionBtn 
+                                        itemId={slug.toString()}
+                                        itemType='local-group'
+                                    />
                                 </div>
                                 <div>
                                     <div>

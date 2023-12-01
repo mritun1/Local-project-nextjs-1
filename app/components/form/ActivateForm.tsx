@@ -29,7 +29,7 @@ const ActivateForm = (props: propType) => {
         e.preventDefault();
         setSubmitLoad(false)
         const res = await fetch(
-            "api/auth/activate-ac",
+            "/api/auth/activate-ac/",
             {
                 method: "PATCH",
                 headers: {
@@ -67,7 +67,7 @@ const ActivateForm = (props: propType) => {
     return (
         <>
 
-            <div id="activate_account" className="modal" style={{ display: otpFormHidden ? `none` : `block` }}>
+            <div id="activate_account" className="modal" style={{ display: otpFormHidden ? `none` : `block`,zIndex:999 }}>
                 <div className="modal_bg"></div>
                 <div className="modal_body">
                     <div className="sign_up">
@@ -77,7 +77,7 @@ const ActivateForm = (props: propType) => {
                                 <p>You must activate the account before login.</p>
                             </div>
                             <div>
-                                <div className='close'><button ><i className="fa-solid fa-xmark"></i></button></div>
+                                {/* <div className='close'><button ><i className="fa-solid fa-xmark"></i></button></div> */}
                             </div>
                         </div>
 

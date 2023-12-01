@@ -166,7 +166,7 @@ const PostOptions = (props:propsType) => {
                                             </div>
                                         </div>
                                         <div>
-                                            <h3><i className="fa-solid fa-indian-rupee-sign"></i> {ele.item.amount}</h3>
+                                            <h5><i className="fa-solid fa-indian-rupee-sign"></i> {ele.item.amount}</h5>
                                         </div>
                                     </div>
                                     <div>

@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import '../styles/scss/global.scss'
-import MenuModal from '../components/form/MenuModal'
-import BlogContent from '../components/pages/blogs/BlogContent'
+import '../../../styles/scss/global.scss'
+import BlogContent from '../../../components/pages/blogs/BlogContent'
+import BlogMenu from '../../../components/pages/blogs/BlogMenu'
 
 export const metadata: Metadata = {
-    title: 'Localnii - PIN code wise community.',
-    description: 'To stay connected locally. Local Social network for business only. Hyper local content sharing platform. PIN code wise community.',
+    title: 'Referral Link',
+    description: 'This is the Referral Link for Localnii',
     icons: '/icons/logo/logo1.png'
 }
 
@@ -19,7 +19,7 @@ export default function RootLayout({
         <main>
 
             <div>
-                <MenuModal />
+                <BlogMenu></BlogMenu>
                 
 
                 <div className="container_full">

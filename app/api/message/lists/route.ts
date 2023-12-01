@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
         //GET CURRENT USERID
         const token = new getTokenData(req);
         const uId = token.userID();
-        let msgId;
         //Firstly, Check if there is message with this user ID
         const cursor = await messageLists.find({
             $or: [{ firstUser: Object(uId) }, { secondUser: Object(uId) }]
@@ -21,7 +20,7 @@ export async function POST(req: NextRequest) {
         // Assuming cursor is an array of items
         const promises = cursor.map(async (item) => {
             //Check User Id
-            let secondId:string = ""
+            let secondId:any;
             if (uId != item.firstUser){
                 secondId = item.firstUser
             }else{
@@ -31,25 +30,28 @@ export async function POST(req: NextRequest) {
             if (String(item.lastUserId) === String(uId)){
                 lastUser = "me"
             }
-            const user = await User.findById(Object(secondId), {
+            
+            const user = await User.findById(secondId, {
                 firstName: 1,
                 profilePic: 1
             }); // Specify the fields you want to include
-            let otherUser:string = '';
-            if (item.lastUserId){
-                const ou = await User.findById(Object(item.lastUserId),{
-                    firstName:1
-                })
-                otherUser = ou.firstName
-            }
-            ArrayItems.push({
-                item, user: {
-                    firstName: user.firstName,
-                    profilePic: user.profilePic,
-                    otherName: otherUser,
-                    lastUser: lastUser
+            if (user){
+                let otherUser:string = '';
+                if (item.lastUserId){
+                    const ou = await User.findById(item.lastUserId,{
+                        firstName:1
+                    })
+                    otherUser = ou.firstName
                 }
-            }); // Include only the desired fields
+                ArrayItems.push({
+                    item, user: {
+                        firstName: user.firstName,
+                        profilePic: user.profilePic,
+                        otherName: otherUser,
+                        lastUser: lastUser
+                    }
+                }); // Include only the desired fields
+            }
         });
 
         // Wait for all promises to resolve
@@ -60,6 +62,7 @@ export async function POST(req: NextRequest) {
             code: 1
         })
     } catch (error) {
+        console.log(error)
         return NextResponse.json({
             msg: error,
             code: 0

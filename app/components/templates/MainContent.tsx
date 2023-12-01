@@ -1,44 +1,16 @@
 "use client"
 import React, { useState } from 'react'
 import LeftMenu from './LeftMenu'
-import Modal from '../temp/Modal'
-import ButtonLoading from '../temp/ButtonLoading'
+import PinModel from './PinModel';
 
 const MainContent = () => {
    
     const [isHidden, setIsHidden] = useState<boolean>(false);
-    const [submitBtn, setSubmitBtn] = useState<boolean>(true);
-    const [pinVal, setPinVal] = useState<string>("");
     
     const toggleModal = () => {
         setIsHidden(!isHidden)
     }
-    const eventPin = (e: string) => {
-        setPinVal(e)
-    }
-    const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setSubmitBtn(false)
-        const res = await fetch("/api/others/changepin/",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                pin: pinVal
-            })
-        })
-        if(res.ok){
-            const data = await res.json();
-            console.log(data)
-            if(data.code === 1){
-                setSubmitBtn(true)
-                //RELOAD ON SUCCESS
-                window.location.reload();
-            }
-        }
-    }
-
+    
   return (
     <>
           <div className="col_left">
@@ -53,8 +25,11 @@ const MainContent = () => {
 
           </div>
 
-
-          <Modal
+            <PinModel
+            toggleModal={toggleModal}
+            isHidden={isHidden}
+            ></PinModel>
+          {/* <Modal
               id="changePin"
               title="Change PIN Code"
               isHidden={isHidden}
@@ -88,7 +63,7 @@ const MainContent = () => {
 
                   </form>
               </div>
-          </Modal>
+          </Modal> */}
     </>
   )
 }

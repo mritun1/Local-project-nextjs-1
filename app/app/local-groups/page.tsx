@@ -4,7 +4,6 @@ import GroupsMenu from '@/app/components/pages/groups/GroupsMenu';
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
 import seenUpdate from '@/app/customlib/seenUpdate';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 

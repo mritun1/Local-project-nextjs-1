@@ -23,7 +23,12 @@ export async function GET(
         }
 
         //IF THE PIN IS - 0000000 - IT IS A GLOBAL
-        const cursor = await eventsPost.find({ pin: { $in: [pin, '0000000'] } }).sort({ createdDate: -1 }).skip(offset).limit(limit);
+        let cursor
+        if (pin === '0000000') {
+            cursor = await eventsPost.find({}).sort({ createdDate: -1 }).skip(offset).limit(limit);
+        } else {
+            cursor = await eventsPost.find({ pin: { $in: [pin, '0000000'] } }).sort({ createdDate: -1 }).skip(offset).limit(limit);
+        }
 
         if (cursor.length == 0) {
             return NextResponse.json({

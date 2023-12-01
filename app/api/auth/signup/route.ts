@@ -8,13 +8,14 @@ import customSearch from "@/app/lib/customSearch";
 import peoplesCatModels from "@/app/models/peoples/peoplesCatModels";
 import sms from "@/app/customlib/sms";
 import customMath from "@/app/lib/customMath";
+import walletTransactions from "@/app/models/wallet/walletTransactions";
 
 export async function POST(req: Request) {
     try {
         await connectDB();
         const body = await req.json();
 
-        const { firstName, lastName, pinCode, mobile, password, confirmPassword, profession, gender } = body;
+        const { firstName, lastName, pinCode, mobile, password, confirmPassword, profession, gender, refID } = body;
         //CHECK IF ALL THE INPUTS WERE DONE
         if (!firstName || !lastName || !pinCode || !mobile || !password || !confirmPassword || !profession || !gender) {
             return NextResponse.json(
@@ -64,14 +65,15 @@ export async function POST(req: Request) {
         const ran = new customMath();
         const ranNum:number = ran.randomNum(10000);
 
-        let otp: string = ranNum.toString();
+        // let otp: string = ranNum.toString();
+        let otp:string = "234";
 
         //SEND OTP TO MOBILE
-        const OTP = new sms();
-        const sendOtp = OTP.singleOTP(mobile.toString(),otp);
-        if (sendOtp === null){
-            return NextResponse.json({ msg: "Sms not sent, something wrong.", code: 0 });
-        }
+        // const OTP = new sms();
+        // const sendOtp = OTP.singleOTP(mobile.toString(),otp);
+        // if (sendOtp === null){
+        //     return NextResponse.json({ msg: "Sms not sent, something wrong.", code: 0 });
+        // }
 
         const hashOtp = await bcrypt.hash(otp, 10)
 
@@ -87,9 +89,36 @@ export async function POST(req: Request) {
         })
 
         try {
-            const newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, mobile, password: hashPassword, otp: hashOtp });
+            let newUser:any;
+            if (refID){
+                //REFERRAL IS SET
+                //ADD MONEY TO THE REFERRER ACCOUNT
+                const referAmount: number = 30;
+                const lastData2 = await walletTransactions.findOne({ userId: refID }).sort({ slId: -1 });
+                if (lastData2) {
+                    //INSERT TO TRANSACTION
+                    
+                    const currentBalValue: number = parseFloat(lastData2.currentBal);
+                    const updatedCurrentBal: number = currentBalValue + referAmount;
+                    await walletTransactions.create({
+                        userId: refID,
+                        slId: lastData2.slId + 1,
+                        transactionType: "Received",
+                        prevAmount: lastData2.currentBal,
+                        myPrevSlId: lastData2.slId,
+                        Amount: referAmount,
+                        currentBal: updatedCurrentBal,
+                        status: 'Success',
+                        createdDate: Date.now()
+                    })
+                }
+                newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, mobile, refID, refPaid: referAmount, password: hashPassword, otp: hashOtp });
+            }else{
+                newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, mobile, password: hashPassword, otp: hashOtp });
+                
+            }
             newUser.save()
-            
+
             const user_id = newUser._id
             const secret: any = process.env.SECRECT_KEY
             const token = jwt.sign({ user_id, firstName, lastName, pinCode, mobile }, secret)

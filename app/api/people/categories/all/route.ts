@@ -16,31 +16,61 @@ export async function POST(req: NextRequest) {
         const uID = new mongoose.Types.ObjectId(uId);
 
         try {
-            const data = await User.aggregate([
-                {
-                    $match: {  
-                        $and: [
-                            { pinCode: parseInt(pin_code, 10) },
-                            { isActive: 1 },
-                            { _id: { $ne: uID } }
-                        ]
-                    }
-                }, {
-                    $group: {
-                        _id: "$professionSlug",
-                        count: { $sum: 1 }
-                    }
+            let data;
+            let all;
+            if(pin_code === '0000000'){
+                //FOR GLOBAL - START
+                data = await User.aggregate([
+                    {
+                        $match: {  
+                            $and: [
+                                { isActive: 1 },
+                                { _id: { $ne: uID } }
+                            ]
+                        }
+                    }, {
+                        $group: {
+                            _id: "$professionSlug",
+                            count: { $sum: 1 }
+                        }
 
-                }
-            ])
+                    }
+                ])
+                all = await User.find({  
+                    $and: [
+                        { isActive: 1 },
+                        { _id: { $ne: uId } }
+                    ]
+                })
+                //FOR GLOBAL - END
+            }else{
+                //FOR LOCAL - START
+                data = await User.aggregate([
+                    {
+                        $match: {
+                            $and: [
+                                { pinCode: parseInt(pin_code, 10) },
+                                { isActive: 1 },
+                                { _id: { $ne: uID } }
+                            ]
+                        }
+                    }, {
+                        $group: {
+                            _id: "$professionSlug",
+                            count: { $sum: 1 }
+                        }
 
-            const all = await User.find({  
-                $and: [
-                    { pinCode: parseInt(pin_code, 10) },
-                    { isActive: 1 },
-                    { _id: { $ne: uId } }
-                ]
-            })
+                    }
+                ])
+                all = await User.find({
+                    $and: [
+                        { pinCode: parseInt(pin_code, 10) },
+                        { isActive: 1 },
+                        { _id: { $ne: uId } }
+                    ]
+                })
+                //FOR LOCAL - END
+            }
 
             return NextResponse.json({
                 data: data,

@@ -21,9 +21,15 @@ export async function GET(
             const pinCookie: any = process.env.PIN_CODE;
             pin = req.cookies.get(pinCookie)?.value || "";
         }
-
+        
+        let cursor;
         //0000000 means GLOBAL VISIBLE
-        const cursor = await groupsModels.find({ groupPin: { $in: [pin, '0000000'] } }).sort({ createdDate: -1 }).skip(offset).limit(limit);
+        if(pin === '0000000'){
+            cursor = await groupsModels.find({}).sort({ createdDate: -1 }).skip(offset).limit(limit);
+        }else{
+            cursor = await groupsModels.find({ groupPin: { $in: [pin, '0000000'] } }).sort({ createdDate: -1 }).skip(offset).limit(limit);
+        }
+        
 
         const token = new getTokenData(req);
         const uId = token.userID()

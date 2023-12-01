@@ -291,6 +291,11 @@ $btn-orange-hov: rgb(126, 82, 2);
     color: $text-color2;
 }
 
+.normal_div{
+    @include div_bg();
+    @include pad_mar(6px, 6px);
+}
+
 @mixin radio_btn($mx-border, $mx-bg-color, $mx-radius) {
     border: $mx-border;
     background-color: $mx-bg-color;
@@ -2588,6 +2593,9 @@ body {
 //-----------------------------------------------------
 // POST OPTIONS - END
 //-----------------------------------------------------
+//-----------------------------------------------------
+// CONTRIBUTION - START
+//-----------------------------------------------------
 .contribution{
     background-color: $bg-box;
     height: 90vh;
@@ -2679,3 +2687,29 @@ body {
         }
     }
 }
+//-----------------------------------------------------
+// CONTRIBUTION - END
+//-----------------------------------------------------
+//-----------------------------------------------------
+// CONTRIBUTION ON MESSAGE - START
+//-----------------------------------------------------
+.contributionOnMgs{
+    &>div{
+        text-align: center;
+        color: $text-color;
+    }
+    &>.contributeOnMgsBtn{
+        @include pad_mar(10px, 0px);
+        &>button{
+            @include green_btn();
+            @include pad_mar(4px 8px, 4px 8px);
+            color: $text-color;
+            font-size: 20px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+    }
+}
+//-----------------------------------------------------
+// CONTRIBUTION ON MESSAGE - END
+//-----------------------------------------------------

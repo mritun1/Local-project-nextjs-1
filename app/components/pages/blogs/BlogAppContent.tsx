@@ -35,7 +35,7 @@ const BlogAppContent = (props: templateType) => {
                     <div className="left_menu">
                         <ul className="vertical_list">
 
-                            <a href="/app/my-groups" className="link_color2">
+                            <a href="/blogs/others/about-us/" className="link_color2">
                                 <li><i className="fa-solid fa-circle-info icon-list"></i> About us</li>
                             </a>
 

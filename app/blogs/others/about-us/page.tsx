@@ -1,10 +1,15 @@
 import BlogAppContent from '@/app/components/pages/blogs/BlogAppContent'
 import React from 'react'
 import Image from 'next/image'
+import Head from 'next/head'
 
-const page = () => {
+const Page = () => {
     return (
         <>
+
+            <Head>
+                <title>Hello</title>
+            </Head>
 
             <BlogAppContent
                 mainContent={
@@ -42,4 +47,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

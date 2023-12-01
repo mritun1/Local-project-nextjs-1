@@ -1,5 +1,6 @@
 "use client"
 import ChatContent from '@/app/components/pages/message/ChatContent';
+import ChatOptionBtn from '@/app/components/pages/message/ChatOptionBtn';
 import AppContent from '@/app/components/templates/AppContent'
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -173,7 +174,10 @@ const LocalMessageChat = () => {
 
                             <div className="chat-input-sec">
                                 <div>
-                                    <div><button><i className="fa-solid fa-plus"></i></button></div>
+                                    <ChatOptionBtn
+                                        itemId={slug.toString()}
+                                        itemType='message'
+                                    />
                                 </div>
                                 <div>
                                     <div>

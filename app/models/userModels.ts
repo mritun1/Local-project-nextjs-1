@@ -43,6 +43,14 @@ let userSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    refID:{
+        type: mongoose.Types.ObjectId,
+        immutable:true
+    },
+    refPaid: {
+        type: Number,//234 or 0
+        default:0,
+    },
     createdDate:{
         type: Number,
         default: Date.now()

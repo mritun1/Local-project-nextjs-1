@@ -80,7 +80,7 @@ const AppContent = (props: templateType) => {
                             <a href="/app/pin-code-map" className="link_color2">
                                 <li><i className="fa-solid fa-map icon-list"></i> PinCode Map</li>
                             </a>
-                            <a href="/app/blogs" className="link_color2">
+                            <a href="/blogs/guides" className="link_color2">
                                 <li><i className="fa-solid fa-book icon-list"></i> Guide & Helps</li>
                             </a>
                         </ul>

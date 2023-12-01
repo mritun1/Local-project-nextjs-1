@@ -24,12 +24,21 @@ export async function GET(
         }
 
         let cursor;
-        if (slug === 'all') {
-            cursor = await productSecondHand.find({ productPin: pin }).sort({ createdDate: -1 }).skip(offset).limit(limit);
+        if(pin === '0000000'){
+            //FOR GLOBAL
+            if (slug === 'all') {
+                cursor = await productSecondHand.find({}).sort({ createdDate: -1 }).skip(offset).limit(limit);
+            } else {
+                cursor = await productSecondHand.find({ productCategory: slug }).sort({ createdDate: -1 }).skip(offset).limit(limit);
+            }
         }else{
-            cursor = await productSecondHand.find({ productPin: pin, productCategory: slug }).sort({ createdDate: -1 }).skip(offset).limit(limit);
+            //FOR LOCAL
+            if (slug === 'all') {
+                cursor = await productSecondHand.find({ productPin: pin }).sort({ createdDate: -1 }).skip(offset).limit(limit);
+            } else {
+                cursor = await productSecondHand.find({ productPin: pin, productCategory: slug }).sort({ createdDate: -1 }).skip(offset).limit(limit);
+            }
         }
-        
 
         if (cursor.length == 0) {
             return NextResponse.json({

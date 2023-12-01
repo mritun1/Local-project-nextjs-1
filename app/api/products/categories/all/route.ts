@@ -10,23 +10,42 @@ export async function POST(req: NextRequest) {
         const pin_code = req.cookies.get(pinCookie)?.value || '';
 
         try {
-            const data = await productSecondHand.aggregate([
-                {
-                    $match: { productPin: parseInt(pin_code, 10) }
-                }, {
-                    $group: {
-                        // _id: "$productCategory",
-                        _id: {
-                            productCategory: "$productCategory",
-                            productCatName: "$productCatName"
-                        },
-                        count: { $sum: 1 }
+            let data;
+            let all;
+            if (pin_code === '0000000') {
+                //FOR GLOBAL
+                data = await productSecondHand.aggregate([
+                    {
+                        $group: {
+                            // _id: "$productCategory",
+                            _id: {
+                                productCategory: "$productCategory",
+                                productCatName: "$productCatName"
+                            },
+                            count: { $sum: 1 }
+                        }
+
                     }
+                ])
+                all = await productSecondHand.find({})
+            }else{
+                data = await productSecondHand.aggregate([
+                    {
+                        $match: { productPin: parseInt(pin_code, 10) }
+                    }, {
+                        $group: {
+                            // _id: "$productCategory",
+                            _id: {
+                                productCategory: "$productCategory",
+                                productCatName: "$productCatName"
+                            },
+                            count: { $sum: 1 }
+                        }
 
-                }
-            ])
-
-            const all = await productSecondHand.find({ productPin: parseInt(pin_code, 10) })
+                    }
+                ])
+                all = await productSecondHand.find({ productPin: parseInt(pin_code, 10) })
+            }
 
             return NextResponse.json({
                 data: data,

@@ -2,6 +2,7 @@ import connectDB from "@/app/db/config";
 import getTokenData from "@/app/lib/getTokenData";
 import contributions from "@/app/models/contribution/contributions";
 import User from "@/app/models/userModels";
+import walletTransactions from "@/app/models/wallet/walletTransactions";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -16,6 +17,7 @@ export async function POST(req: NextRequest) {
             })
         }
         const token = new getTokenData(req);
+        const uId = token.userID();
         if (!token) {
             return NextResponse.json({
                 msg: "Not logged In",
@@ -55,11 +57,13 @@ export async function POST(req: NextRequest) {
 
         // Wait for all promises to resolve
         await Promise.all(promises);
+        const lastData = await walletTransactions.findOne({ userId: uId }).sort({ slId: -1 });
 
         if(data.length>0){
             return NextResponse.json({
                 msg: "Success",
                 data: ArrayItems,
+                bal: lastData.currentBal,
                 code: 1
             })
         }else{

@@ -65,9 +65,8 @@ export default function Home() {
               <p>English(US)</p>
               <p>
                 <a href="/blogs/others/about-us">About us</a>
-                <a href="">Terms & Conditions</a>
-                <a href="">Contact us</a>
-                <a href="">Feedback</a>
+                <a href="/blogs/others/terms-condition">Terms & Conditions</a>
+                <a href="/blogs/others/return-policy">Return Policy</a>
               </p>
               <p><i>Developed by</i> <b>Mritunjoy Tech OPC Pvt Ltd</b></p>
             </div>

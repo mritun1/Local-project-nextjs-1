@@ -70,6 +70,7 @@ const PostOptions = (props: propsType) => {
             }
         }
     }
+    const [bal,setBal] = useState<number>(0)
     useEffect(() => {
         const loadCOnt = async () => {
             const res = await fetch("/api/contributions/comments/", {
@@ -87,6 +88,7 @@ const PostOptions = (props: propsType) => {
 
                 if (data.code === 1) {
                     setContList(data.data)
+                    setBal(data.bal)
                 }
             }
         }
@@ -182,7 +184,7 @@ const PostOptions = (props: propsType) => {
                                 <div><i className="fa-solid fa-indian-rupee-sign"></i> <input type="number" onChange={(e) => setContributeAmount(e.target.value)} value={contributeAmount || ''} placeholder='Amount' /></div>
                             </div>
                             <div>
-                                <div><h4>Bal: <i className="fa-solid fa-indian-rupee-sign"></i> 343/-</h4></div>
+                                <div><h4>Bal: <i className="fa-solid fa-indian-rupee-sign"></i> {bal}/-</h4></div>
                             </div>
                         </div>
                         <div className="contribution-text">

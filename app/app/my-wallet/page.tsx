@@ -122,7 +122,7 @@ const MyWallet = () => {
                 setAlertText2(withdrawnAmount + " is added to WithDrawn, please wait for approval");
                 clickTransaction();
                 loadTransaction();
-            }else{
+            } else {
                 setAlertHidden2(true);
                 setAlertText2(data.msg)
             }
@@ -158,7 +158,7 @@ const MyWallet = () => {
     useEffect(() => {
         loadTransaction();
         return () => { }
-    },[])
+    }, [])
 
     return (
         <>
@@ -282,9 +282,10 @@ const MyWallet = () => {
                                                 placeholder="Amount"
                                                 onChange={(e) => changeInput(e, "addInput")}
                                                 value={addInput || ''}
+                                                disabled
                                             />
                                         </div>
-                                        <button onClick={addMoney}><i className="fa-solid fa-plus"></i> Add Money</button>
+                                        <button disabled onClick={addMoney}><i className="fa-solid fa-plus"></i> Add Money</button>
                                     </div>
                                 </div>
                             </div>
@@ -317,11 +318,11 @@ const MyWallet = () => {
                                     <div className="single-div-center">
                                         <div>
                                             <div>
-                                                <input 
-                                                type="text" 
-                                                placeholder="Amount" 
+                                                <input
+                                                    type="text"
+                                                    placeholder="Amount"
                                                     onChange={(e) => setWithdrawnAmount(e.target.value)}
-                                                value={withdrawnAmount}
+                                                    value={withdrawnAmount}
                                                 />
                                             </div>
                                             <button onClick={withDrawnClick}>Withdraw</button>

@@ -11,7 +11,7 @@ const BlogLeftMenu = () => {
             <div className="title_bar">
                 <div>
                     <div>
-                        <h3> Guides</h3>
+                        <h3> Social Account</h3>
                     </div>
                 </div>
                 <div>
@@ -22,16 +22,20 @@ const BlogLeftMenu = () => {
             <div className="left_menu" style={{ borderBottom: `none` }}>
                 <ul className="vertical_list">
 
-                    <Link href="/app/local-news" className="link_color">
+                    <Link href="https://www.youtube.com/playlist?list=PLDPoZsPYxSlyueW3hayaQHdG-ravAika-" target='_blank' className="link_color">
                         <li
                             className={pathname === '/app/local-news' ? 'active' : ''}
-                        ><i className="fa-solid fa-clipboard-list icon-list"></i> How to register? </li>
+                        ><i className="fa-solid fa-clipboard-list icon-list"></i> 
+                            YouTube
+                        </li>
                     </Link>
 
-                    <Link href="/app/local-news" className="link_color">
+                    <Link href="https://www.facebook.com/localnii/" target='_blank' className="link_color">
                         <li
                             className={pathname === '/app/local-news' ? 'active' : ''}
-                        ><i className="fa-solid fa-clipboard-list icon-list"></i> How to Login? </li>
+                        ><i className="fa-solid fa-clipboard-list icon-list"></i> 
+                            Facebook
+                        </li>
                     </Link>
 
                 </ul>

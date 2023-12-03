@@ -1,15 +1,14 @@
 "use client"
-import Link from 'next/link'
-import React, { useEffect } from 'react'
-import { usePathname } from 'next/navigation'
-import goBack from '@/app/lib/goBack'
+import { usePathname } from 'next/navigation';
+import React from 'react'
 
 type templateType = {
     mainContent: any,
 }
 
 const BlogAppContent = (props: templateType) => {
-    
+    const pathname = usePathname();
+
     return (
         <>
             <div className="col_center">
@@ -35,20 +34,16 @@ const BlogAppContent = (props: templateType) => {
                     <div className="left_menu">
                         <ul className="vertical_list">
 
-                            <a href="/blogs/others/about-us/" className="link_color2">
-                                <li><i className="fa-solid fa-circle-info icon-list"></i> About us</li>
+                            <a href="/blogs/others/about-us" className="link_color2">
+                                <li className={pathname === '/blogs/others/about-us' ? 'active' : ''}><i className="fa-solid fa-circle-info icon-list"></i> About us</li>
                             </a>
 
-                            <a href="/app/my-groups" className="link_color2">
-                                <li><i className="fa-solid fa-square-check icon-list"></i> Terms & Conditions</li>
+                            <a href="/blogs/others/terms-condition" className="link_color2">
+                                <li className={pathname === '/blogs/others/terms-condition' ? 'active' : ''}><i className="fa-solid fa-square-check icon-list"></i> Terms & Conditions</li>
                             </a>
 
-                            <a href="/app/my-groups" className="link_color2">
-                                <li><i className="fa-solid fa-address-book icon-list"></i> Contact us</li>
-                            </a>
-
-                            <a href="/app/my-groups" className="link_color2">
-                                <li><i className="fa-solid fa-comment-dots icon-list"></i> Feedback</li>
+                            <a href="/blogs/others/return-policy" className="link_color2">
+                                <li className={pathname === '/blogs/others/return-policy' ? 'active' : ''}><i className="fa-solid fa-address-book icon-list"></i> Return Policy</li>
                             </a>
 
                         </ul>

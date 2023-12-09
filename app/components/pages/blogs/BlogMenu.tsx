@@ -18,7 +18,7 @@ const MenuModal = () => {
                             <Image src="/icons/logo/logo1.png" alt='Logo' width={45} height={45} />
                         </div>
                         <div>
-                            <h2 >OCALNII</h2>
+                            <h2 >OCAL<small>nii</small></h2>
                         </div>
                     </div>
                     <div >

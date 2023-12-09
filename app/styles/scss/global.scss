@@ -798,10 +798,10 @@ body {
         @include w_h(100%, 300px);
 
         &>div {
-            @include w_h(26px, 26px);
+            @include w_h(40px, 40px);
 
             &>div {
-                @include w_h(26px, 26px);
+                @include w_h(40px, 40px);
                 border-radius: 50%;
                 @include flex(center, center);
                 @include green_btn();
@@ -815,7 +815,27 @@ body {
         }
 
         &>.news_img_btn_right {
-            @include position(absolute, 48%, 98%);
+            @include position(absolute, 48%, 95%);
+        }
+        &>.img_btn_center{
+            @include w_h(100%, 100%);
+            @include flex(center, center);
+            &>div{
+                width: 100px;
+                background: transparent;
+                &:hover{
+                    background: transparent;
+                }
+                &>button{
+                    border: 2px solid black;
+                    border-radius: 10px;
+                    background: transparent;
+                    padding: 6px;
+                    &:hover{
+                        background-color: white;
+                    }
+                }
+            }
         }
     }
 }
@@ -2713,6 +2733,9 @@ body {
 //-----------------------------------------------------
 // CONTRIBUTION ON MESSAGE - END
 //-----------------------------------------------------
+//-----------------------------------------------------
+// SHARE BUTTON - START
+//-----------------------------------------------------
 .shareButtons{
     display: flex;
     justify-content: space-evenly;
@@ -2728,3 +2751,50 @@ body {
         @include pad_mar(6px 0px, 6px 0px);
     }
 }
+//-----------------------------------------------------
+// SHARE BUTTON - END
+//-----------------------------------------------------
+//-----------------------------------------------------
+// MOBILE APP - START
+//-----------------------------------------------------
+@media all and (display-mode: standalone) {
+    .apps,
+    .app_install_hr{
+        display: none;
+    }
+}
+//-----------------------------------------------------
+// MOBILE APP - END
+//-----------------------------------------------------
+.img_viewers{
+    @include position_full(fixed, 0px, 0px, 0px, 0px);
+    z-index: 1;
+    &>.img_opa{
+        @include position_full(absolute, 0px, 0px, 0px, 0px);
+        background-color: black;
+        opacity: 0.5;
+    }
+    &>.img_close{
+        @include w_h(60px, 60px);
+        @include position_full(absolute, 0px, 0px, auto, auto);
+        @include flex(center,center);
+        &>div>button{
+            color: $text-color;
+            font-weight: bold;
+            font-size: 30px;
+            border-radius: 50%;
+            @include w_h(40px, 40px);
+            @include red_btn();
+        }
+    }
+    &>.img_cont{
+        @include flex(center, center);
+        @include position_full(absolute, 0px, 0px, 0px, 0px);
+        overflow: auto;
+        &>div{
+            width: 96%;     
+        }
+    }
+    
+}
+

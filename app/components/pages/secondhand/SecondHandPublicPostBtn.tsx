@@ -6,7 +6,8 @@ type propsType = {
     name: String,
     des: String,
     contact1: number,
-    contact2: number
+    contact2: number,
+    id:string
 }
 
 const SecondHandPublicPostBtn = (props:propsType) => {
@@ -17,6 +18,26 @@ const SecondHandPublicPostBtn = (props:propsType) => {
     const [modalContact, setModalContact] = useState<boolean>(false)
     const openModalContact = () => {
         setModalContact(!modalContact)
+    }
+
+    const CheckMessage = async () =>{
+        const res = await fetch("/api/message/product-msg-check/",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                id:props.id,
+                type:'secondhand'
+            })
+        })
+        if(res.ok){
+            const data = await res.json();
+            console.log(data)
+            if(data.code === 1){
+                window.location.href = '/app/message/' + data.msgId;
+            }
+        }
     }
     
     return (
@@ -31,7 +52,7 @@ const SecondHandPublicPostBtn = (props:propsType) => {
                     <p>Contact</p>
                 </div>
                 <div>
-                    <button><i className="fa-solid fa-message"></i></button>
+                    <button onClick={CheckMessage}><i className="fa-solid fa-message"></i></button>
                     <p>Message</p>
                 </div>
             </div>

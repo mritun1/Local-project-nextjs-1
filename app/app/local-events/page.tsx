@@ -1,12 +1,12 @@
 "use client"
+import EventPost from '@/app/components/pages/posts/events/EventPost';
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
-import PostOptions from '@/app/components/temp/PostOptions';
 import AppContent from '@/app/components/templates/AppContent'
 import seenUpdate from '@/app/customlib/seenUpdate';
 import customDate from '@/app/lib/customDate';
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
 import { usePathname } from 'next/navigation';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface EventItems {
     item: {
@@ -122,17 +122,6 @@ const LocalEvents = () => {
         };
     }, []);
 
-    const [imgState, setImgState] = useState<number | null>(null)
-    const [imgUrl, setImgUrl] = useState<string | null>(null)
-    const getNextImg = (index: number) => (event: React.MouseEvent<HTMLDivElement>) => {
-        setImgState(index);
-        setImgUrl(doublyLinkedLists[index].getNextData());
-    };
-    const getPrevImg = (index: number) => (event: React.MouseEvent<HTMLDivElement>) => {
-        setImgState(index);
-        setImgUrl(doublyLinkedLists[index].getPrevData());
-    };
-
     return (
         <>
             <AppContent
@@ -155,57 +144,21 @@ const LocalEvents = () => {
 
                             {notFound ? (
                                 eventList.map((ele, index) => (
-                                    <div key={index} className="offer_post event_posts" style={{ height: `520px` }}>
-
-                                        <div className="events_cont">
-                                            <div>
-
-                                                <div className="event_date">
-                                                    <h3><span className="event_date">Date:</span> {newDate.isoToMonth(ele.item.startDate)} - {newDate.isoToMonth(ele.item.endDate)}</h3>
-                                                </div>
-
-                                                <div className="product_images">
-                                                    <div className="news_img_sec"
-                                                        style={{
-                                                            backgroundImage: `url(${imgState === index ? imgUrl :
-                                                                ele.item.images[0]
-                                                                })`
-                                                        }}>
-                                                        <div className="news_img_btn_left">
-                                                            <div onClick={getPrevImg(index)}><i className="fa-solid fa-angle-left"></i></div>
-                                                        </div>
-                                                        <div className="news_img_btn_right">
-                                                            <div onClick={getNextImg(index)} ><i className="fa-solid fa-angle-right"></i></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <PostOptions
-                                                    itemId={ele.item._id}
-                                                    itemType='Events'
-                                                />
-
-                                                <div className="product_title">
-                                                    <h2>{ele.item.title}</h2>
-                                                </div>
-                                                <div className="news_des">
-                                                    <div>
-                                                        <p className="text-color">{ele.item.des}</p>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div className="profile">
-                                            <div className="profile_name">
-                                                <a href=""><h5>{ele.user.firstName} {ele.user.lastName}</h5></a>
-                                            </div>
-                                            <div className="profile_img">
-                                                <div style={{ backgroundImage: `url(${ele.user.profilePic ? ele.user.profilePic : '/icons/others/profile.webp'})` }}></div>
-                                            </div>
-
-                                        </div>
-                                    </div>
+                                    <EventPost
+                                        key={index}
+                                        index={index}
+                                        images={ele.item.images}
+                                        startDate={ele.item.startDate}
+                                        endDate={ele.item.endDate}
+                                        doublyLinkedLists={doublyLinkedLists}
+                                        id={ele.item._id}
+                                        title={ele.item.title}
+                                        des={ele.item.des}
+                                        profilePic={ele.user.profilePic}
+                                        firstName={ele.user.firstName}
+                                        lastName={ele.user.lastName}
+                                    />
+                                    
                                 ))
 
                             ) : (

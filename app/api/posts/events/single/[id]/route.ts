@@ -1,34 +1,30 @@
 import connectDB from "@/app/db/config";
-import getTokenData from "@/app/lib/getTokenData";
-import contributions from "@/app/models/contribution/contributions";
+import eventsPost from "@/app/models/posts/eventsPost";
 import User from "@/app/models/userModels";
-import walletTransactions from "@/app/models/wallet/walletTransactions";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
+export async function GET(
+    req: NextRequest,
+    { params }: { params: { id: string } }
+) {
     try {
+
+        let id: string = params.id;
         await connectDB();
-        const body = await req.json();
-        const { itemId, itemType } = body;
-        if (!body) {
+
+        const cursor = await eventsPost.find({_id:id})
+
+        if (cursor.length == 0) {
             return NextResponse.json({
-                msg: "Bad Request",
+                msg: "Data Not found",
                 code: 0
             })
         }
-        const token = new getTokenData(req);
-        const uId = token.userID();
-        let loggedIn = false;
-        if (token) {
-            loggedIn = true;
-        }
-        //GET ALL LISTS
-        const data = await contributions.find({itemId:itemId,itemType:itemType})
 
         //ADDING THE ADDITIONAL USERS DATA
         const ArrayItems: any[] = [];
         // Assuming cursor is an array of items
-        const promises = data.map(async (item) => {
+        const promises = cursor.map(async (item) => {
             const user = await User.findById(item.userId, {
                 firstName: 1,
                 lastName: 1,
@@ -55,28 +51,18 @@ export async function POST(req: NextRequest) {
 
         // Wait for all promises to resolve
         await Promise.all(promises);
-        const lastData = await walletTransactions.findOne({ userId: uId }).sort({ slId: -1 });
 
-        if(data.length>0){
-            return NextResponse.json({
-                msg: "Success",
-                data: ArrayItems,
-                bal: lastData.currentBal,
-                code: 1,
-                loggedIn: loggedIn
-            })
-        }else{
-            return NextResponse.json({
-                msg: "No Content",
-                code: 0,
-                loggedIn: loggedIn
-            })
-        }
-
-    } catch (error) {
         return NextResponse.json({
-            msg: error,
+            msg: "Data found",
+            data: ArrayItems,
+            code: 1,
+        })
+
+    } catch (err) {
+        return NextResponse.json({
+            msg: "Sorry! no data found.",
             code: 0
         })
     }
 }
+

@@ -1,15 +1,22 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import Modal from './Modal'
-import { useRouter } from 'next/navigation'
+import copy from 'clipboard-copy'
 interface propsType{
     url:string;
     state:boolean;
     click:()=>void;
 }
 const ShareModel = (props:propsType) => {
-    const router = useRouter();
     const currentUrl = `${props.url}`;
+
+    const [isCopyLink, setIsCopyLink] = useState<boolean>(false)
+
+    const copyLinkHandle = async (e: string) => {
+        await copy(e);
+        setIsCopyLink(true);
+        setTimeout(() => setIsCopyLink(false), 1500);
+    }
 
     const shareOnTwitter = () => {
         const tweetText = 'Check out this awesome content!';
@@ -43,6 +50,28 @@ const ShareModel = (props:propsType) => {
                   <div><button onClick={shareOnFacebook}><i className="fa-brands fa-facebook-f"></i></button></div>
                   <div><button onClick={shareOnLinkedIn}><i className="fa-brands fa-linkedin-in"></i></button></div>
 
+              </div>
+
+              <div className="referral_box">
+                  <div>
+                      <h3>Copy Link</h3>
+                  </div>
+                  <div>
+                      <input
+                          type="text"
+                          placeholder="Copy Link"
+                          value={props.url}
+                          onChange={() => { }}
+                      />
+                  </div>
+                  <div>
+                      {isCopyLink ? (
+                          <button><i className="fa-solid fa-copy"></i> Copied</button>
+                      ) : (
+                              <button onClick={() => copyLinkHandle(props.url)}><i className="fa-solid fa-copy"></i> Copy</button>
+                      )}
+
+                  </div>
               </div>
           </Modal>
     </>

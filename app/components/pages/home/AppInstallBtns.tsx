@@ -21,7 +21,8 @@ const AppInstallBtns = () => {
         };
     }, []); // Run this effect only once when the component mounts
 
-    const handleInstallClick = () => {
+    const handleInstallClick = () => { 
+
         // Trigger the installation prompt
         if (deferredPrompt) {
             deferredPrompt.prompt();

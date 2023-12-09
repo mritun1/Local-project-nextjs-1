@@ -1,0 +1,57 @@
+[
+    {
+        "categoryName":"Electrician",
+        "catSlug":"electrician",
+        "tags":"electrician,electricians,electric,electron,electronics"
+    },
+    {
+        "categoryName": "Plumber",
+        "catSlug": "plumber",
+        "tags": "plumber,plumbers,plumbing"
+    },
+    {
+        "categoryName": "Car Mechanic",
+        "catSlug": "car-mechanics",
+        "tags": "car,cars,vehicle,four wheeler"
+    },
+    {
+        "categoryName": "Bike Mechanic",
+        "catSlug": "bike-mechanics",
+        "tags": "bike,two wheeler"
+    },
+    {
+        "categoryName": "Other Mechanic",
+        "catSlug": "other-mechanics",
+        "tags": "tractor,truck,bus,cycle"
+    },
+    {
+        "categoryName": "Mobile Mechanic",
+        "catSlug": "mobile-mechanics",
+        "tags": "mobile,smartphone,cell phone"
+    },
+    {
+        "categoryName": "PC/Laptop Mechanic",
+        "catSlug": "pc-computer-mechanics",
+        "tags": "computer,laptop,desktop,tablet"
+    },
+    {
+        "categoryName": "Software Engineer",
+        "catSlug": "software-engineers",
+        "tags": "web,developer,software,programmer,coding,app,frontend,backend,devops,sde"
+    },
+    {
+        "categoryName": "Other Engineer",
+        "catSlug": "other-engineers",
+        "tags": "mechanical,automobile,chemical,aeronautics"
+    },
+    {
+        "categoryName": "Traders",
+        "catSlug": "traders",
+        "tags": "trading,share,trade"
+    },
+    {
+        "categoryName": "Doctor",
+        "catSlug": "doctors",
+        "tags": "doctor"
+    }
+]

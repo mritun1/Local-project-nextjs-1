@@ -1,5 +1,5 @@
 "use client"
-import SecondHandPublicPostBtn from '@/app/components/pages/secondhand/SecondHandPublicPostBtn';
+import SecondHandPublicPost from '@/app/components/pages/secondhand/SecondHandPublicPost';
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
 import seenUpdate from '@/app/customlib/seenUpdate';
@@ -117,19 +117,6 @@ const LocalSecondHandCat = () => {
         return () => {};
     }, [pathname]);
 
-    const [imgState, setImgState] = useState<number | null>(null)
-    const [imgUrl, setImgUrl] = useState<string | null>(null)
-    const getNextImg = (index: number) => (event: React.MouseEvent<HTMLDivElement>) => {
-        setImgState(index);
-        setImgUrl(doublyLinkedLists[index].getNextData());
-    };
-    const getPrevImg = (index: number) => (event: React.MouseEvent<HTMLDivElement>) => {
-        setImgState(index);
-        setImgUrl(doublyLinkedLists[index].getPrevData());
-    };
-
-    
-
     const [backUrl, setBackUrl] = useState<string>("/");
     useEffect(() => {
         const getBackFunc = new goBack();
@@ -162,66 +149,24 @@ const LocalSecondHandCat = () => {
                             <div className="columns_two_product">
                                 {contents.map((ele, index) => (
 
-                                    <div key={index}>
-                                        <div>
-                                            <div className="pin_profile">
-                                                <div>
+                                    <SecondHandPublicPost 
+                                        key={index}
+                                        index={index}
+                                        images={ele.item.images}
+                                        doublyLinkedLists={doublyLinkedLists}
+                                        profilePic={ele.user.profilePic}
+                                        firstName={ele.user.firstName}
+                                        productPin={ele.item.productPin}
+                                        productName={ele.item.productName}
+                                        productPrice={ele.item.productPrice}
+                                        productOld={ele.item.productOld}
+                                        productDes={ele.item.productDes}
+                                        contact1={ele.item.contact1}
+                                        contact2={ele.item.contact2}
+                                        id={ele.item._id}
+                                    />
 
-                                                    <div className="store_profile" style={{ background: `none` }}>
-                                                        <div>
-                                                            <div style={{ backgroundImage: ele.user.profilePic ? `url(` + ele.user.profilePic + `)` : `url(/icons/others/profile.webp)` , border: `2px solid #c3c9c4`, height: `30px`, width: `30px` }} className="img"></div>
-                                                        </div>
-                                                        <div>
-                                                            <div>
-                                                                <a href="">
-                                                                    <p style={{ fontSize: `13px` }}>{ele.user.firstName}</p>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div>
-                                                    <div><p>{ele.item.productPin} <i className="fa-solid fa-location-dot"></i></p></div>
-                                                </div>
-                                            </div>
-
-                                            <div className="product_images" >
-                                                <div className="news_img_sec" style={{
-                                                    backgroundImage: `url(${imgState === index ? imgUrl :
-                                                        ele.item.images[0]
-                                                        })`, 
-                                                    height: `140px`
-                                                }}>
-                                                    <div className="news_img_btn_left">
-                                                        <div onClick={getPrevImg(index)}><i className="fa-solid fa-angle-left"></i></div>
-                                                    </div>
-                                                    <div className="news_img_btn_right" style={{ left: `95%` }}>
-                                                        <div onClick={getNextImg(index)}><i className="fa-solid fa-angle-right"></i></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <h5 className="text-color">{ele.item.productName}</h5>
-
-                                            <div className="secondhand_price">
-                                                <div>
-                                                    <h5><i className="fa-solid fa-indian-rupee-sign"></i>{ele.item.productPrice}</h5>
-                                                </div>
-                                                <div>
-                                                    <h5>{ele.item.productOld}</h5>
-                                                </div>
-                                            </div>
-
-                                            <SecondHandPublicPostBtn
-                                            name={ele.item.productName}
-                                            des={ele.item.productDes}
-                                            contact1={ele.item.contact1}
-                                            contact2={ele.item.contact2}
-                                            ></SecondHandPublicPostBtn>
-
-                                        </div>
-                                    </div>
+                                    
                                 ))}
 
                             </div>

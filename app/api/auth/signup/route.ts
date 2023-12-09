@@ -5,10 +5,10 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import validate from "@/app/lib/validate";
 import customSearch from "@/app/lib/customSearch";
-import peoplesCatModels from "@/app/models/peoples/peoplesCatModels";
 import sms from "@/app/customlib/sms";
 import customMath from "@/app/lib/customMath";
 import walletTransactions from "@/app/models/wallet/walletTransactions";
+import peopleCats from "@/app/json/peopleCats.json"
 
 export async function POST(req: Request) {
     try {
@@ -80,10 +80,9 @@ export async function POST(req: Request) {
         //SEARCH PROFESSION SLUG
         let professionSlug = "Others"
         const search = new customSearch();
-        const searchRes = await peoplesCatModels.find({})
-        searchRes.forEach((ele)=>{
+        peopleCats.forEach((ele) => {
             const result = search.searchByCommaSeparated(profession, ele.tags);
-            if(result){
+            if (result) {
                 professionSlug = ele.categoryName
             }
         })

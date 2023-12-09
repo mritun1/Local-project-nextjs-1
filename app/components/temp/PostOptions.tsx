@@ -21,6 +21,7 @@ interface contArr {
 
 const PostOptions = (props: propsType) => {
     const [isContribute, setIsContribute] = useState<boolean>(false);
+    const [shareUrl, setShareUrl] = useState<string>('/page/'+props.itemType+'/'+props.itemId)
     const clickContribute = () => {
         setIsContribute(!isContribute);
     }
@@ -71,6 +72,7 @@ const PostOptions = (props: propsType) => {
         }
     }
     const [bal,setBal] = useState<number>(0)
+    const [loggedIn, setLoggedIn] = useState<boolean>(false)
     useEffect(() => {
         const loadCOnt = async () => {
             const res = await fetch("/api/contributions/comments/", {
@@ -85,7 +87,7 @@ const PostOptions = (props: propsType) => {
             })
             if (res.ok) {
                 const data = await res.json();
-
+                setLoggedIn(data.loggedIn)
                 if (data.code === 1) {
                     setContList(data.data)
                     setBal(data.bal)
@@ -125,7 +127,7 @@ const PostOptions = (props: propsType) => {
                     await navigator.share({
                         title: 'Localnii.com',
                         text: 'Check out this cool content!',
-                        url: 'https://localnii.com',
+                        url: 'https://localnii.com' + shareUrl,
                     });
                     console.log('Content shared successfully');
                 } catch (error) {
@@ -144,14 +146,20 @@ const PostOptions = (props: propsType) => {
                 </div>
                 <div className='col-3'>
                     <div>
-                        <button>
-                            <i className="fa-solid fa-floppy-disk"></i> Save
-                        </button>
+                        {loggedIn ? (
+                            <button>
+                                <i className="fa-solid fa-floppy-disk"></i> Save
+                            </button>
+                        ) : null}
+                        
                     </div>
                     <div>
-                        <button onClick={clickContribute}>
-                            <i className="fa-solid fa-indian-rupee-sign"></i> Contribute
-                        </button>
+                        {loggedIn?(
+                            <button onClick={clickContribute}>
+                                <i className="fa-solid fa-indian-rupee-sign"></i> Contribute
+                            </button>
+                        ):null}
+                        
                     </div>
                     <div>
                         <button onClick={shareBtn} >
@@ -162,7 +170,7 @@ const PostOptions = (props: propsType) => {
             </div>
 
             <ShareModel
-                url='https://localnii.com'
+                url={`https://localnii.com${shareUrl}`}
                 state={isShare}
                 click={clickShare}
             ></ShareModel>

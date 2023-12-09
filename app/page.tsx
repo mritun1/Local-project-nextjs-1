@@ -23,7 +23,7 @@ export default function Home() {
 
                 <div>
                   <h1>Localnii</h1>
-                  <p>To stay connected locally. Local Social media for business only. Hyper local content sharing platform. PIN code wise community.</p>
+                  <p>To stay connected with local businesses. Local Social media for business only. Hyper local content sharing platform. PIN code wise community.</p>
                 </div>
 
               </div>
@@ -48,7 +48,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="hr_or">
+                  <div className="hr_or app_install_hr">
                     <hr />
                     <button>Install App</button>
                   </div>

@@ -221,11 +221,15 @@ const EditPost = (props: propsType) => {
         }
     }
 
+    const redirect = (e:string)=>{
+        window.open(e, "_blank");
+    }
+
     return (
         <>
             <button onClick={() => editModalClick(props.postType)} className="edit"><i className="fa-solid fa-pen-to-square"></i> Edit</button>
             <button onClick={() => clickDelModal()} className="del"><i className="fa-solid fa-trash"></i> Delete</button>
-            <button className="view"><i className="fa-solid fa-eye"></i> preview</button>
+            <button onClick={() => redirect('/page/'+props.postType+'/'+props.postId)} className="view"><i className="fa-solid fa-eye"></i> preview</button>
 
             <Confirmation
                 key={props.postId.toString()}

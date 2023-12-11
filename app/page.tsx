@@ -23,7 +23,7 @@ export default function Home() {
 
                 <div>
                   <h1>Localnii</h1>
-                  <p>To stay connected with local businesses. Local Social media for business only. Hyper local content sharing platform. PIN code wise community.</p>
+                  <p>Find local people, news, events, products, and many more. Find local people to chat with and contribute. Get daily updates on local news and events to stay locally aware. Find local products and businesses nearby. Stay connected with local businesses.</p>
                 </div>
 
               </div>

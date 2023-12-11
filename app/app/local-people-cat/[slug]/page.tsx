@@ -3,7 +3,6 @@ import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import goBack from '@/app/lib/goBack';
 import { useParams } from 'next/navigation';
 import PeoplesBtn from '@/app/components/pages/people/PeoplesBtn';
 
@@ -75,13 +74,6 @@ const LocalPeopleView = () => {
             }
         };
     }, [pNum,slug]);
-
-    const [backUrl, setBackUrl] = useState<string>("/");
-    useEffect(() => {
-        const getBackFunc = new goBack();
-        setBackUrl(getBackFunc.getUrl())
-        return () => { };
-    }, []);
 
     useEffect(() => {
         const loadPeople = (num: number) => {
@@ -158,6 +150,8 @@ const LocalPeopleView = () => {
                         <ButtonLoading
                             submitLoad={infinityLod}
                         >.</ButtonLoading>
+
+                        <br /><br /><br /><br />
                         
                     </div>
                 }
@@ -166,7 +160,7 @@ const LocalPeopleView = () => {
 
                         <div className="cat_title">
                             <div>
-                                <Link href={backUrl} as={backUrl} >
+                                <Link href={'/app/local-people'} >
                                     <div><div><i className="fa-solid fa-left-long"></i></div></div>
                                 </Link>
                             </div>
@@ -177,7 +171,7 @@ const LocalPeopleView = () => {
 
                         <div className="cat_list">
 
-                            <div className="cat">
+                            {/* <div className="cat">
                                 <Link href="/app/local-people-cat">
                                     <h5>Software Engineer <button>23</button></h5>
                                 </Link>
@@ -202,7 +196,7 @@ const LocalPeopleView = () => {
                                 <Link href="/app/local-people-cat">
                                     <h5>Electricians <button>23</button></h5>
                                 </Link>
-                            </div>
+                            </div> */}
 
                         </div>
 

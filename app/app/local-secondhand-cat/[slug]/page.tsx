@@ -4,7 +4,6 @@ import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
 import seenUpdate from '@/app/customlib/seenUpdate';
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
-import goBack from '@/app/lib/goBack';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -117,11 +116,8 @@ const LocalSecondHandCat = () => {
         return () => {};
     }, [pathname]);
 
-    const [backUrl, setBackUrl] = useState<string>("/");
     useEffect(() => {
-        const getBackFunc = new goBack();
         loadNews(1,slug);
-        setBackUrl(getBackFunc.getUrl())
         return () => {};
     }, [slug]);
 
@@ -193,7 +189,7 @@ const LocalSecondHandCat = () => {
 
                         <div className="cat_title">
                             <div>
-                                <Link href={backUrl} as={backUrl} >
+                                <Link href={'/app/local-secondhand'} >
                                     <div><div><i className="fa-solid fa-left-long"></i></div></div>
                                 </Link>
                             </div>
@@ -204,7 +200,7 @@ const LocalSecondHandCat = () => {
 
                         <div className="cat_list">
 
-                            <div className="cat">
+                            {/* <div className="cat">
                                 <a href="/local-market-cat">
                                     <h5>Bycycle <button>23</button></h5>
                                 </a>
@@ -229,7 +225,7 @@ const LocalSecondHandCat = () => {
                                 <a href="/local-market-cat">
                                     <h5>Banglow <button>23</button></h5>
                                 </a>
-                            </div>
+                            </div> */}
 
                         </div>
 

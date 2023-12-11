@@ -3,7 +3,6 @@ import NewsPost from '@/app/components/pages/posts/news/NewsPost';
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
 import seenUpdate from '@/app/customlib/seenUpdate';
-import customDate from '@/app/lib/customDate';
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -38,12 +37,7 @@ const LocalNews = () => {
 
     const loadNews = (num: number) => {
         setInfinityLoad(false)
-        fetch(`/api/posts/news/all/${num}/0/`, {
-            method: 'GET',
-            headers: {
-                'Cache-Control': 'no-cache, no-store',
-            },
-        })
+        fetch(`/api/posts/news/all/${num}/0/`)
             .then(response => response.json())
             .then(data => {
                 setPin(data.pin)
@@ -55,7 +49,7 @@ const LocalNews = () => {
 
                     setNewsList((prevData) => [...prevData, ...data.data]);
                     setTotal((prevData) => prevData + data.data.length);
-                    setPnum((prev) => prev + 1)
+                    // setPnum((prev) => prev + 1)
 
                     if (data.data.length > 0) {
 
@@ -95,6 +89,7 @@ const LocalNews = () => {
         const handleScroll = () => {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
                 loadNews(pNum);
+                setPnum((prev) => prev + 1)
             }
         };
 
@@ -119,6 +114,7 @@ const LocalNews = () => {
     useEffect(() => {
         loadNews(1);
         return () => {
+            loadNews(1)
         };
     }, []);
 
@@ -190,6 +186,8 @@ const LocalNews = () => {
                         <ButtonLoading
                             submitLoad={infinityLod}
                         >.</ButtonLoading>
+
+                        <br/><br/><br/><br/>
 
                     </div>
                 }

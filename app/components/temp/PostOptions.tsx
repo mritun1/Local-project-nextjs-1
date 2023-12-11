@@ -6,6 +6,9 @@ import ShareModel from './ShareModel';
 interface propsType {
     itemId: string;
     itemType: string;
+    itemTitle:string;
+    itemDes:string;
+    itemImg:string;
 }
 interface contArr {
     item: {
@@ -21,7 +24,7 @@ interface contArr {
 
 const PostOptions = (props: propsType) => {
     const [isContribute, setIsContribute] = useState<boolean>(false);
-    const [shareUrl, setShareUrl] = useState<string>('/page/'+props.itemType+'/'+props.itemId)
+    const [shareUrl, setShareUrl] = useState<string>('/page/'+props.itemType+'/'+props.itemId+'/'+props.itemTitle+'/'+props.itemDes+'/'+props.itemImg)
     const clickContribute = () => {
         setIsContribute(!isContribute);
     }
@@ -125,8 +128,8 @@ const PostOptions = (props: propsType) => {
             if (navigator.share) {
                 try {
                     await navigator.share({
-                        title: 'Localnii.com',
-                        text: 'Check out this cool content!',
+                        title: props.itemTitle,
+                        text: props.itemDes,
                         url: 'https://localnii.com' + shareUrl,
                     });
                     console.log('Content shared successfully');

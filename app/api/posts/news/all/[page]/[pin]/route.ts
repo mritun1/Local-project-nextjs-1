@@ -77,6 +77,7 @@ export async function GET(
                 msg: "Data found",
                 data: ArrayItems,
                 code: 1,
+                offset,limit
             })
         }catch(error){
             return NextResponse.json({

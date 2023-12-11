@@ -25,6 +25,7 @@ interface propsType {
 
 const NewsPost = (props: propsType) => {
     const [imgViewState, setImgViewState] = useState<boolean>(false);
+    const imgName: string = props.images[0].replace('https://storage.googleapis.com/localnii-production/','')
     const imgView = () => {
         setImgViewState(!imgViewState);
     }
@@ -88,6 +89,9 @@ const NewsPost = (props: propsType) => {
                         <PostOptions
                             itemId={props.id}
                             itemType='News'
+                            itemTitle={props.title}
+                            itemDes={props.des}
+                            itemImg={`{${imgName}}`}
                         />
 
                         <div className="product_title">

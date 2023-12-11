@@ -4,8 +4,8 @@ import { Metadata } from 'next'
 import AppInstallBtns from './components/pages/home/AppInstallBtns'
 
 export const metadata: Metadata = {
-  title: 'Localnii - PIN code wise community.',
-  description: 'To stay connected locally. Local Social network for business only. Hyper local content sharing platform. PIN code wise community.',
+  title: 'Localnii - Find local people, news, events, products, and many more.',
+  description: 'Find local people to chat with and contribute. Get daily updates on local news and events to stay locally aware. Find local products and businesses nearby. Stay connected with local businesses.',
   icons: '/icons/logo/logo1.png'
 }
 

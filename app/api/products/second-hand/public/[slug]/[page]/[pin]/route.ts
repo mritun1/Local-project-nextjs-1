@@ -13,7 +13,7 @@ export async function GET(
         let pin: string = params.pin;
         let slug: string = params.slug;
 
-        const limit: number = 2;
+        const limit: number = 10;
         let offset: number = (page - 1) * limit;
 
         await connectDB();

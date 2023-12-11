@@ -12,7 +12,7 @@ export async function GET(
         let page: number = params.page;
         let pin: string = params.pin;
 
-        const limit:number = 2;
+        const limit:number = 10;
         let offset:number = (page-1) * limit;
 
         await connectDB();

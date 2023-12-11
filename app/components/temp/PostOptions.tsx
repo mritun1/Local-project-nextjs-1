@@ -24,7 +24,9 @@ interface contArr {
 
 const PostOptions = (props: propsType) => {
     const [isContribute, setIsContribute] = useState<boolean>(false);
-    const [shareUrl, setShareUrl] = useState<string>('/page/'+props.itemType+'/'+props.itemId+'/'+props.itemTitle+'/'+props.itemDes+'/'+props.itemImg)
+    const shareTitle = decodeURIComponent(props.itemTitle.slice(0, 64))
+    const shareDes = decodeURIComponent(props.itemDes.slice(0, 64))
+    const [shareUrl, setShareUrl] = useState<string>('/page/' + props.itemType + '/' + props.itemId + '/' + shareTitle + '/' + shareDes +'/'+props.itemImg)
     const clickContribute = () => {
         setIsContribute(!isContribute);
     }
@@ -128,8 +130,8 @@ const PostOptions = (props: propsType) => {
             if (navigator.share) {
                 try {
                     await navigator.share({
-                        title: props.itemTitle,
-                        text: props.itemDes,
+                        // title: props.itemTitle,
+                        // text: props.itemDes,
                         url: 'https://localnii.com' + shareUrl,
                     });
                     console.log('Content shared successfully');

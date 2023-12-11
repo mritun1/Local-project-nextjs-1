@@ -7,7 +7,11 @@ export default function RootLayout({
 }: {
     children: React.ReactNode,
 }) {
+    
+
     return (
+        
+
         <main>
 
             <div>
@@ -31,3 +35,7 @@ export default function RootLayout({
         </main>
     )
 }
+function useLayout(): { setTitle: any } {
+    throw new Error('Function not implemented.')
+}
+

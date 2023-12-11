@@ -10,7 +10,10 @@ type propsType = {
     postType: String,
     postId: String,
     loadCont: () => void,
-    pin:number
+    pin:number,
+    postTitle:string,
+    postDes:string,
+    postImg:string,
 }
 
 const EditPost = (props: propsType) => {
@@ -225,11 +228,19 @@ const EditPost = (props: propsType) => {
         window.open(e, "_blank");
     }
 
+    const shareTitle = decodeURIComponent(props.postTitle.slice(0, 64))
+    const shareDes = decodeURIComponent(props.postDes.slice(0, 64))
+
+    let newPostType:String = props.postType;
+    if(props.postType === 'Event'){
+        newPostType = 'Events'
+    }
+
     return (
         <>
             <button onClick={() => editModalClick(props.postType)} className="edit"><i className="fa-solid fa-pen-to-square"></i> Edit</button>
             <button onClick={() => clickDelModal()} className="del"><i className="fa-solid fa-trash"></i> Delete</button>
-            <button onClick={() => redirect('/page/'+props.postType+'/'+props.postId)} className="view"><i className="fa-solid fa-eye"></i> preview</button>
+            <button onClick={() => redirect('/page/' + newPostType + '/' + props.postId + '/' + shareTitle + '/' + shareDes + '/' + props.postImg)} className="view"><i className="fa-solid fa-eye"></i> preview</button>
 
             <Confirmation
                 key={props.postId.toString()}

@@ -107,7 +107,6 @@ const Page = ({ }) => {
                 <meta name="twitter:description" content={decodeURIComponent(des.toString())} />
                 <meta name="twitter:image" content={imgStorageUrl} />
             </Helmet>
-
             <BlogAppContent
                 mainContent={
                     <div className="main_content">
@@ -151,6 +150,7 @@ const Page = ({ }) => {
                     </div>
                 }
             ></BlogAppContent>
+
 
         </>
     )

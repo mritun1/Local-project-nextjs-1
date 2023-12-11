@@ -1,6 +1,6 @@
-import '../../../../../../styles/scss/global.scss'
-import BlogContent from '../../../../../../components/pages/blogs/BlogContent'
-import BlogMenu from '../../../../../../components/pages/blogs/BlogMenu'
+import '../../../../styles/scss/global.scss'
+import BlogContent from '../../../../components/pages/blogs/BlogContent'
+import BlogMenu from '../../../../components/pages/blogs/BlogMenu'
 
 export default function RootLayout({
     children,

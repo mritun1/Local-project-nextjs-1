@@ -2766,6 +2766,9 @@ body {
 //-----------------------------------------------------
 // MOBILE APP - END
 //-----------------------------------------------------
+//-----------------------------------------------------
+// ON CLICK IMAGE VIEW - START
+//-----------------------------------------------------
 .img_viewers{
     @include position_full(fixed, 0px, 0px, 0px, 0px);
     z-index: 1;
@@ -2797,4 +2800,36 @@ body {
     }
     
 }
-
+//-----------------------------------------------------
+// ON CLICK IMAGE VIEW - END
+//-----------------------------------------------------
+//-----------------------------------------------------
+// LOGIN BLOCK TO ACCESS - START
+//-----------------------------------------------------
+.loginBlock{
+    @include position_full(fixed, 60px, 0px, 0px, 0px);
+    z-index: 1;
+    &>.bgOpacity{
+        @include position_full(absolute, 0px, 0px, 0px, 0px);
+        background-color: gray;
+        opacity: 0.3;
+    }
+    &>.loginRegisterDiv{
+        @include position_full(absolute, auto, 0px, 0px, 0px);
+        text-align: center;
+        background-color: $text-color;
+        padding: 10px 0px;
+        color: $btn-red;
+        &>a>button{
+            @include green_btn();
+            color: $text-color;
+            font-weight: bold;
+            font-size: 20px;
+            border-radius: 10px;
+            @include pad_mar(8px 10px, auto);
+        }
+    }
+}
+//-----------------------------------------------------
+// LOGIN BLOCK TO ACCESS - END
+//-----------------------------------------------------

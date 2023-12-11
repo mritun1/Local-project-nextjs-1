@@ -3,8 +3,8 @@ import BlogAppContent from '@/app/components/pages/blogs/BlogAppContent'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
-import {Helmet} from 'react-helmet'
 import EventPost from '@/app/components/pages/posts/events/EventPost'
+import LoginBlockDiv from '@/app/components/temp/LoginBlockDiv';
 
 interface EventItems {
     item: {
@@ -27,15 +27,11 @@ interface EventItems {
     };
 }
 
-const Page = ({ }) => {
-    const { id, title, des, img } = useParams();
-    const imgClear = decodeURIComponent(img.toString())
-    const imgStorageUrl = 'https://storage.googleapis.com/localnii-production/' + imgClear.replace(/[{}]/g, '')
-    
+const EventSingleView = () => {
+    const { id } = useParams();
+
     const [eventList, setEventLists] = useState<EventItems[]>([]);
     const [doublyLinkedLists, setDoublyLinkedLists] = useState<DoublyCircularLinkedList[]>([]);
-
-    
 
     useEffect(() => {
         const loadEvents2 = (num: number) => {
@@ -80,34 +76,9 @@ const Page = ({ }) => {
             loadEvents2(1);
         };
     }, [id]);
-
-    
     return (
         <>
-            <Helmet>
-                <title>{decodeURIComponent(title.toString())}</title>
-                <meta name="description" content={decodeURIComponent(des.toString())} />
-                {/* Favicon */}
-                <link rel="icon" href={imgStorageUrl} />
-
-                {/* Apple Touch Icon (iOS) */}
-                <link rel="apple-touch-icon" sizes="180x180" href={imgStorageUrl} />
-
-                {/* Facebook Open Graph Tags */}
-                {/* <meta property="og:url" content="https://localnii.com" /> */}
-                <meta property="og:type" content="website" />
-                <meta property="og:title" content={decodeURIComponent(title.toString())} />
-                <meta property="og:description" content={decodeURIComponent(des.toString())} />
-                <meta property="og:image" content={imgStorageUrl} />
-                <meta property="og:image:alt" content={decodeURIComponent(title.toString())} />
-
-                {/* Twitter Card Tags */}
-                <meta name="twitter:card" content="summary_large_image" />
-                {/* <meta name="twitter:site" content="@yourTwitterHandle" /> */}
-                <meta name="twitter:title" content={decodeURIComponent(title.toString())} />
-                <meta name="twitter:description" content={decodeURIComponent(des.toString())} />
-                <meta name="twitter:image" content={imgStorageUrl} />
-            </Helmet>
+            <LoginBlockDiv></LoginBlockDiv>
 
             <BlogAppContent
                 mainContent={
@@ -116,7 +87,7 @@ const Page = ({ }) => {
                         <div className="title_bar">
                             <div>
                                 <div>
-                                    <h3><i className="fa-solid fa-circle-info icon-list"></i> News</h3>
+                                    <h3><i className="fa-solid fa-circle-info icon-list"></i> Event</h3>
                                 </div>
                             </div>
                             <div>
@@ -141,15 +112,14 @@ const Page = ({ }) => {
                             />
 
                         ))}
-                        
+
 
 
                     </div>
                 }
             ></BlogAppContent>
-
         </>
     )
 }
 
-export default Page
+export default EventSingleView

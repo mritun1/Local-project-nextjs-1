@@ -5,6 +5,13 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
     try{
         const getData = new getTokenData(req)
+        const uId = getData.userID();
+        if (!getData && !uId ){
+            return NextResponse.json({
+                msg: "Sorry, not Logged In",
+                code: 0
+            })
+        }
 
         const getDB = await User.findOne({ _id: getData.userID() })
         if (!getDB){

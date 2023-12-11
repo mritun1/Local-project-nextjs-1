@@ -139,8 +139,6 @@ const MyPosts = () => {
                                                 postId={ele._doc._id}
                                                 loadCont={loadContents}
                                                 postTitle={ele._doc.title}
-                                                postDes={ele._doc.des}
-                                                postImg={`{${ele._doc.images[0].replace('https://storage.googleapis.com/localnii-production/', '')}}`}
                                                 pin={pin}
                                             ></EditPost>
                                         </div>

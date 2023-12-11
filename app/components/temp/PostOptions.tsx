@@ -7,8 +7,6 @@ interface propsType {
     itemId: string;
     itemType: string;
     itemTitle:string;
-    itemDes:string;
-    itemImg:string;
 }
 interface contArr {
     item: {
@@ -25,8 +23,7 @@ interface contArr {
 const PostOptions = (props: propsType) => {
     const [isContribute, setIsContribute] = useState<boolean>(false);
     const shareTitle = decodeURIComponent(props.itemTitle.slice(0, 64))
-    const shareDes = decodeURIComponent(props.itemDes.slice(0, 64))
-    const [shareUrl, setShareUrl] = useState<string>('/page/' + props.itemType + '/' + props.itemId + '/' + shareTitle + '/' + shareDes +'/'+props.itemImg)
+    const [shareUrl, setShareUrl] = useState<string>('/page/' + props.itemType + '/' + props.itemId + '/' + shareTitle)
     const clickContribute = () => {
         setIsContribute(!isContribute);
     }

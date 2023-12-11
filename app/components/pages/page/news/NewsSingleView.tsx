@@ -1,10 +1,10 @@
 "use client"
+import React, { useEffect, useState } from 'react';
 import BlogAppContent from '@/app/components/pages/blogs/BlogAppContent'
 import NewsPost from '@/app/components/pages/posts/news/NewsPost'
 import { useParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
-import {Helmet} from 'react-helmet'
+import LoginBlockDiv from '@/app/components/temp/LoginBlockDiv';
 
 interface NewsItems {
     item: {
@@ -25,10 +25,8 @@ interface NewsItems {
     };
 }
 
-const Page = ({ }) => {
-    const { id,title,des,img } = useParams();
-    const imgClear = decodeURIComponent(img.toString())
-    const imgStorageUrl = 'https://storage.googleapis.com/localnii-production/' + imgClear.replace(/[{}]/g,'')
+const NewsSingleView = () => {
+    const { id } = useParams();
 
     const [newsList, setNewsList] = useState<NewsItems[]>([]);
     const [doublyLinkedLists, setDoublyLinkedLists] = useState<DoublyCircularLinkedList[]>([]);
@@ -40,7 +38,7 @@ const Page = ({ }) => {
                 .then(data => {
 
                     if (data.code === 1) {
-                        
+
                         setNewsList((prevData) => [...prevData, ...data.data]);
 
                         if (data.data.length > 0) {
@@ -79,34 +77,11 @@ const Page = ({ }) => {
         setImgState(index);
         setImgUrl(doublyLinkedLists[index].getPrevData());
     };
-    
-    
     return (
         <>
-            <Helmet>
-                <title>{decodeURIComponent(title.toString())}</title>
-                <meta name="description" content={decodeURIComponent(des.toString())} />
-                {/* Favicon */}
-                <link rel="icon" href={imgStorageUrl} />
 
-                {/* Apple Touch Icon (iOS) */}
-                <link rel="apple-touch-icon" sizes="180x180" href={imgStorageUrl} />
+            <LoginBlockDiv></LoginBlockDiv>
 
-                {/* Facebook Open Graph Tags */}
-                {/* <meta property="og:url" content="https://localnii.com" /> */}
-                <meta property="og:type" content="website" />
-                <meta property="og:title" content={decodeURIComponent(title.toString())} />
-                <meta property="og:description" content={decodeURIComponent(des.toString())} />
-                <meta property="og:image" content={`https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg`} />
-                <meta property="og:image:alt" content={decodeURIComponent(title.toString())} />
-
-                {/* Twitter Card Tags */}
-                <meta name="twitter:card" content="summary_large_image" />
-                {/* <meta name="twitter:site" content="@yourTwitterHandle" /> */}
-                <meta name="twitter:title" content={decodeURIComponent(title.toString())} />
-                <meta name="twitter:description" content={decodeURIComponent(des.toString())} />
-                <meta name="twitter:image" content={imgStorageUrl} />
-            </Helmet>
             <BlogAppContent
                 mainContent={
                     <div className="main_content">
@@ -114,7 +89,9 @@ const Page = ({ }) => {
                         <div className="title_bar">
                             <div>
                                 <div>
-                                    <h3><i className="fa-solid fa-circle-info icon-list"></i> News</h3>
+                                    <h3>
+                                        <i className="fa-solid fa-circle-info icon-list"></i> News
+                                    </h3>
                                 </div>
                             </div>
                             <div>
@@ -122,7 +99,7 @@ const Page = ({ }) => {
                             </div>
                         </div>
 
-                       {
+                        {
                             newsList.map((ele, index) => (
 
                                 <NewsPost
@@ -143,8 +120,8 @@ const Page = ({ }) => {
                                     lastName={ele.user.lastName}
                                 />
                             ))
-                       }
-                        
+                        }
+
 
 
                     </div>
@@ -156,4 +133,4 @@ const Page = ({ }) => {
     )
 }
 
-export default Page
+export default NewsSingleView

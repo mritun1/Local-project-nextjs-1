@@ -1,6 +1,6 @@
-import '../../../../../../styles/scss/global.scss'
-import BlogContent from '../../../../../../components/pages/blogs/BlogContent'
-import BlogMenu from '../../../../../../components/pages/blogs/BlogMenu'
+import '../../../../styles/scss/global.scss'
+import BlogContent from '../../../../components/pages/blogs/BlogContent'
+import BlogMenu from '../../../../components/pages/blogs/BlogMenu'
 
 export default function RootLayout({
     children,
@@ -12,7 +12,7 @@ export default function RootLayout({
 
             <div>
                 <BlogMenu></BlogMenu>
-                
+
 
                 <div className="container_full">
                     <div className="container content_col">

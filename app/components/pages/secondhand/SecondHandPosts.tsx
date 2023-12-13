@@ -186,6 +186,12 @@ const SecondHandPosts = (props:typePros) => {
         await delFetch("/api/posts/delete/");
     }
 
+    const shareTitle = decodeURIComponent(props.productName.slice(0, 64))
+    const [shareUrl, setShareUrl] = useState<string>('/page/secondhand/' + props.id + '/' + shareTitle)
+    const redirect = () =>{
+        window.open(`https://localnii.com${shareUrl}`,'_blank')
+    }
+
   return (
     <>
         <div key={props.index} className="post_box">
@@ -207,7 +213,7 @@ const SecondHandPosts = (props:typePros) => {
                   <div>
                       <button onClick={openModal} className="edit"><i className="fa-solid fa-pen-to-square"></i> Edit</button>
                       <button onClick={() => clickDelModal()} className="del"><i className="fa-solid fa-trash"></i> Delete</button>
-                      <button className="view"><i className="fa-solid fa-eye"></i> preview</button>
+                      <button onClick={redirect} className="view"><i className="fa-solid fa-eye"></i> preview</button>
                   </div>
               </div>
           </div>

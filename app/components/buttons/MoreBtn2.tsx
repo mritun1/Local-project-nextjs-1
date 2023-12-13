@@ -17,7 +17,7 @@ const MoreBtn = (props: propType) => {
             <div className={"position-relative " + props.btnClass} >
                 <button onClick={toggleModal} className="more_btn_cont">{props.moreText}</button>
                 <div id='morebtn' style={{ display: isHidden ? `none` : `block` }} className="more_list">
-                    <ul>
+                    <ul onClick={toggleModal}>
                         {props.children}
                     </ul>
                 </div>

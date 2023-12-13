@@ -94,7 +94,7 @@ const SecondHandPublicPost = (props: propsType) => {
                         </div>
                         <div>
                             <h5>{props.productOld}</h5>
-                        </div>
+                        </div> 
                     </div>
 
                     <SecondHandPublicPostBtn

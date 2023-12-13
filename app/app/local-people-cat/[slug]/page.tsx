@@ -134,6 +134,7 @@ const LocalPeopleView = () => {
                                         </div>
                                         <PeoplesBtn 
                                         id={ele._id}
+                                        name={ele.firstName + ' ' + ele.lastName}
                                         ></PeoplesBtn>
                                     </div>
                                 </div>

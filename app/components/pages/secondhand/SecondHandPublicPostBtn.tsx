@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from '../../temp/Modal'
 import SecondHandSingleEle from './SecondHandSingleEle'
+import ShareModel from '../../temp/ShareModel'
 
 type propsType = {
     name: String,
@@ -40,6 +41,47 @@ const SecondHandPublicPostBtn = (props:propsType) => {
         }
     }
     
+    //SHARE BUTTON
+    const shareTitle = decodeURIComponent(props.name.slice(0, 64))
+    const [shareUrl, setShareUrl] = useState<string>('/page/secondhand/' + props.id + '/' + shareTitle)
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        // Check if the user is on a mobile device
+        const checkIsMobile = () => {
+            setIsMobile(/Mobi|Android/i.test(navigator.userAgent));
+        };
+        // Initial check
+        checkIsMobile();
+        // Update on resize
+        window.addEventListener('resize', checkIsMobile);
+        // Clean up the event listener on component unmount
+        return () => {
+            window.removeEventListener('resize', checkIsMobile);
+        };
+    }, []);
+
+    const [isShare, setIsShare] = useState<boolean>(false);
+    const clickShare = () => {
+        setIsShare(!isShare)
+    }
+
+    const shareBtn = async () => {
+        setModal(false)
+        if (isMobile) {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        url: 'https://localnii.com' + shareUrl,
+                    });
+                    console.log('Content shared successfully');
+                } catch (error) {
+                    console.log('Error sharing content:', error);
+                }
+            }
+        } else {
+            setIsShare(true)
+        }
+    };
     return (
         <>
             <div className="secondhand_btns">
@@ -57,6 +99,12 @@ const SecondHandPublicPostBtn = (props:propsType) => {
                 </div>
             </div>
 
+            <ShareModel
+                url={`https://localnii.com${shareUrl}`}
+                state={isShare}
+                click={clickShare}
+            ></ShareModel>
+
             <Modal
                 id="moreModal"
                 title={props.name.toString()}
@@ -68,9 +116,33 @@ const SecondHandPublicPostBtn = (props:propsType) => {
             >
                 
                 <div className='div-box'>
+                    
+                    <div className="post_options">
+                        <div className='col-3'>
+                            <div>
+                                <button>
+                                    <i className="fa-solid fa-floppy-disk"></i> Save
+                                </button>
+
+                            </div>
+                            <div>
+                                {/* <button >
+                                    <i className="fa-solid fa-indian-rupee-sign"></i> Contribute
+                                </button> */}
+
+                            </div>
+                            <div>
+                                <button onClick={shareBtn} >
+                                    <i className="fa-solid fa-share"></i> Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="single-ele-text">
                         <p className='text-color2'>{props.des}</p>
                     </div>
+
                 </div>
                 
             </Modal>

@@ -105,7 +105,7 @@ const MySecondHand = () => {
                                     createdDate={newDate.millisecondToString("dmy", ele.createdDate)}
                                     productName={ele.productName}
                                     loadCont={loadCont}
-                                    id={ele._id.toString()}
+                                    id={ele._id.toString()} 
                                 />
                             ))
                         ) : (

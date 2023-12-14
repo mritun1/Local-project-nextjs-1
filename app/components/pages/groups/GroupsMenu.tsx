@@ -126,7 +126,7 @@ const GroupsMenu = (props:propsType) => {
                                 required /></div>
                         </div>
 
-                        <p className='text-color2'>Pin: {props.pin}</p>
+                        <p className='text-color'>Pin: {props.pin}</p>
 
                         <ButtonLoading
                             submitLoad={submitBtn}

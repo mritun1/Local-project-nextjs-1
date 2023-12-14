@@ -19,7 +19,7 @@ export async function generateMetadata(
     // let url = 'http://127.0.0.1:3000/';
     let url = 'https://localnii.com/';
     let title = '';
-    let favIcon = '/icons/others/profile.webp';
+    let favIcon = 'https://cdn.memiah.co.uk/blog/wp-content/uploads/counselling-directory.org.uk/2019/04/shutterstock_1464234134-1024x684.jpg';
     const res = await fetch(url+`api/groups/${id}`,{
         method:'GET'
     })

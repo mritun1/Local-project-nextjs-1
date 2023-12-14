@@ -77,6 +77,7 @@ const SignUpModal = () => {
                  MODAL FOR ACTIVATE ACCOUNT
                  -------------------------
             */}
+            
             {activeStatus ? (
                 <ActivateForm
                     isHidden={false}

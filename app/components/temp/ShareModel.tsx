@@ -2,12 +2,12 @@
 import React, { useState } from 'react'
 import Modal from './Modal'
 import copy from 'clipboard-copy'
-interface propsType{
-    url:string;
-    state:boolean;
-    click:()=>void;
+interface propsType {
+    url: string;
+    state: boolean;
+    click: () => void;
 }
-const ShareModel = (props:propsType) => {
+const ShareModel = (props: propsType) => {
     const currentUrl = `${props.url}`;
 
     const [isCopyLink, setIsCopyLink] = useState<boolean>(false)
@@ -33,49 +33,49 @@ const ShareModel = (props:propsType) => {
         const linkedInUrl = `https://www.linkedin.com/shareArticle?url=${encodeURIComponent(currentUrl)}`;
         window.open(linkedInUrl, '_blank');
     };
-  return (
-    <>
-          <Modal
-              id="shareBtn"
-              title="Share"
-              isHidden={props.state}
-              zIndex={1}
-              modalClass={''}
-              additionBtn={''}
-              closeBtn={props.click}
-          >
-              <div className='shareButtons'>
+    return (
+        <>
+            <Modal
+                id="shareBtn"
+                title="Share"
+                isHidden={props.state}
+                zIndex={1}
+                modalClass={''}
+                additionBtn={''}
+                closeBtn={props.click}
+            >
+                <div className='shareButtons'>
 
-                  <div><button onClick={shareOnTwitter}><i className="fa-brands fa-x-twitter"></i></button></div>
-                  <div><button onClick={shareOnFacebook}><i className="fa-brands fa-facebook-f"></i></button></div>
-                  <div><button onClick={shareOnLinkedIn}><i className="fa-brands fa-linkedin-in"></i></button></div>
+                    <div><button onClick={shareOnTwitter}><i className="fa-brands fa-x-twitter"></i></button></div>
+                    <div><button onClick={shareOnFacebook}><i className="fa-brands fa-facebook-f"></i></button></div>
+                    <div><button onClick={shareOnLinkedIn}><i className="fa-brands fa-linkedin-in"></i></button></div>
 
-              </div>
+                </div>
 
-              <div className="referral_box">
-                  <div>
-                      <h3>Copy Link</h3>
-                  </div>
-                  <div>
-                      <input
-                          type="text"
-                          placeholder="Copy Link"
-                          value={props.url}
-                          onChange={() => { }}
-                      />
-                  </div>
-                  <div>
-                      {isCopyLink ? (
-                          <button><i className="fa-solid fa-copy"></i> Copied</button>
-                      ) : (
-                              <button onClick={() => copyLinkHandle(props.url)}><i className="fa-solid fa-copy"></i> Copy</button>
-                      )}
+                <div className="referral_box">
+                    <div>
+                        <h3>Copy Link</h3>
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Copy Link"
+                            value={props.url}
+                            onChange={() => { }}
+                        />
+                    </div>
+                    <div>
+                        {isCopyLink ? (
+                            <button><i className="fa-solid fa-copy"></i> Copied</button>
+                        ) : (
+                            <button onClick={() => copyLinkHandle(props.url)}><i className="fa-solid fa-copy"></i> Copy</button>
+                        )}
 
-                  </div>
-              </div>
-          </Modal>
-    </>
-  )
+                    </div>
+                </div>
+            </Modal>
+        </>
+    )
 }
 
 export default ShareModel

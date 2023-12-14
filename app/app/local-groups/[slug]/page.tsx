@@ -141,7 +141,7 @@ const LocalGroupChat = () => {
                                     ></div>
                                     <div>
                                         <h4 >
-                                            <Link href="" className='text-color2'>
+                                            <Link href="" className='text-color'>
                                                 {groupName}
                                             </Link>
                                         </h4>

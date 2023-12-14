@@ -17,7 +17,7 @@ const ChatContent = (props: ProTye) => {
         <div className={
           me ? "chat-content bg-dark-green" : "chat-content bg-light-green"
         }>
-          <p className='text-color2'>{props.content}</p>
+          <p className='text-color'>{props.content}</p>
         </div>
       </div>
     </>

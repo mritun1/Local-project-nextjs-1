@@ -63,7 +63,7 @@ const ChangePassword = () => {
                     <div><h3>Change Password</h3></div>
                 </div>
                 <div>
-                    <div><button onClick={showModal}><i className="fa-solid fa-right-long"></i></button></div>
+                    <div className='forward'><button onClick={showModal}><i className="fa-solid fa-right-long"></i></button></div>
                 </div>
             </div>
 

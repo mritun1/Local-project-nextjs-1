@@ -13,7 +13,8 @@ const MainContent = () => {
 
     return (
         <>
-            <div className="col_left">
+
+            <div className="col_left testing">
 
                 <div>
 

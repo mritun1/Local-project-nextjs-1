@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import ShareModel from '../../temp/ShareModel'
+import Modal from '../../temp/Modal'
 type propsType = {
     id:String,
     name:string
@@ -72,6 +73,12 @@ const PeoplesBtn = (props:propsType) => {
             setIsShare(true)
         }
     };
+
+    //PAY FOR CONTACT
+    const [payContact,setPayContact] = useState<boolean>(false);
+    const clickPayContact = () =>{
+        setPayContact(!payContact)
+    }
   return (
     <>
           <div className="secondhand_btns">
@@ -80,7 +87,7 @@ const PeoplesBtn = (props:propsType) => {
                   <p>Share</p>
               </div>
               <div>
-                  <button><i className="fa-solid fa-phone-volume"></i></button>
+                  <button onClick={clickPayContact}><i className="fa-solid fa-phone-volume"></i></button>
                   <p>Contact</p>
               </div>
               <div>
@@ -94,6 +101,40 @@ const PeoplesBtn = (props:propsType) => {
               state={isShare}
               click={clickShare}
           ></ShareModel>
+
+          <Modal
+              id="shareBtn"
+              title="Get Contact"
+              isHidden={payContact}
+              zIndex={1}
+              modalClass={''}
+              additionBtn={''}
+              closeBtn={clickPayContact}
+          >
+              <div className='contributionOnMgs'>
+
+                  <div>
+                      <p>Pay to get the contact information. So that only those who really need contact get it.</p>
+                      <h3>Bal: <i className="fa-solid fa-indian-rupee-sign"></i> 0/-</h3>
+                  </div>
+                  <div>
+                      <input
+                          type="number"
+                          name="money"
+                          id="money"
+                          placeholder='Amount'
+                          onChange={(e) => {}}
+                          value={10}
+                          disabled
+                          style={{backgroundColor:`lightgray`,color:`black`}}
+                      />
+                  </div>
+                  <div className='contributeOnMgsBtn'>
+                      <button ><i className="fa-solid fa-paper-plane"></i> Pay</button>
+                  </div>
+              </div>
+
+          </Modal>
     </>
   )
 }

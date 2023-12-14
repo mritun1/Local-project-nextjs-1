@@ -126,7 +126,7 @@ const MenuModal = () => {
                             <div>
                                 <div className='others green_btn'>
                                     <Link href="/app/settings">
-                                        <button onClick={displayModal} ><i className="fa-solid fa-gear"></i></button>
+                                        <button onClick={displayModal} ><i className="fa-solid fa-gear text-color"></i></button>
                                     </Link>
                                 </div>
                                 <div className='close'><button onClick={displayModal} ><i className="fa-solid fa-xmark"></i></button></div>

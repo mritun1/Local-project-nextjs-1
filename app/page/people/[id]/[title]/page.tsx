@@ -16,10 +16,10 @@ export async function generateMetadata(
     const id = params.id
 
     // fetch data
-    let url = 'http://127.0.0.1:3000/';
-    //let url = 'https://localnii.com/';
+    //let url = 'http://127.0.0.1:3000/';
+    let url = 'https://localnii.com/';
     let title = '';
-    let favIcon = '/icons/others/profile.webp';
+    let favIcon = 'https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png';
     const res = await fetch(url+`api/people/single/${id}`,{
         method:'GET'
     })

@@ -91,7 +91,7 @@ const ChatOptionBtn = (props:propsType) => {
                     <div className='contributionOnMgs'>
                         
                         <div>
-                            <p>Contribute to the Group</p>
+                            <p>Contribute to the owner</p>
                             <h3>Bal: <i className="fa-solid fa-indian-rupee-sign"></i> {bal}/-</h3>
                         </div>
                         <div>

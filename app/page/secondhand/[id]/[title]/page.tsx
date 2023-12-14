@@ -20,7 +20,7 @@ export async function generateMetadata(
     let url = 'https://localnii.com/';
     let title = '';
     let des = '';
-    let favIcon = '/icons/others/profile.webp';
+    let favIcon = 'https://www.mountaingoatsoftware.com/uploads/blog/2016-09-06-what-is-a-product.png';
     const res = await fetch(url+`api/products/second-hand/${id}`,{
         method:'GET'
     })

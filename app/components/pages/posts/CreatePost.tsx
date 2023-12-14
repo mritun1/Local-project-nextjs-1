@@ -290,7 +290,7 @@ const CreatePost = (props: propsType) => {
                 <div id='fromForEvent' className="sign_up_form">
                     <form onSubmit={submitEventHandler}>
 
-                        <p className='text-color2'>Start Date and End Date</p>
+                        <p className='text-color'>Start Date and End Date</p>
 
                         <div className="sign_up_two_col">
                             <div>
@@ -334,7 +334,7 @@ const CreatePost = (props: propsType) => {
                             uploadImg={newsImgUpload1}
                         ></ImageInput>
 
-                        <p className='text-color2'>Pin: {props.pin}</p>
+                        <p className='text-color'>Pin: {props.pin}</p>
 
                         <ButtonLoading
                             submitLoad={submitBtn}
@@ -363,7 +363,7 @@ const CreatePost = (props: propsType) => {
                 <div id='formForNews' className="sign_up_form">
                     <form onSubmit={submitHandler}>
 
-                        <p className='text-color2'>Date: 30 sept, 2023</p>
+                        <p className='text-color'>Date: 30 sept, 2023</p>
 
                         <div className="sign_up_one_col">
                             <div><input type={'text'} name={'newsTitle'} placeholder={'News Title'}
@@ -392,7 +392,7 @@ const CreatePost = (props: propsType) => {
                         ></ImageInput>
 
 
-                        <p className='text-color2'>Pin: {props.pin}</p>
+                        <p className='text-color'>Pin: {props.pin}</p>
 
                         <ButtonLoading
                             submitLoad={submitBtn}

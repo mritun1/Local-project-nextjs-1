@@ -70,7 +70,7 @@ const PinModel = (props:propsType) => {
               <div id='fromForEvent' className="sign_up_form">
                   <form onSubmit={()=>{}}>
 
-                      <p className='text-color2'>Enter Your PIN</p>
+                      <p className='text-color'>Enter Your PIN</p>
 
                       <div className="sign_up_one_col">
                           <div><input type={'text'} name={'pin'} placeholder={'Your PIN'}

@@ -249,7 +249,7 @@ const SecondHandPosts = (props:typePros) => {
               <div id='fromForEvent' className="sign_up_form">
                   <form onSubmit={(e) => submitPost(e)}>
 
-                      <p className='text-color2'>Your Product Info</p>
+                      <p className='text-color'>Your Product Info</p>
 
                       <div className="sign_up_one_col">
                           <div><input type={'text'} name={'productName'} placeholder={'Product Name'}
@@ -295,7 +295,7 @@ const SecondHandPosts = (props:typePros) => {
                           </div>
                       </div>
 
-                      <p className='text-color2'>Your Contact Info</p>
+                      <p className='text-color'>Your Contact Info</p>
 
                       <div className="sign_up_one_col">
                           <div><input type={'text'} name={'mobileNum1'} placeholder={'Mobile Number 1'}
@@ -311,7 +311,7 @@ const SecondHandPosts = (props:typePros) => {
                                /></div>
                       </div>
 
-                      <p className='text-color2'>Your Product Images</p>
+                      <p className='text-color'>Your Product Images</p>
 
                       <ImageInput
                           key="imgForDraft"
@@ -324,7 +324,7 @@ const SecondHandPosts = (props:typePros) => {
                           uploadImg={newsImgUpload}
                       ></ImageInput>
 
-                      <p className='text-color2'>Pin: {productPin}</p>
+                      <p className='text-color'>Pin: {productPin}</p>
 
                       <ButtonLoading
                           submitLoad={submitBtn}

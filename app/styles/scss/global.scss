@@ -339,7 +339,7 @@ body {
 }
 
 .head {
-    background-color: #1A421E;
+    background-color: #5da364;
     position: sticky;
     top: 0px;
     z-index: 1;
@@ -2144,7 +2144,6 @@ body {
 .btn-box{
     @include pad_mar(6px 0px, 6px 0px);
     &>div>button{
-        color: $text-color;
         font-weight: bold;
         font-size: 18px;
         @include pad_mar(6px, 3px);
@@ -2156,6 +2155,7 @@ body {
     }
     &>div>.cancel {
         @include red_btn();
+        color: $text-color2;
     }
 }
 .btn-box.right{
@@ -2645,7 +2645,7 @@ body {
     &>.contribution-inputs{
         @include w_h(100%, 100px);
         @include position_full(absolute, auto, 0px, 0px, 0px);
-        background-color: #1c702e;
+        background-color: #3fac56;
         &>.contribution-bal-rupee{
             display: flex;
             &>div:nth-child(1){
@@ -2660,7 +2660,7 @@ body {
             &>div{
                 flex:5;
                 padding: 6px;
-                color:$text-color;
+                color:$text-color2;
             }
         }
         &>.contribution-text{
@@ -2686,7 +2686,7 @@ body {
                         @include w_h(40px, 40px);
                         border-radius: 50%;
                         @include red_btn();
-                        color:$text-color;
+                        color:$text-color2;
                     }
 
                 }

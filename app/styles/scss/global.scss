@@ -1996,7 +1996,7 @@ body {
 }
 .error_status{
     @include pad_mar(0px, 6px);
-    color: $text-color2;
+    color: $text-color;
     border-radius: 6px;
     overflow: auto;
     &>div{
@@ -2007,7 +2007,7 @@ body {
         font-size: 26px;
         @include w_h(30px, 30px);
         margin: 3px;
-        color: $text-color2;
+        color: $text-color;
     }
     &>div:nth-child(1){
         width: 30px;

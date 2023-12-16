@@ -19,7 +19,7 @@ const SecondHandSingleEle = (props:typePros) => {
     <>
           <div className="single-ele">
               <div>
-                  <h3 className='text-color2'><i className="fa-solid fa-square-phone"></i> {props.content}</h3>
+                  <h3 className='text-color'><i className="fa-solid fa-square-phone"></i> {props.content}</h3>
               </div>
               <div>
                   <div>

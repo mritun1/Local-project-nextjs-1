@@ -140,7 +140,7 @@ const SecondHandPublicPostBtn = (props:propsType) => {
                     </div>
 
                     <div className="single-ele-text">
-                        <p className='text-color2'>{props.des}</p>
+                        <p className='text-color'>{props.des}</p>
                     </div>
 
                 </div>

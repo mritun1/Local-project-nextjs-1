@@ -92,7 +92,7 @@ export async function POST(req: Request) {
             if (refID){
                 //REFERRAL IS SET
                 //ADD MONEY TO THE REFERRER ACCOUNT
-                const referAmount: number = 50;
+                const referAmount: number = 200;
                 const lastData2 = await walletTransactions.findOne({ userId: refID }).sort({ slId: -1 });
                 if (lastData2) {
                     //INSERT TO TRANSACTION

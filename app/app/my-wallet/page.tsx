@@ -91,6 +91,7 @@ const MyWallet = () => {
         })
         if (res.ok) {
             const data = await res.json();
+            console.log(data)
             if (data.code === 1) {
                 setTransactionsLists(data.data)
                 setBal(data.bal)
@@ -285,7 +286,10 @@ const MyWallet = () => {
                                                 disabled
                                             />
                                         </div>
-                                        <button disabled onClick={addMoney}><i className="fa-solid fa-plus"></i> Add Money</button>
+                                        <button 
+                                        disabled 
+                                        onClick={addMoney}
+                                        ><i className="fa-solid fa-plus"></i> Add Money</button>
                                     </div>
                                 </div>
                             </div>

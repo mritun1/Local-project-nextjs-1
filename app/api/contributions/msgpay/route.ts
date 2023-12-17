@@ -34,10 +34,9 @@ export async function POST(req: NextRequest) {
         }
         if (itemType === 'message') {
             const itemData = await messageLists.findById({ _id: itemId })
-            if (itemData.firstUser !== uId){
+            if (itemData.firstUser != uId){
                 receiverId = itemData.firstUser
-            } 
-            if (itemData.secondUser !== uId) {
+            } else {
                 receiverId = itemData.secondUser
             }
         }
@@ -49,41 +48,46 @@ export async function POST(req: NextRequest) {
         if (lastData) {
             if (lastData.currentBal >= amount) {
                 //INSERT TO SENDER TRANSACTION
-                const lastData = await walletTransactions.findOne({ userId: uId }).sort({ slId: -1 });
-                if (lastData.currentBal >= amount) {
-                    if (lastData) {
-                        //INSERT TO SENDER TRANSACTION
-                        await walletTransactions.create({
-                            userId: uId,
-                            slId: lastData.slId + 1,
-                            transactionType: "Sent",
-                            prevAmount: lastData.currentBal,
-                            myPrevSlId: lastData.slId,
-                            Amount: parseFloat(amount),
-                            currentBal: parseFloat(lastData.currentBal) - parseFloat(amount),
-                            status: 'Success',
-                            createdDate: Date.now()
-                        })
-                    }
-                }
+                await walletTransactions.create({
+                    userId: uId,
+                    slId: lastData.slId + 1,
+                    transactionType: "Sent",
+                    prevAmount: lastData.currentBal,
+                    myPrevSlId: lastData.slId,
+                    Amount: parseFloat(amount),
+                    currentBal: parseFloat(lastData.currentBal) - parseFloat(amount),
+                    status: 'Success',
+                    createdDate: Date.now()
+                })
                 //INSERT TO RECEIVER TRANSACTION
                 try{
                     const lastData2 = await walletTransactions.findOne({ userId: receiverId }).sort({ slId: -1 });
-                    if (lastData2.currentBal >= amount) {
-                        if (lastData2) {
-                            //INSERT TO SENDER TRANSACTION
-                            await walletTransactions.create({
-                                userId: receiverId,
-                                slId: lastData2.slId + 1,
-                                transactionType: "Received",
-                                prevAmount: lastData2.currentBal,
-                                myPrevSlId: lastData2.slId,
-                                Amount: parseFloat(amount),
-                                currentBal: parseFloat(lastData2.currentBal) + parseFloat(amount),
-                                status: 'Success',
-                                createdDate: Date.now()
-                            })
-                        }
+                    if (lastData2) {
+                        //INSERT TO SENDER TRANSACTION
+                        await walletTransactions.create({
+                            userId: receiverId,
+                            slId: lastData2.slId + 1,
+                            transactionType: "Received",
+                            prevAmount: lastData2.currentBal,
+                            myPrevSlId: lastData2.slId,
+                            Amount: parseFloat(amount),
+                            currentBal: parseFloat(lastData2.currentBal) + parseFloat(amount),
+                            status: 'Success',
+                            createdDate: Date.now()
+                        })
+                    }else{
+                        //INSERT TO SENDER TRANSACTION
+                        await walletTransactions.create({
+                            userId: receiverId,
+                            slId: 1,
+                            transactionType: "Received",
+                            prevAmount: 0,
+                            myPrevSlId: 0,
+                            Amount: parseFloat(amount),
+                            currentBal: amount,
+                            status: 'Success',
+                            createdDate: Date.now()
+                        })
                     }
                 }catch(error){
                     console.log(error)

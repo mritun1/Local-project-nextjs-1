@@ -22,7 +22,8 @@ interface messageArr {
 const LocalMessageChat = () => {
 
     const {slug} = useParams();
-    const [senderName,setSenderName] = useState<string>("")
+    const [senderName, setSenderName] = useState<string>("")
+    const [senderID, setSenderID] = useState<string>("")
     const [senderPic,setSenderPic] = useState<string>("/icons/others/profile.webp")
     const [messageText, setMessageText] = useState<string>("")
     //ALWAYS SCROLL DOWN
@@ -54,6 +55,9 @@ const LocalMessageChat = () => {
                     setSenderName(data.user.firstName + " " + data.user.lastName)
                     if (data.user.profilePic){
                         setSenderPic(data.user.profilePic)
+                    }
+                    if(data.user._id){
+                        setSenderID(data.user._id)
                     }
                     scrollToBottom();
                 }
@@ -141,7 +145,7 @@ const LocalMessageChat = () => {
                                     ></div>
                                     <div>
                                         <h4 >
-                                            <Link href="" className='text-color'>
+                                            <Link href={"/page/people/" + senderID + "/" + senderName} className='text-color'>
                                                 {senderName}
                                             </Link>
                                         </h4>

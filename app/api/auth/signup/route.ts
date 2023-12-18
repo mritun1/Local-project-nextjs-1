@@ -79,11 +79,13 @@ export async function POST(req: Request) {
 
         //SEARCH PROFESSION SLUG
         let professionSlug = "Others"
+        let categoryName = "Others"
         const search = new customSearch();
         peopleCats.forEach((ele) => {
             const result = search.searchByCommaSeparated(profession, ele.tags);
             if (result) {
-                professionSlug = ele.categoryName
+                professionSlug = ele.catSlug,
+                categoryName = ele.categoryName
             }
         })
 
@@ -111,9 +113,9 @@ export async function POST(req: Request) {
                         createdDate: Date.now()
                     })
                 }
-                newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, mobile, refID, refPaid: referAmount, password: hashPassword, otp: hashOtp });
+                newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, professionName: categoryName, mobile, refID, refPaid: referAmount, password: hashPassword, otp: hashOtp });
             }else{
-                newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, mobile, password: hashPassword, otp: hashOtp });
+                newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, professionName: categoryName, mobile, password: hashPassword, otp: hashOtp });
                 
             }
             newUser.save()

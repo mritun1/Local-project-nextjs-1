@@ -15,7 +15,8 @@ interface messageArr {
         videos: [];
     },
     uType: string,
-    sender: string
+    sender: string,
+    senderId:string
 }
 
 const LocalGroupChat = () => {
@@ -141,7 +142,7 @@ const LocalGroupChat = () => {
                                     ></div>
                                     <div>
                                         <h4 >
-                                            <Link href="" className='text-color'>
+                                            <Link href="#" className='text-color'>
                                                 {groupName}
                                             </Link>
                                         </h4>
@@ -168,6 +169,7 @@ const LocalGroupChat = () => {
                                         content={ele.ele.chatContent}
                                         me={ele.uType}
                                         sender={ele.sender}
+                                        senderId={ele.senderId}
                                     ></ChatContentGroup>
                                 ))}
 

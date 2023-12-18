@@ -85,6 +85,12 @@
         border: 1px solid $border-color;
         @include pad_mar(6px, 0px);
         color: $color;
+        &>a{
+            font-weight: bold;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
     }
 
     &>thead>tr {

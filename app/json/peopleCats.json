@@ -53,5 +53,10 @@
         "categoryName": "Doctor",
         "catSlug": "doctors",
         "tags": "doctor"
+    },
+    {
+        "categoryName": "Students",
+        "catSlug": "students",
+        "tags": "student,students,study"
     }
 ]

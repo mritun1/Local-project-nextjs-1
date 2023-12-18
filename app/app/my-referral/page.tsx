@@ -3,11 +3,13 @@ import AppContent from '@/app/components/templates/AppContent'
 import React, { useEffect, useState } from 'react'
 import copy from 'clipboard-copy'
 import AlertNotice from '@/app/components/temp/AlertNotice';
+import Link from 'next/link';
 
 interface items {
     firstName:string;
     lastName:string;
     refPaid:number;
+    _id:string;
 }
 
 const Page = () => {
@@ -149,7 +151,9 @@ const Page = () => {
                                         items.map((ele,index)=>(
                                             <tr key={index}>
                                                 <td>1</td>
-                                                <td>{ele.firstName + ' '+ele.lastName}</td>
+                                                <td>
+                                                    <Link href={"/page/people/" + ele._id + "/" + ele.firstName + " " + ele.lastName}>{ele.firstName + ' ' + ele.lastName}</Link>
+                                                </td>
                                                 {ele.refPaid>0?(
                                                     <td><i className="fa-solid fa-indian-rupee"></i> {ele.refPaid}</td>
                                                 ):(

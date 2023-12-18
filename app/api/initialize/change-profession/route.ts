@@ -16,17 +16,20 @@ export async function GET() {
             //data.push(ele.firstName)
             //SEARCH PROFESSION SLUG
             let professionSlug = "Others"
+            let categoryName = "Others"
             const search = new customSearch();
             peopleCats.forEach((ele) => {
                 const result = search.searchByCommaSeparated(item.profession, ele.tags);
                 if (result) {
-                    professionSlug = ele.catSlug
+                    professionSlug = ele.catSlug,
+                    categoryName = ele.categoryName
                 }
             })
             //data.push(professionSlug)
             //INSERT INTO DATABASE
             await User.findByIdAndUpdate(item._id,{
-                professionSlug: professionSlug
+                professionSlug: professionSlug,
+                professionName: categoryName
             })
         })
 

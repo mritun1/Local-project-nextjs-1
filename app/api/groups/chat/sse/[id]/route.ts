@@ -40,11 +40,13 @@ export async function GET(
                 try {
                     const user = await User.findById(ele.senderId, {
                         firstName: 1,
-                        lastName: 1
+                        lastName: 1,
+                        _id: 1
                     }); // Specify the fields you want to include
 
                     if (user) {
                         ar.sender = user.firstName;
+                        ar.senderId = user._id;
                     }
                 } catch (error) {
                     console.error('An error occurred while fetching user data:', error);

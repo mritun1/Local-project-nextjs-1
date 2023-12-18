@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 
 interface catAr {
     _id:string;
+    profession: string;
     count:number;
 }
 
@@ -29,6 +30,7 @@ const LocalPeoples = () => {
         })
         if(res.ok){
             const data = await res.json();
+            console.log(data.data)
             setCategories(data.data)
             setTotal(data.allTotal)
             setPin(data.pin)
@@ -82,7 +84,7 @@ const LocalPeoples = () => {
                                 <div key={index}>
                                     <Link href={"/app/local-people-cat/" + ele._id }>
                                         <div>
-                                            <h3>{ele._id}</h3>
+                                            <h3>{ele.profession}</h3>
                                             <button>{ele.count}</button>
                                         </div>
                                     </Link>

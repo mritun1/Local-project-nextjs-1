@@ -27,6 +27,9 @@ let userSchema = new mongoose.Schema({
     professionSlug:{
         type:String
     },
+    professionName: {
+        type: String,
+    },
     mobile:{
         type: Number,
         require: true,

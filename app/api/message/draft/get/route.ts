@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
             }else{
                 nextUID = mgsData.secondUser
             }
-            otherUserData = await User.findById({ _id: Object(nextUID) }).select('firstName lastName profilePic')
+            otherUserData = await User.findById({ _id: Object(nextUID) }).select('_id firstName lastName profilePic')
         }
         
         return NextResponse.json({

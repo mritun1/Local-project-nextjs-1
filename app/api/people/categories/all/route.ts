@@ -30,7 +30,9 @@ export async function POST(req: NextRequest) {
                         }
                     }, {
                         $group: {
+                            // _id: "$professionSlug",
                             _id: "$professionSlug",
+                            profession: { $first: "$professionName" },
                             count: { $sum: 1 }
                         }
 
@@ -57,6 +59,7 @@ export async function POST(req: NextRequest) {
                     }, {
                         $group: {
                             _id: "$professionSlug",
+                            profession: { $first: "$professionName" },
                             count: { $sum: 1 }
                         }
 

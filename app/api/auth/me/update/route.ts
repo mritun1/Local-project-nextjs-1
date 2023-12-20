@@ -9,7 +9,7 @@ export async function PATCH(req:NextRequest){
     try{
         await connectDB();
         const body = await req.json();
-        const { firstName, lastName, profession, gender, pinCode } = body
+        const { firstName, lastName, profession, gender, pinCode, inputList, contactPermission } = body
 
         try{
             const getData = new getTokenData(req)
@@ -37,7 +37,9 @@ export async function PATCH(req:NextRequest){
                     professionSlug: professionSlug,
                     gender,
                     pinCode,
-                    updatedDate: todayDate 
+                    updatedDate: todayDate,
+                    contacts: inputList,
+                    contactPermission
                 }, // Update
                 { new: true } // Options
             );

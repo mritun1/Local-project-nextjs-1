@@ -30,6 +30,8 @@ export async function POST(req: NextRequest) {
             gender: getDB.gender,
             profession: getDB.profession,
             profilePic: getDB.profilePic,
+            contacts: getDB.contacts,
+            contactPermission: getDB.contactPermission,
         });
     }catch(err){
         return NextResponse.json({

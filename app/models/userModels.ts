@@ -35,6 +35,10 @@ let userSchema = new mongoose.Schema({
         require: true,
         unique: true
     },
+    contacts:[],
+    contactPermission:{
+        type:String,
+    },
     password:{
         type: String,
         require: true

@@ -1,5 +1,6 @@
 "use client"
 import DoubleInput from '@/app/components/form/singleData/DoubleInput'
+import MultiInput from '@/app/components/form/singleData/MultiInput'
 import RadioInput from '@/app/components/form/singleData/RadioInput'
 import SingleInput from '@/app/components/form/singleData/SingleInput'
 import ProgressBar from '@/app/components/temp/ProgressBar'
@@ -8,7 +9,6 @@ import axios from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
 
 const Profile = () => {
-    const [isSingleInputHidden, setIsSingleInputHidden] = useState<boolean>(false)
     const [isPinCodeHidden, setIsPinCodeHidden] = useState<boolean>(false)
     const [isNameHidden, setIsNameHidden] = useState<boolean>(false)
     const [isRadioHidden, setRadioHidden] = useState<boolean>(false)
@@ -21,6 +21,7 @@ const Profile = () => {
     const [mobile, setMobile] = useState<number>(0)
     const [pincode, setPincode] = useState<number>(0)
     const [profileImg, setProfileImg] = useState<string>("")
+    const [contacts, setContacts] = useState<[]>([])
 
     const loadMe = async () => {
         try {
@@ -39,6 +40,10 @@ const Profile = () => {
                 setMobile(data.mobile)
                 setPincode(data.pinCode)
                 setProfileImg(data.profilePic)
+                if (data.contacts){
+                    setContacts(data.contacts)
+                }
+                
             } else {
                 console.log("something wrong")
             }
@@ -281,7 +286,21 @@ const Profile = () => {
                             onClick={pinCodeModal}
                         >{pincode}</SingleInput>
 
+                        <MultiInput 
+                            id='Contacts'
+                            title='Contacts'
+                            arr={contacts}
+                            url="/api/auth/me/update"
+                            method="PATCH"
+                            load={loadMe}
+                        >
+                            {contacts.map((ele, index) => (
+                                <h3 key={index}>{ele}</h3>
+                            ))}
+                        </MultiInput>
 
+                        <br /><br />
+                        <br /><br />
 
 
                     </div>

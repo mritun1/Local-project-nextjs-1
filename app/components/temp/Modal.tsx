@@ -19,7 +19,7 @@ const Modal = (props: propsType) => {
                     <div className="sign_up">
                         <div className="modal_head">
                             <div>
-                                <h2>{props.title}</h2>
+                                <h3>{props.title}</h3>
                             </div>
                             <div>
                                 {props.additionBtn}

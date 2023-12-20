@@ -113,9 +113,9 @@ export async function POST(req: Request) {
                         createdDate: Date.now()
                     })
                 }
-                newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, professionName: categoryName, mobile, refID, refPaid: referAmount, password: hashPassword, otp: hashOtp });
+                newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, professionName: categoryName, mobile, contacts: mobile, contactPermission: "Sell", refID, refPaid: referAmount, password: hashPassword, otp: hashOtp });
             }else{
-                newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, professionName: categoryName, mobile, password: hashPassword, otp: hashOtp });
+                newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, professionName: categoryName, mobile, contacts: mobile, contactPermission: "Sell", password: hashPassword, otp: hashOtp });
                 
             }
             newUser.save()

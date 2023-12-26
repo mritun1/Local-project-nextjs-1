@@ -2,14 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import ButtonLoading from '../../temp/ButtonLoading'
 import Modal from '../../temp/Modal'
-interface propsType{
-    dataVal:string;
-    load:()=>void;
-}
-const ChangeContactPremission = (props:propsType) => {
+
+const ChangeContactPremission = () => {
     const [modalHidden, setModalHidden] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(true)
-    const [val, setVal] = useState<string>(props.dataVal)
+    const [val, setVal] = useState<string>('')
     const showModal = () => {
         setModalHidden(!modalHidden)
     }
@@ -28,9 +25,29 @@ const ChangeContactPremission = (props:propsType) => {
         if(res.ok){
             showModal();
             setLoading(true);
-            props.load();
+            load();
         }
     }
+
+    const load = async () => {
+        const res = await fetch("/api/auth/me", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                code: 1
+            })
+        })
+        if (res.ok) {
+            const data = await res.json()
+            setVal(data.contactPermission)
+        }
+    }
+    useEffect(() => {
+        load();
+        return () => { }
+    }, [])
     return (
         <>
             <div className="bar_btn_box">
@@ -57,8 +74,6 @@ const ChangeContactPremission = (props:propsType) => {
 
                 <div className="sign_up_form">
                     <form onSubmit={handleSubmit}>
-
-                        <h3>{val}</h3>
 
                         <div className="sign_up_three_col">
 

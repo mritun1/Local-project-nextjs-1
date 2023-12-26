@@ -115,6 +115,10 @@ const PeoplesBtn = (props: propsType) => {
 
 
     }
+
+    const payForContact = () =>{
+        //CHECK THE MONEY AND PAY THEN COMEBACK
+    }
     return (
         <>
             <div className="secondhand_btns">
@@ -166,7 +170,7 @@ const PeoplesBtn = (props: propsType) => {
                         />
                     </div>
                     <div className='contributeOnMgsBtn'>
-                        <button ><i className="fa-solid fa-paper-plane"></i> Pay</button>
+                        <button onClick={payForContact} ><i className="fa-solid fa-paper-plane"></i> Pay</button>
                     </div>
                 </div>
 

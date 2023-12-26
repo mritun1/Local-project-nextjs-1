@@ -94,11 +94,10 @@ export async function POST(req: Request) {
             if (refID){
                 //REFERRAL IS SET
                 //ADD MONEY TO THE REFERRER ACCOUNT
-                const referAmount: number = 200;
+                const referAmount: number = 100;
                 const lastData2 = await walletTransactions.findOne({ userId: refID }).sort({ slId: -1 });
                 if (lastData2) {
                     //INSERT TO TRANSACTION
-                    
                     const currentBalValue: number = parseFloat(lastData2.currentBal);
                     const updatedCurrentBal: number = currentBalValue + referAmount;
                     await walletTransactions.create({
@@ -116,7 +115,22 @@ export async function POST(req: Request) {
                 newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, professionName: categoryName, mobile, contacts: mobile, contactPermission: "Sell", refID, refPaid: referAmount, password: hashPassword, otp: hashOtp });
             }else{
                 newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, professionName: categoryName, mobile, contacts: mobile, contactPermission: "Sell", password: hashPassword, otp: hashOtp });
-                
+                //GET PRICE MONEY FOR JOINING
+                //ADD MONEY TO THE ACCOUNT
+                const referAmount: number = 100;
+                const newUID = newUser._id
+                //INSERT TO TRANSACTION
+                await walletTransactions.create({
+                    userId: newUID,
+                    slId: 1,
+                    transactionType: "Received",
+                    prevAmount: 0,
+                    myPrevSlId: 0,
+                    Amount: referAmount,
+                    currentBal: referAmount,
+                    status: 'Success',
+                    createdDate: Date.now()
+                })
             }
             newUser.save()
 

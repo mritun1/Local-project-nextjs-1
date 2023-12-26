@@ -36,7 +36,6 @@ const WalTransactionSchema = new mongoose.Schema({
     },
     journal: {
         type: String,
-        immutable: true,
     },
     currentBal: {
         type: Number,

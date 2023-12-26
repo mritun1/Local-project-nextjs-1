@@ -149,7 +149,8 @@ export async function POST(req: Request) {
             response.cookies.set(isUserActive,isUserActiveCookie)
             //SET PIN CODE IN COOKIE
             const pinCookie: any = process.env.PIN_CODE
-            response.cookies.set(pinCookie, pinCode)
+            // response.cookies.set(pinCookie, pinCode)
+            response.cookies.set(pinCookie, '0000000');
             return response
             
         } catch (error) {

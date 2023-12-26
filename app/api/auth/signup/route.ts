@@ -115,26 +115,27 @@ export async function POST(req: Request) {
                 newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, professionName: categoryName, mobile, contacts: mobile, contactPermission: "Sell", refID, refPaid: referAmount, password: hashPassword, otp: hashOtp });
             }else{
                 newUser = new User({ firstName, lastName, pinCode, gender, profession, professionSlug: professionSlug, professionName: categoryName, mobile, contacts: mobile, contactPermission: "Sell", password: hashPassword, otp: hashOtp });
-                //GET PRICE MONEY FOR JOINING
-                //ADD MONEY TO THE ACCOUNT
-                const referAmount: number = 100;
-                const newUID = newUser._id
-                //INSERT TO TRANSACTION
-                await walletTransactions.create({
-                    userId: newUID,
-                    slId: 1,
-                    transactionType: "Received",
-                    prevAmount: 0,
-                    myPrevSlId: 0,
-                    Amount: referAmount,
-                    currentBal: referAmount,
-                    status: 'Success',
-                    createdDate: Date.now()
-                })
             }
             newUser.save()
 
             const user_id = newUser._id
+
+            //GET PRICE MONEY FOR JOINING
+            //ADD MONEY TO THE ACCOUNT
+            const joinGift: number = 100;
+            //INSERT TO TRANSACTION
+            await walletTransactions.create({
+                userId: user_id,
+                slId: 1,
+                transactionType: "Received",
+                prevAmount: 0,
+                myPrevSlId: 0,
+                Amount: joinGift,
+                currentBal: joinGift,
+                status: 'Success',
+                createdDate: Date.now()
+            })
+
             const secret: any = process.env.SECRECT_KEY
             const token = jwt.sign({ user_id, firstName, lastName, pinCode, mobile }, secret)
             const isUserActiveCookie = jwt.sign({code:"zero"}, secret)

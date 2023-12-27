@@ -94,7 +94,7 @@ export async function POST(req: Request) {
             if (refID){
                 //REFERRAL IS SET
                 //ADD MONEY TO THE REFERRER ACCOUNT
-                const referAmount: number = 100;
+                const referAmount: number = 50;
                 const lastData2 = await walletTransactions.findOne({ userId: refID }).sort({ slId: -1 });
                 if (lastData2) {
                     //INSERT TO TRANSACTION
@@ -103,7 +103,7 @@ export async function POST(req: Request) {
                     await walletTransactions.create({
                         userId: refID,
                         slId: lastData2.slId + 1,
-                        transactionType: "Received",
+                        transactionType: "Received(Referral)",
                         prevAmount: lastData2.currentBal,
                         myPrevSlId: lastData2.slId,
                         Amount: referAmount,
@@ -122,12 +122,12 @@ export async function POST(req: Request) {
 
             //GET PRICE MONEY FOR JOINING
             //ADD MONEY TO THE ACCOUNT
-            const joinGift: number = 100;
+            const joinGift: number = 50;
             //INSERT TO TRANSACTION
             await walletTransactions.create({
                 userId: user_id,
                 slId: 1,
-                transactionType: "Received",
+                transactionType: "Received(Joined)",
                 prevAmount: 0,
                 myPrevSlId: 0,
                 Amount: joinGift,

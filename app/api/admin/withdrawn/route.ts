@@ -20,7 +20,8 @@ export async function POST(req:NextRequest) {
                 userName: u.firstName + ' ' + u.lastName,
                 upiFullName: w.fullName,
                 upiId: w.upiId,
-                mobile: u.mobile
+                mobile: u.mobile,
+                uId: u._id
             });
         }
 

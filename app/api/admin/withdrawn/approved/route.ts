@@ -8,7 +8,7 @@ export async function POST(req:NextRequest){
         const body = await req.json();
         const { id, status, journal } = body
         console.log(journal)
-        //Update the Wallet
+        // // Update the Wallet
         // await walletTransactions.findOneAndUpdate(
         //     { _id: id }, 
         //     { $set: { status: status, journal: journal } } 

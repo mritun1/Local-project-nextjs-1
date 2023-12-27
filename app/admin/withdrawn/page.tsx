@@ -15,6 +15,7 @@ interface Lists {
     upiFullName: string;
     upiId: string;
     mobile: number;
+    uId: string;
 }
 const Page = () => {
     const [lists, setLists] = useState<Lists[]>([])
@@ -39,7 +40,7 @@ const Page = () => {
     }, [])
 
     const paidHandler =async (e:string,s:string) =>{
-        if (confirm('Are you sure to Delete?')){
+        if (confirm('Are you sure ABOUT PAID?')){
             let journal = prompt("Journal");
             const res = await fetch("/api/admin/withdrawn/approved/",{
                 method:"POST",
@@ -88,7 +89,9 @@ const Page = () => {
                         {lists.map((ele, index) => (
                             <tr key={index}>
                                 <td>{ele.item.createdDate}</td>
-                                <td>{ele.userName}</td>
+                                <td>
+                                    <a href={`/admin/transactions/${ele.uId}`} target='_blank'>{ele.userName}</a>
+                                </td>
                                 <td>{ele.mobile}</td>
                                 <td>{ele.item.Amount}</td>
                                 <td>{ele.item.transactionType}</td>
@@ -106,7 +109,6 @@ const Page = () => {
                                 </td>
                             </tr>
                         ))}
-                        
                     </tbody>
                 </table>
             </div>

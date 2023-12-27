@@ -1,2 +1,4 @@
 .next
 node_modules
+app/admin/*
+app/api/admin/*

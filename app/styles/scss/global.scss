@@ -2614,7 +2614,7 @@ body {
 //-----------------------------------------------------
 .post_options{
     margin-bottom: 6px;
-    &>div{
+    &>div:nth-child(1){
         border-bottom: 1px solid $btn-color;
     }
     &>.details{
@@ -2809,7 +2809,7 @@ body {
     &>.img_opa{
         @include position_full(absolute, 0px, 0px, 0px, 0px);
         background-color: black;
-        opacity: 0.5;
+        opacity: 0.9;
     }
     &>.img_close{
         @include w_h(60px, 60px);

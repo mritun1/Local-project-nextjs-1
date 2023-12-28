@@ -122,7 +122,7 @@ export async function POST(req: Request) {
 
             //GET PRICE MONEY FOR JOINING
             //ADD MONEY TO THE ACCOUNT
-            const joinGift: number = 50;
+            const joinGift: number = 0;
             //INSERT TO TRANSACTION
             await walletTransactions.create({
                 userId: user_id,

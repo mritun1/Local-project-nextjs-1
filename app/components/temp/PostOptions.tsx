@@ -46,7 +46,7 @@ const PostOptions = (props: propsType) => {
         if (res.ok) {
             const data = await res.json();
             if (data.code === 1) {
-                loadCOnt();
+                loadCOnt1();
                 setContributeAmount('')
                 setContributeComment('')
             }
@@ -54,7 +54,7 @@ const PostOptions = (props: propsType) => {
     }
     //Load Contribute Content
     const [contList, setContList] = useState<contArr[]>([])
-    const loadCOnt = async () => {
+    const loadCOnt1 = async () => {
         const res = await fetch("/api/contributions/comments/", {
             method: "POST",
             headers: {
@@ -70,9 +70,11 @@ const PostOptions = (props: propsType) => {
 
             if (data.code === 1) {
                 setContList(data.data)
+                setBal(data.bal)
             }
         }
     }
+    
     const [bal,setBal] = useState<number>(0)
     const [loggedIn, setLoggedIn] = useState<boolean>(false)
     useEffect(() => {
@@ -94,6 +96,7 @@ const PostOptions = (props: propsType) => {
                     setContList(data.data)
                     setBal(data.bal)
                 }
+                
             }
         }
         loadCOnt();

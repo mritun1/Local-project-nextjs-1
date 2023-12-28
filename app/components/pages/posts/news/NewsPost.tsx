@@ -67,29 +67,29 @@ const NewsPost = (props: propsType) => {
                             </div>
 
                         </div>
-                        <div className="product_images">
-                            <div className="news_img_sec"
-                                style={{
-                                    backgroundImage: `url(${props.images[0]})`
-                                }}
-                            >
-                                <div className="news_img_btn_left">
-                                    <div onClick={getPrevImg(props.index)}><i className="fa-solid fa-angle-left"></i></div>
-                                </div>
-                                <div className="news_img_btn_right">
-                                    <div onClick={getNextImg(props.index)} ><i className="fa-solid fa-angle-right"></i></div>
-                                </div>
-                                <div className="img_btn_center">
-                                    <div><button onClick={imgView}>View Image</button></div>
+
+                        {props.images[0] ? (
+                            <div className="product_images">
+                                <div className="news_img_sec"
+                                    style={{
+
+                                        backgroundImage: `url(${imgState === props.index ? imgUrl :
+                                            props.images[0]
+                                            })`
+                                    }}
+                                >
+                                    <div className="news_img_btn_left">
+                                        <div onClick={getPrevImg(props.index)}><i className="fa-solid fa-angle-left"></i></div>
+                                    </div>
+                                    <div className="news_img_btn_right">
+                                        <div onClick={getNextImg(props.index)} ><i className="fa-solid fa-angle-right"></i></div>
+                                    </div>
+                                    <div className="img_btn_center">
+                                        <div><button onClick={imgView}>View Image</button></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <PostOptions
-                            itemId={props.id}
-                            itemType='News'
-                            itemTitle={props.title}
-                        />
+                        ) : null}
 
                         <div className="product_title">
                             <h2>{props.title}</h2>
@@ -97,6 +97,12 @@ const NewsPost = (props: propsType) => {
 
                         <NewsDesMore
                             des={props.des}
+                        />
+
+                        <PostOptions
+                            itemId={props.id}
+                            itemType='News'
+                            itemTitle={props.title}
                         />
 
                     </div>

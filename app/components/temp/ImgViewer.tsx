@@ -20,9 +20,7 @@ const ImgViewer = (props: propsType) => {
                                 src={props.imgUrl || ''}
                                 alt="image"
                                 objectFit="contain"
-                                layout='responsive'
-                                width={100}
-                                height={0}
+                                layout='fill'
                             />
                         </div>
                     </div>

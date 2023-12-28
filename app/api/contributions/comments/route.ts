@@ -57,21 +57,23 @@ export async function POST(req: NextRequest) {
         await Promise.all(promises);
         const lastData = await walletTransactions.findOne({ userId: uId }).sort({ slId: -1 });
 
-        if(data.length>0){
-            return NextResponse.json({
-                msg: "Success",
-                data: ArrayItems,
-                bal: lastData.currentBal,
-                code: 1,
-                loggedIn: loggedIn
-            })
-        }else{
-            return NextResponse.json({
-                msg: "No Content",
-                code: 0,
-                loggedIn: loggedIn
-            })
-        }
+        return NextResponse.json({
+            msg: "Success",
+            data: ArrayItems,
+            bal: lastData.currentBal,
+            code: 1,
+            loggedIn: loggedIn
+        })
+
+        // if(data.length>0){
+            
+        // }else{
+        //     return NextResponse.json({
+        //         msg: "No Content",
+        //         code: 0,
+        //         loggedIn: loggedIn
+        //     })
+        // }
 
     } catch (error) {
         return NextResponse.json({

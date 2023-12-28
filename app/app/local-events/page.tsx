@@ -118,9 +118,10 @@ const LocalEvents = () => {
     
     useEffect(() => {
         loadEvents2(1);   
-        return () => {
-        };
+        return () => {};
     }, []);
+
+    
 
     return (
         <>
@@ -157,6 +158,7 @@ const LocalEvents = () => {
                                         profilePic={ele.user.profilePic}
                                         firstName={ele.user.firstName}
                                         lastName={ele.user.lastName}
+                                        
                                     />
                                     
                                 ))

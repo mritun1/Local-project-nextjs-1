@@ -112,10 +112,54 @@ const LocalNews = () => {
 
 
     useEffect(() => {
-        loadNews(1);
-        return () => {
-            loadNews(1)
-        };
+        const loadNewsOnload = (num: number) => {
+            setInfinityLoad(false)
+            fetch(`/api/posts/news/all/${num}/0/`)
+                .then(response => response.json())
+                .then(data => {
+                    setPin(data.pin)
+
+
+                    if (data.code === 1) {
+
+                        console.log(data.data)
+
+                        setNewsList(data.data);
+                        setTotal(data.data.length);
+                        // setPnum((prev) => prev + 1)
+
+                        if (data.data.length > 0) {
+
+                            //Create Image Circular linked list array
+                            const arr = data.data;
+
+                            const doublyLinkedLists: DoublyCircularLinkedList[] = [];
+                            arr.forEach((ele: NewsItems) => {
+                                const doublyLL = new DoublyCircularLinkedList();
+                                ele.item.images.forEach((item) => {
+                                    doublyLL.append(item);
+                                });
+                                doublyLinkedLists.push(doublyLL);
+                            });
+                            setDoublyLinkedLists(doublyLinkedLists)
+
+                        } else {
+                            setNotFound(false)
+                        }
+                        setInfinityLoad(true)
+                    } else {
+                        setInfinityLoad(true)
+                        if (num === 1) {
+                            setNotFound(false)
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error', error);
+                })
+        }
+        loadNewsOnload(1);
+        return () => {};
     }, []);
 
     const [imgState, setImgState] = useState<number | null>(null)
@@ -150,11 +194,8 @@ const LocalNews = () => {
                             </div>
                         </div>
 
-
-
                         {notFound ? (
                             newsList.map((ele, index) => (
-                                
                                 <NewsPost
                                     key={index}
                                     imgState={imgState || 0}

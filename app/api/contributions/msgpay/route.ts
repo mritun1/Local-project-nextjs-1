@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
                         await walletTransactions.create({
                             userId: receiverId,
                             slId: lastData2.slId + 1,
-                            transactionType: "Received(Contribute)",
+                            transactionType: "Received(chat)",
                             prevAmount: lastData2.currentBal,
                             myPrevSlId: lastData2.slId,
                             Amount: parseFloat(amount),
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
                         await walletTransactions.create({
                             userId: receiverId,
                             slId: 1,
-                            transactionType: "Received(Contribute)",
+                            transactionType: "Received(chat)",
                             prevAmount: 0,
                             myPrevSlId: 0,
                             Amount: parseFloat(amount),

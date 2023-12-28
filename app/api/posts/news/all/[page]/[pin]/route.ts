@@ -12,7 +12,7 @@ export async function GET(
         let page: number = params.page;
         let pin: string = params.pin;
 
-        const limit: number = 10;
+        const limit: number = 3;
         let offset: number = (page - 1) * limit;
 
         await connectDB();
@@ -71,6 +71,9 @@ export async function GET(
 
             // Wait for all promises to resolve
             await Promise.all(promises);
+
+            // Sort ArrayItems by createdDate in descending order
+            ArrayItems.sort((a, b) => b.item.createdDate - a.item.createdDate);
 
             return NextResponse.json({
                 pin: pin,

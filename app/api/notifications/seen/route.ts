@@ -1,5 +1,4 @@
 import connectDB from "@/app/db/config";
-import getTokenData from "@/app/lib/getTokenData";
 import notificationsMain from "@/app/models/notifications/notificationsMain";
 import { NextRequest, NextResponse } from "next/server";
 

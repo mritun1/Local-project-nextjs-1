@@ -1406,7 +1406,7 @@ body {
     color: $text-color;
 }
 .alert.alert-danger {
-    background-color: $btn-orange;
+    background-color: $btn-red;
     color: $text-color2;
 }
 // //ALERT WITH NUMBER AND FORWARD BUTTON
@@ -2867,4 +2867,44 @@ body {
 }
 //-----------------------------------------------------
 // LOGIN BLOCK TO ACCESS - END
+//-----------------------------------------------------
+//-----------------------------------------------------
+// NOTIFICATION - START
+//-----------------------------------------------------
+.notifications{
+    padding: 6px;
+    &>.notification_list.active {
+        background-color: $btn-color;
+    }
+    &>.notification_list{
+        display: flex;
+        margin: 6px 0px;
+        &>div:nth-child(1){
+            padding: 6px;
+            &>div{
+                border: 1px solid $btn-color;
+                @include w_h(40px, 40px);
+                @include bg();
+                background-size: 30px;
+                border-radius: 50%;
+            }
+        }
+        &>div:nth-child(2) {
+            flex:8;
+            border: 1px solid $btn-color;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        &>div:nth-child(3) {
+            width: 30px;
+            text-align: center;
+            &>button{
+                border: 1px solid $btn-color;
+                border-radius: 6px;
+            }
+        }
+    }
+}
+//-----------------------------------------------------
+// NOTIFICATION - END
 //-----------------------------------------------------

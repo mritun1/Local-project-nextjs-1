@@ -2,3 +2,5 @@
 node_modules
 app/admin/*
 app/api/admin/*
+app/components/admin/*
+app/styles/scss/admin.scss

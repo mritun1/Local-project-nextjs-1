@@ -1,3 +1,20 @@
+@mixin position($mx-position,$mx-top,$mx-right,$mx-bottom,$mx-left){
+    position: $mx-position;
+    top: $mx-top;
+    right: $mx-right;
+    bottom: $mx-bottom;
+    left: $mx-left;
+}
+@mixin flex($mx-justify,$mx-align){
+    display: flex;
+    justify-content: $mx-justify;
+    align-items: $mx-align;
+}
+@mixin w_h($mx-w,$mx-h){
+    width: $mx-w;
+    height: $mx-h;
+}
+
 .admin_table{
     width: 100%;
     border-collapse: collapse;
@@ -23,4 +40,22 @@
 .unpaid{
     background-color: red;
     color:white;
+}
+
+.modal{
+    @include position(fixed, 0px, 0px, 0px, 0px);
+    border: 1px solid red;
+    &>div{
+        @include flex(center, center);
+        @include w_h(100%, 100vh);
+        &>.modalBody {
+            background-color: white;
+            @include w_h(300px, 300px);
+            border: 1px solid blue;
+        }
+    }
+}
+
+.adminInput{
+    border: 1px solid black;
 }

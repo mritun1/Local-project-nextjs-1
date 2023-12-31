@@ -1,7 +1,8 @@
 "use client"
+import AdminModal from '@/app/components/admin/temp/AdminModal';
 import React, { useEffect, useState } from 'react'
 interface Lists {
-    item:{
+    item: {
         Amount: number;
         createdDate: number;
         currentBal: number;
@@ -11,7 +12,7 @@ interface Lists {
         journal: string;
         _id: string;
     },
-    userName:string;
+    userName: string;
     upiFullName: string;
     upiId: string;
     mobile: number;
@@ -19,6 +20,7 @@ interface Lists {
 }
 const Page = () => {
     const [lists, setLists] = useState<Lists[]>([])
+    const [totalAmount, setTotalAmount] = useState<number>(0)
     useEffect(() => {
         const Fetch = async () => {
             const res = await fetch("/api/admin/withdrawn/", {
@@ -32,45 +34,58 @@ const Page = () => {
             })
             if (res.ok) {
                 const data = await res.json();
-                setLists(data.data)
-                console.log(data)
+                if (data.data) {
+                    setLists(data.data)
+                    setTotalAmount(data.totalAmount)
+                    console.log(data)
+                }
             }
         }
         Fetch();
-    }, [])
+    }, [totalAmount])
 
-    const paidHandler =async (e:string,s:string) =>{
-        if (confirm('Are you sure ABOUT PAID?')){
-            let journal = prompt("Journal");
-            const res = await fetch("/api/admin/withdrawn/approved/",{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                    id:e,
-                    status:s,
-                    journal
-                })
+    const [modalShow,setModalShow] = useState<boolean>(false);
+    const [action,setAction] = useState<string>('');
+    const [journal,setJournal] = useState<string>('');
+    const [notification,setNotification] = useState<string>('');
+    const [uId,setUID] = useState<string>('');
+
+    const modalClickHandler = (e: string) => {
+        setModalShow(!modalShow)
+        setUID(e)
+    }
+
+    const statusUpdateHandler = async (e:any) =>{
+        e.preventDefault();
+        const res = await fetch("/api/admin/withdrawn/approved/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: uId,
+                status: action,
+                journal,
+                notification
             })
-            if(res.ok){
-                const data = await res.json();
-                console.log(data)
-                window.location.reload()
-            }
+        })
+        if (res.ok) {
+            const data = await res.json();
+            console.log(data)
+            window.location.reload()
         }
     }
 
     return (
         <div>
-            <div>
-                <a href=""><button>Go Back</button></a>
+            <div key={1}>
+                <a href="/admin/"><button>Go Back</button></a>
                 <h1>
-                    | Withdrawn Lists
+                    | Withdrawn Lists | Total: {totalAmount}
                 </h1>
             </div>
 
-            <div >
+            <div key={2}>
                 <table className='admin_table'>
                     <thead>
                         <tr>
@@ -103,8 +118,7 @@ const Page = () => {
                                 </td>
                                 <td>
                                     <div>
-                                        <button onClick={() => paidHandler(ele.item._id, 'Success')} className='btn paidBtn'>Paid</button>
-                                        <button onClick={() => paidHandler(ele.item._id, 'Pending')} className='btn unpaid'>UnPaid</button>
+                                        <button onClick={(e)=>modalClickHandler(ele.uId)} className='btn paidBtn'>Change Status</button>
                                     </div>
                                 </td>
                             </tr>
@@ -112,6 +126,60 @@ const Page = () => {
                     </tbody>
                 </table>
             </div>
+
+            <AdminModal
+                title='WithDrawn Status'
+                modalShow={modalShow}
+                uId={uId}
+                modalClickHandler={(e)=>modalClickHandler(uId)}
+            >
+                <form onSubmit={statusUpdateHandler}>
+                    <p><b>Action</b></p>
+                    <p>
+                        <label htmlFor="Success">Success</label>
+                        <input 
+                        className='adminInput' 
+                        type="radio" 
+                        name="action" 
+                        value={'Success'} 
+                        id='Success' 
+                        onChange={(e)=>setAction(e.target.value)}
+                        />
+
+                        <label htmlFor="Rejected">Rejected</label>
+                        <input 
+                        className='adminInput' 
+                        type="radio" 
+                        name="action" 
+                        value={'Rejected'} 
+                        id='Rejected' 
+                        onChange={(e) => setAction(e.target.value)}
+                        />
+                    </p>
+
+                    <p><b>Journal</b></p>
+                    <input 
+                    className='adminInput' 
+                    type="text" 
+                    name="journal" 
+                        onChange={(e) => setJournal(e.target.value)}
+                        value={journal}
+                    />
+
+                    <p><b>Notification</b></p>
+                    <textarea 
+                    className='adminInput' 
+                    name="notification" 
+                    cols={20} 
+                    rows={2}
+                        onChange={(e) => setNotification(e.target.value)}
+                        value={notification}
+                    ></textarea>
+                    
+                    <br/>
+                    <button type='submit' className='btn paidBtn'>Submit</button>
+                </form>
+            </AdminModal>
 
         </div>
     )

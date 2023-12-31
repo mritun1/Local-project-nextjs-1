@@ -79,6 +79,8 @@ const MyWallet = () => {
     const [bal, setBal] = useState<number>(0);
     const [fullName, setFullName] = useState<string>('');
     const [upiId, setUpiId] = useState<string>('');
+    const [walletNotification, setWalletNotification] = useState<boolean>(false);
+    const [walNotificationMsg,setWalNotificationMsg] = useState<string>('');
     const loadTransaction = async () => {
         const res = await fetch("/api/wallet/transactions/", {
             method: "POST",
@@ -97,6 +99,12 @@ const MyWallet = () => {
                 setBal(data.bal)
                 setFullName(data.fullName)
                 setUpiId(data.upiId)
+                if (data.notificationAppCode === true){
+                    if (data.notificationApp.active === 1){
+                        setWalletNotification(true)
+                        setWalNotificationMsg(data.notificationApp.message);
+                    }
+                }
             }
         }
     }
@@ -212,6 +220,15 @@ const MyWallet = () => {
                                 clickClose={clickClose}
                             ></AlertNotice>
                         ) : null}
+
+                        {walletNotification?(
+                            <AlertNotice
+                                alertClass={"alert-danger"}
+                                text={'Warning: '+walNotificationMsg}
+                                state={walletNotification}
+                                clickClose={clickClose}
+                            ></AlertNotice>
+                        ):null}
 
 
                         {isTransaction ? (

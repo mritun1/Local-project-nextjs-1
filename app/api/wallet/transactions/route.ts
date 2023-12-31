@@ -1,5 +1,6 @@
 import connectDB from "@/app/db/config";
 import getTokenData from "@/app/lib/getTokenData";
+import notificationsApp from "@/app/models/notifications/notificationsApp";
 import walletBank from "@/app/models/wallet/walletBank";
 import walletTransactions from "@/app/models/wallet/walletTransactions";
 import { NextRequest, NextResponse } from "next/server";
@@ -32,10 +33,20 @@ export async function POST(req:NextRequest){
                 upiId= bank.upiId;
             }
 
+            //CHECK FOR THE APP NOTIFICATION - START
+            const notificationApp = await notificationsApp.findOne({ userId: uId, notificationType: 'wallet' });
+            let notificationAppCode = false;
+            if(notificationApp){
+                notificationAppCode = true;
+            }
+            //CHECK FOR THE APP NOTIFICATION - END
+
             return NextResponse.json({
                 msg: "Success",
                 data: data,
                 bal: dataLast.currentBal,
+                notificationAppCode,
+                notificationApp,
                 fullName: fullName,
                 upiId: upiId,
                 code:1

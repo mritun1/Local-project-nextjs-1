@@ -8,13 +8,15 @@ export async function POST(req:NextRequest) {
     try{
         await connectDB();
 
-        const cursor = await walletTransactions.find({ transactionType:'Withdrawn'}).sort({ createdDate: -1 })
+        const cursor = await walletTransactions.find({ transactionType: 'Withdrawn', status: { $ne: 'Success' } }).sort({ createdDate: -1 })
         const withdrawnData = [];
 
         // Use for...of loop to iterate over async functions sequentially
+        let totalAmount = 0;
         for (const ele of cursor) {
             const u = await User.findOne(ele.userId);
             const w = await walletBank.findOne({ userId : ele.userId});
+            totalAmount += ele.Amount;
             withdrawnData.push({
                 item: ele,
                 userName: u.firstName + ' ' + u.lastName,
@@ -27,7 +29,8 @@ export async function POST(req:NextRequest) {
 
         return NextResponse.json({
             data: withdrawnData,
-            code: 1
+            code: 1,
+            totalAmount
         })
 
     }catch(error){

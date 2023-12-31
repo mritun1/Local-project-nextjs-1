@@ -13,7 +13,9 @@ export default function Admin() {
           <li>
             <a href="/admin/withdrawn/">Withdrawn Lists</a>
           </li>
-          
+          <li>
+            <a href="/admin/notifications/">Notification</a>
+          </li>
         </ul>
       </div>
     </div>

@@ -21,6 +21,7 @@ interface Lists {
 const Page = () => {
     const [lists, setLists] = useState<Lists[]>([])
     const [totalAmount, setTotalAmount] = useState<number>(0)
+    const [dataStatus,setDataStatus] = useState<boolean>(false)
     useEffect(() => {
         const Fetch = async () => {
             const res = await fetch("/api/admin/withdrawn/", {
@@ -34,7 +35,12 @@ const Page = () => {
             })
             if (res.ok) {
                 const data = await res.json();
-                if (data.data) {
+                if (data.code === 1) {
+
+                    if (data.data.length>0){
+                        setDataStatus(true)
+                    }
+
                     setLists(data.data)
                     setTotalAmount(data.totalAmount)
                     console.log(data)
@@ -48,11 +54,15 @@ const Page = () => {
     const [action,setAction] = useState<string>('');
     const [journal,setJournal] = useState<string>('');
     const [notification,setNotification] = useState<string>('');
-    const [uId,setUID] = useState<string>('');
+    const [uId, setUID] = useState<string>('');
+    const [itemId, setItemId] = useState<string>('');
+    const [amount, setAmount] = useState<number>(0);
 
-    const modalClickHandler = (e: string) => {
+    const modalClickHandler = (e: string,_id:string,amount:number) => {
         setModalShow(!modalShow)
         setUID(e)
+        setItemId(_id)
+        setAmount(amount)
     }
 
     const statusUpdateHandler = async (e:any) =>{
@@ -64,9 +74,11 @@ const Page = () => {
             },
             body: JSON.stringify({
                 id: uId,
+                itemId: itemId,
                 status: action,
                 journal,
-                notification
+                notification,
+                amount
             })
         })
         if (res.ok) {
@@ -101,7 +113,7 @@ const Page = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {lists.map((ele, index) => (
+                        {dataStatus ? (lists.map((ele, index) => (
                             <tr key={index}>
                                 <td>{ele.item.createdDate}</td>
                                 <td>
@@ -118,11 +130,24 @@ const Page = () => {
                                 </td>
                                 <td>
                                     <div>
-                                        <button onClick={(e)=>modalClickHandler(ele.uId)} className='btn paidBtn'>Change Status</button>
+                                        <button onClick={(e) => modalClickHandler(ele.uId, ele.item._id,ele.item.Amount)} className='btn paidBtn'>Change Status</button>
                                     </div>
                                 </td>
                             </tr>
-                        ))}
+                        ))) : (
+                            <tr key={1}>
+                                <td>1</td>
+                                <td>1
+                                </td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>
@@ -131,7 +156,7 @@ const Page = () => {
                 title='WithDrawn Status'
                 modalShow={modalShow}
                 uId={uId}
-                modalClickHandler={(e)=>modalClickHandler(uId)}
+                modalClickHandler={(e) => modalClickHandler(uId, itemId, amount)}
             >
                 <form onSubmit={statusUpdateHandler}>
                     <p><b>Action</b></p>

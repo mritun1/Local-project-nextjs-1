@@ -8,7 +8,7 @@ export async function POST(req:NextRequest) {
     try{
         await connectDB();
 
-        const cursor = await walletTransactions.find({ transactionType: 'Withdrawn', status: { $ne: 'Success' } }).sort({ createdDate: -1 })
+        const cursor = await walletTransactions.find({ transactionType: 'Withdrawn', status: 'Pending' }).sort({ createdDate: -1 })
         const withdrawnData = [];
 
         // Use for...of loop to iterate over async functions sequentially

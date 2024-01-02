@@ -1,19 +1,10 @@
 "use client"
 import More1 from '@/app/components/buttons/More1'
 import AppContent from '@/app/components/templates/AppContent'
-import seenUpdate from '@/app/customlib/seenUpdate';
-import { usePathname } from 'next/navigation';
 import React, { useEffect } from 'react'
 
 const LocalOffers = () => {
-  // const seenUpdater = new seenUpdate();
-  // const pathname = usePathname();
-
-  // useEffect(() => {
-  //   return () => {
-  //     seenUpdater.update(pathname);
-  //   };
-  // }, []);
+  
   return (
     <>
         

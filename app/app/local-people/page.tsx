@@ -1,6 +1,5 @@
 "use client"
 import AppContent from '@/app/components/templates/AppContent'
-import seenUpdate from '@/app/customlib/seenUpdate';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -36,12 +35,6 @@ const LocalPeoples = () => {
             setPin(data.pin)
         }
     }
-
-    useEffect(() => {
-        const seenUpdater = new seenUpdate();
-        seenUpdater.update(pathname);
-        return () => {};
-    }, [pathname]);
 
     useEffect(() => {
         getData();

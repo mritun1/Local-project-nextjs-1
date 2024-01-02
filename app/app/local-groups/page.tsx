@@ -3,7 +3,6 @@ import GroupsItem from '@/app/components/pages/groups/GroupsItem';
 import GroupsMenu from '@/app/components/pages/groups/GroupsMenu';
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
-import seenUpdate from '@/app/customlib/seenUpdate';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
@@ -31,12 +30,6 @@ const LocalGroups = () => {
         setIsSearch(!isSearch)
     }
 
-    useEffect(() => {
-        const seenUpdater = new seenUpdate();
-        seenUpdater.update(pathname);
-        return () => {
-        };
-    }, [pathname]);
     //--------------------------------------------------------
     //LOAD CONTENT - SEARCH - START
     //--------------------------------------------------------

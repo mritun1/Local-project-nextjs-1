@@ -1,7 +1,5 @@
 "use client"
 import AppContent from '@/app/components/templates/AppContent'
-import seenUpdate from '@/app/customlib/seenUpdate';
-import { usePathname } from 'next/navigation';
 import React, { useEffect } from 'react'
 
 const MySaved = () => {

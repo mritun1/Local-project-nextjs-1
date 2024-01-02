@@ -2,7 +2,6 @@
 import NewsPost from '@/app/components/pages/posts/news/NewsPost';
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
-import seenUpdate from '@/app/customlib/seenUpdate';
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -97,9 +96,6 @@ const LocalNews = () => {
         if (typeof window !== 'undefined') {
             window.addEventListener('scroll', handleScroll);
         }
-
-        const seenUpdater = new seenUpdate();
-        seenUpdater.update(pathname);
 
         // Remove the event listener when the component unmounts
         return () => {

@@ -2,7 +2,6 @@
 import EventPost from '@/app/components/pages/posts/events/EventPost';
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
-import seenUpdate from '@/app/customlib/seenUpdate';
 import customDate from '@/app/lib/customDate';
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
 import { usePathname } from 'next/navigation';
@@ -104,9 +103,6 @@ const LocalEvents = () => {
         if (typeof window !== 'undefined') {
             window.addEventListener('scroll', handleScroll);
         }
-
-        const seenUpdater = new seenUpdate();
-        seenUpdater.update(pathname);
 
         // Remove the event listener when the component unmounts
         return () => {

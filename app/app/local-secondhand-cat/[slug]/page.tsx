@@ -2,7 +2,6 @@
 import SecondHandPublicPost from '@/app/components/pages/secondhand/SecondHandPublicPost';
 import ButtonLoading from '@/app/components/temp/ButtonLoading';
 import AppContent from '@/app/components/templates/AppContent'
-import seenUpdate from '@/app/customlib/seenUpdate';
 import DoublyCircularLinkedList from '@/app/lib/dsa/linkedList/circularLinkedList';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
@@ -106,15 +105,6 @@ const LocalSecondHandCat = () => {
             }
         };
     }, [pNum, slug]);
-
-    
-    const pathname = usePathname();
-
-    useEffect(() => {
-        const seenUpdater = new seenUpdate();
-        seenUpdater.update(pathname);
-        return () => {};
-    }, [pathname]);
 
     useEffect(() => {
         loadNews(1,slug);

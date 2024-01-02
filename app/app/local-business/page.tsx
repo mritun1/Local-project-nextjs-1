@@ -1,20 +1,10 @@
 "use client"
 import AppContent from '@/app/components/templates/AppContent'
-import seenUpdate from '@/app/customlib/seenUpdate';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import React, { useEffect } from 'react'
 
 const LocalBusiness = () => {
-
-    // const seenUpdater = new seenUpdate();
-    // const pathname = usePathname();
-
-    // useEffect(() => {
-    //     return () => {
-    //         seenUpdater.update(pathname);
-    //     };
-    // }, []);
 
   return (
     <>

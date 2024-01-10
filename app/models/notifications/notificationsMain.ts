@@ -13,7 +13,7 @@ const notifications = new mongoose.Schema({
     senderPic: String,
     senderName: String,
     notificationType:{
-        type: String /** wallet, message, settings, profile, my-secondhand, my-posts */
+        type: String /** wallet, contribution (Any name of the sender)*/
     },
     message: String,
     seen:{

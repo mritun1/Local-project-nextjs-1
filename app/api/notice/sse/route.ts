@@ -38,7 +38,8 @@ export async function GET(
                 { sendType: 'one' },
                 { sendType: 'oneToOne' }
             ],
-            uid: uId
+            userId: uId,
+            seen: false 
          }).count();
         const totalNotice = noticeAll + noticeOne;
         //----------------------------------------------------------------------------------------

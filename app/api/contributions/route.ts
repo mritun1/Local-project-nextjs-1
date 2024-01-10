@@ -1,8 +1,10 @@
 import connectDB from "@/app/db/config";
 import getTokenData from "@/app/lib/getTokenData";
 import contributions from "@/app/models/contribution/contributions";
+import notificationsMain from "@/app/models/notifications/notificationsMain";
 import eventsPost from "@/app/models/posts/eventsPost";
 import NewsPost from "@/app/models/posts/newsPost";
+import User from "@/app/models/userModels";
 import walletTransactions from "@/app/models/wallet/walletTransactions";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -84,6 +86,16 @@ export async function POST(req:NextRequest){
                         })
                     }
                 }
+                //INSERT NOTIFICATION - START
+                const senderData = await User.findById(uId);
+                await notificationsMain.create({
+                    userId: receiverId,
+                    sendType: 'oneToOne',
+                    notificationType: 'contribution',
+                    message: 'Rs. ' + amount + ' received. Sent By ' + senderData.firstName + ' ' + senderData.lastName,
+                    createdDate: Date.now()
+                })
+                //INSERT NOTIFICATION - END
                 return NextResponse.json({
                     msg: "Success",
                     code: 1

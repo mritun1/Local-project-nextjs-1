@@ -1,7 +1,6 @@
 "use client"
 import AppContent from '@/app/components/templates/AppContent'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation';
 import React, { useEffect } from 'react'
 
 const LocalBusiness = () => {

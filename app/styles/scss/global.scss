@@ -406,11 +406,17 @@ body {
 
                 &>button:nth-child(2) {
                     @include position(absolute, 20px, 10px);
-                    color: $text-color;
-                    background-color: $btn-color;
                     border-radius: 50%;
                     @include w_h(20px, 20px);
                     font-weight: bold;
+                }
+                &>.lightGreen{
+                    background-color: $btn-color;
+                    color: $text-color;
+                }
+                &>.red {
+                    background-color: rgb(187, 84, 84);
+                    color:$text-color2;
                 }
             }
 
@@ -2411,13 +2417,13 @@ body {
     @include bg();
 }
 .badge{
-    color: $text-color;
     font-weight: bold;
     border-radius: 50%;
     @include w_h(22px, 22px);
 }
 .bg-red{
     background-color: rgb(148, 17, 17);
+    color: $text-color2;
 }
 // <div className='avatar-bg'
 //     style={{ backgroundImage:`url(https://www.rri.res.in/sites/default/files/2022-09/Abhisek%20Tamang.jpg)`}}

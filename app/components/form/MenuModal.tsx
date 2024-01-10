@@ -7,10 +7,32 @@ import Link from 'next/link'
 
 const MenuModal = () => {
     const router = useRouter();
-    const pathname = usePathname();
 
     const [fullName,setFullName] = useState<string>("")
     const [profilePic, setProfilePic] = useState<string>("/icons/others/profile.webp")
+
+    //NOTIFICATION - START
+    const [noti, setNoti] = useState<number>(0)
+    const [mgsCount, setMgsCount] = useState<number>(0)
+    useEffect(() => {
+        const eventSource = new EventSource('/api/notice/sse/');
+        eventSource.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                console.log(data);
+                setNoti(data[0].notification)
+                setMgsCount(data[0].mgsCount)
+                // Handle the received data as needed
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+            }
+        };
+        // Clean up the EventSource connection when the component is unmounted
+        return () => {
+            eventSource.close();
+        };
+    }, [mgsCount]);
+    //NOTIFICATION - END
 
     useEffect(()=>{
 
@@ -92,11 +114,11 @@ const MenuModal = () => {
                             </div> */}
                             <div title="Messages" onClick={() => goHref('/app/message')}>
                                 <button><i className="fa-solid fa-message"></i></button>
-                                <button>0</button>
+                                <button className={mgsCount > 0 ? 'red' : 'lightGreen'} >{mgsCount}</button>
                             </div>
                             <div title="Notification" onClick={() => goHref('/app/notification')}>
                                 <button><i className="fa-solid fa-bell"></i></button>
-                                <button>0</button>
+                                <button className={noti > 0 ? 'red':'lightGreen'}>{noti}</button>
                             </div>
 
                             <div onClick={displayModal} className="profile_img">

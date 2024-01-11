@@ -1,6 +1,6 @@
 "use client"
 import { usePathname, useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Modal from '../../temp/Modal';
 import PinModel from '../../templates/PinModel';
 
@@ -11,6 +11,16 @@ const MobFootMenu = () => {
     const homeClick = () => {
         isHomeShow(!homeShow)
     }
+    //FOR APP DISPLAY
+    const homeClick2: () => void = useCallback(() => {
+        isHomeShow((prevHomeShow) => !prevHomeShow);
+    }, []); // Empty dependency array because there are no external dependencies
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches) {
+            homeClick2();
+        }
+    }, [homeClick2]);
+
     //FOR HOME
     const [addShow, isAddShow] = useState<boolean>(false);
     const addClick = () => {

@@ -1,13 +1,41 @@
 "use client"
-import React, { useState } from 'react'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import Alerts2 from '../temp/Alerts2'
-import ActivateForm from './ActivateForm'
-import Alerts3 from '../temp/Alerts3'
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import Alerts2 from '../temp/Alerts2';
+import ActivateForm from './ActivateForm';
+import Alerts3 from '../temp/Alerts3';
+
+import { getMessaging, onMessage } from 'firebase/messaging';
+import firebaseApp from './firebase';
+import UseFcmToken from './UseFcmToken';
 
 const Login = () => {
     const router = useRouter();
+
+    //-----------------------------------------------------
+    //  FOR - PUSH NOTIFICATION - START
+    //-----------------------------------------------------
+    const { fcmToken, notificationPermissionStatus } = UseFcmToken();
+    // Use the token as needed
+    fcmToken && console.log('FCM token:', fcmToken);
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+        if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+            const messaging = getMessaging(firebaseApp);
+            const unsubscribe = onMessage(messaging, (payload) => {
+                console.log('Foreground push notification received:', payload);
+            });
+            return () => {
+                unsubscribe(); // Unsubscribe from the onMessage event
+            };
+        }
+    }, []);
+    
+    //-----------------------------------------------------
+    //  FOR - PUSH NOTIFICATION - END
+    //-----------------------------------------------------
 
     const [mobile, setMobile] = useState<string>('')
     const [mobile2, setMobile2] = useState<string>('')
@@ -100,6 +128,7 @@ const Login = () => {
                 isHidden={logstatus}
                 onClick={handleLogStatus}
             ></Alerts3>
+
 
 
             <form id="loginForm" onSubmit={loginForm} method='POST' >

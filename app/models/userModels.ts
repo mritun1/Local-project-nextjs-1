@@ -58,6 +58,9 @@ let userSchema = new mongoose.Schema({
         type: Number,//234 or 0
         default:0,
     },
+    fcmToken:{
+        type: String
+    },
     createdDate:{
         type: Number,
         default: Date.now()

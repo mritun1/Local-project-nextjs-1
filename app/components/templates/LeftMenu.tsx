@@ -7,10 +7,44 @@ interface propsTypes {
       toggleModal: () => void;
 }
 
+import { getMessaging, onMessage } from 'firebase/messaging';
+import UseFcmToken from '@/app/lib/firebase/UseFcmToken';
+import firebaseApp from '@/app/lib/firebase/firebase';
+
+interface BeforeInstallPromptEvent extends Event {
+      prompt(): Promise<void>;
+      userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
+
 const LeftMenu = (props: propsTypes) => {
       const pathname = usePathname();
 
       const [pin, setPin] = useState<number>(0)
+
+      //-----------------------------------------------------
+      //  FOR - PUSH NOTIFICATION - START
+      //-----------------------------------------------------
+      const { fcmToken, notificationPermissionStatus } = UseFcmToken();
+      // Use the token as needed
+      fcmToken && console.log('FCM token:', fcmToken);
+      notificationPermissionStatus && console.log("Notification status", notificationPermissionStatus)
+
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useEffect(() => {
+            if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+                  const messaging = getMessaging(firebaseApp);
+                  const unsubscribe = onMessage(messaging, (payload) => {
+                        console.log('Foreground push notification received:', payload);
+                        window.location.reload();
+                  });
+                  return () => {
+                        unsubscribe(); // Unsubscribe from the onMessage event
+                  };
+            }
+      }, []);
+      //-----------------------------------------------------
+      //  FOR - PUSH NOTIFICATION - END
+      //-----------------------------------------------------
 
       useEffect(() => {
             const fetchData = async () => {
@@ -21,7 +55,7 @@ const LeftMenu = (props: propsTypes) => {
                               'Cache-Control': 'no-cache, no-store',
                         },
                         body:JSON.stringify({
-                              code:1
+                              fcmToken: fcmToken
                         })
                   });
                   if (res.ok) {
@@ -38,7 +72,7 @@ const LeftMenu = (props: propsTypes) => {
             }
             fetchData();
             return () => {}
-      }, [])
+      }, [fcmToken])
 
       const [eventsCount, setEventsCount] = useState<number>(0);
       const [newsCount, setNewsCount] = useState<number>(0);

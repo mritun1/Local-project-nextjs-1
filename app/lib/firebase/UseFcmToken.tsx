@@ -5,8 +5,7 @@ import firebaseApp from './firebase';
 
 const UseFcmToken = () => {
     const [token, setToken] = useState('');
-    const [notificationPermissionStatus, setNotificationPermissionStatus] =
-        useState('');
+    const [notificationPermissionStatus, setNotificationPermissionStatus] = useState('');
 
     useEffect(() => {
         const retrieveToken = async () => {

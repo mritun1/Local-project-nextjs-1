@@ -1,20 +1,14 @@
 importScripts('https://www.gstatic.com/firebasejs/9.1.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.1.0/firebase-messaging-compat.js');
 
-const apiKey = process.env.apiKey
-const authDomain = process.env.authDomain
-const projectId = process.env.projectId
-const storageBucket = process.env.storageBucket
-const messagingSenderId = process.env.messagingSenderId
-const appId = process.env.appId
-
 const firebaseConfig = {
-    apiKey: apiKey,
-    authDomain: authDomain,
-    projectId: projectId,
-    storageBucket: storageBucket,
-    messagingSenderId: messagingSenderId,
-    appId: appId,
+    apiKey: "AIzaSyC8Zcyc2vlZom5L2TofriLXE_JBZhYIAGE",
+    authDomain: "localniipushnotification.firebaseapp.com",
+    projectId: "localniipushnotification",
+    storageBucket: "localniipushnotification.appspot.com",
+    messagingSenderId: "288263560406",
+    appId: "1:288263560406:web:3c4be62bd26ae7ccfa3d77",
+    measurementId: "G-4FZ0WQ8BLS"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -33,16 +27,15 @@ self.addEventListener('push', (event) => {
     );
 });
 
+
 self.addEventListener('notificationclick', (event) => {
-    const clickedNotification = event.notification;
-
-    // Extract the dynamic URL from the notification payload
-    const urlToOpen = clickedNotification.data.url || 'https://localnii.com';
-
-    event.waitUntil(
-        clients.openWindow(urlToOpen)
-    );
-
-    // Close the notification
-    clickedNotification.close();
+    event.notification.close(); // Close the notification
+    // Add logic to open a specific URL when the notification is clicked
+    //const clickAction = event.data.click_action; // Adjust this based on your notification data
+    const clickAction = 'https://localnii.com'
+    if (clickAction) {
+        // Use clients.openWindow to open a new window or focus an existing one
+        event.waitUntil(clients.openWindow(clickAction));
+    }
+    
 });
